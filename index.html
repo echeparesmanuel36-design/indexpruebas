@@ -181,3 +181,60 @@
             pointer-events: none;
             z-index: 10;
         }
+        /* --- ESTILOS ESPECÍFICOS PARA LOS BOTONES DE CONTACTO (FUSIÓN) --- */
+        .contact-channels {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .btn-contact {
+            background-color: var(--code-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 16px 24px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            cursor: pointer;
+            border-radius: 8px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-contact:hover {
+            border-color: var(--text-main);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Colores de acento sutiles en hover para cada red */
+        .btn-contact.x-btn:hover { color: #00e5ff; border-color: #00e5ff; }
+        .btn-contact.mail-btn:hover { color: #007aff; border-color: #007aff; }
+        .btn-contact.whatsapp-btn:hover { color: #00ff66; border-color: #00ff66; }
+        .btn-contact.github-btn:hover { color: #ffffff; border-color: #ffffff; }
+
+        @media (max-width: 600px) {
+            .contact-channels { grid-template-columns: 1fr; }
+        }
+
+        /* --- ESTILO FOOTER (DISEÑO 1) --- */
+        footer {
+            padding: 40px 24px;
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border-top: 1px solid var(--border-color);
+            width: 100%;
+            z-index: 10;
+        }
+    </style>
+</head>
