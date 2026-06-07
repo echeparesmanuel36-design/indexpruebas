@@ -268,3 +268,113 @@
             <div class="glass-wrapper" id="glassWrapper"></div>
 
         </div>
+                <div class="contact-channels">
+                    <a href="https://x.com/ManuelAxiom" target="_blank" class="btn-contact x-btn">
+                        <i class="fa-brands fa-x-twitter"></i> Twitter Terminal
+                    </a>
+                    <a href="mailto:echeparesmanuel36@gmail.com" class="btn-contact mail-btn">
+                        <i class="fa-solid fa-envelope"></i> Inyectar Correo
+                    </a>
+                    <a href="https://wa.me/34652607512" target="_blank" class="btn-contact whatsapp-btn">
+                        <i class="fa-brands fa-whatsapp"></i> Canal WhatsApp
+                    </a>
+                    <a href="https://github.com/echeparesmanuel36-design" target="_blank" class="btn-contact github-btn">
+                        <i class="fa-brands fa-github"></i> GitHub Perfil
+                    </a>
+                </div>
+            </div>
+
+            <div class="glass-wrapper" id="glassWrapper"></div>
+
+        </div>
+    </main>
+
+    <footer>
+        © 2026 Axiom Systems. MANTÉN LA SOBERANÍA. FUNDADOR MANUEL.
+    </footer>
+
+    <script>
+        // --- GESTOR EXCLUSIVO DE MODO CLARO / OSCURO (DISEÑO 1) ---
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                htmlElement.setAttribute('data-theme', 'light');
+                themeToggle.innerText = 'Dark Mode';
+            } else {
+                htmlElement.setAttribute('data-theme', 'dark');
+                themeToggle.innerText = 'Light Mode';
+            }
+            // Refrescar el cristal matemáticamente al cambiar de modo
+            applyAaveGlass();
+        });
+
+        // --- NÚCLEO MATEMÁTICO DE REFRACCIÓN DE CRISTAL (DISEÑO 1) ---
+        function applyAaveGlass() {
+            const wrapper = document.getElementById('glassWrapper');
+            const scene = document.getElementById('glassScene');
+
+            const w = scene.offsetWidth;
+            const h = scene.offsetHeight;
+
+            const canvas = document.createElement('canvas');
+            canvas.width = w; 
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+
+            ctx.fillStyle = '#808080';
+            ctx.fillRect(0, 0, w, h);
+
+            const imgData = ctx.getImageData(0, 0, w, h);
+            const centerX = w / 2;
+            const centerY = h / 2;
+            const radius = Math.min(w, h) * 0.46;
+
+            for (let y = 0; y < h; y++) {
+                for (let x = 0; x < w; x++) {
+                    const dx = x - centerX;
+                    const dy = y - centerY;
+                    const dist = Math.hypot(dx, dy);
+
+                    if (dist < radius) {
+                        const i = (y * w + x) * 4;
+                        imgData.data[i]   = 128 + (dx / radius) * 115; 
+                        imgData.data[i+1] = 128 + (dy / radius) * 115; 
+                        imgData.data[i+2] = 128;
+                        imgData.data[i+3] = 255;
+                    }
+                }
+            }
+            ctx.putImageData(imgData, 0, 0);
+            const mapUrl = canvas.toDataURL();
+
+            const theme = htmlElement.getAttribute('data-theme');
+            const rectFill = theme === 'dark' ? 'rgba(255, 255, 255, 0.02)' : 'rgba(0, 0, 0, 0.01)';
+            const rectStroke = theme === 'dark' ? 'rgba(255, 255, 255, 0.14)' : 'rgba(0, 0, 0, 0.10)';
+
+            wrapper.innerHTML = `
+                <svg width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg" style="display: block; position: absolute; inset:0;">
+                    <defs>
+                        <filter id="nomadGlassFilter" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+                            <feImage href="${mapUrl}" result="displacementMap"/>
+                            <feDisplacementMap in="SourceGraphic" in2="displacementMap" scale="38" xChannelSelector="R" yChannelSelector="G"/>
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur"/>
+                            <feComposite in="blur" in2="SourceGraphic" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"/>
+                        </filter>
+                    </defs>
+                    <rect width="${w}" height="${h}" rx="40" ry="40" 
+                          fill="${rectFill}" 
+                          filter="url(#nomadGlassFilter)"
+                          stroke="${rectStroke}" 
+                          stroke-width="1.5"/>
+                </svg>
+            `;
+        }
+
+        window.addEventListener('DOMContentLoaded', applyAaveGlass);
+        window.addEventListener('resize', applyAaveGlass);
+    </script>
+</body>
+</html>
