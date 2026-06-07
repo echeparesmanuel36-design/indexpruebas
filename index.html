@@ -80,3 +80,104 @@
             z-index: 1;
             pointer-events: none;
         }
+        /* --- ESTILOS DE ESTRUCTURA Y ETIQUETAS (DISEÑO 1) --- */
+        header {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+        }
+
+        /* BOTÓN INTERCAMBIADOR DE TEMA */
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 16px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        .theme-toggle:hover {
+            background: var(--text-main);
+            color: var(--bg-color);
+        }
+
+        main {
+            max-width: 900px;
+            width: 100%;
+            margin: auto;
+            padding: 20px 24px 80px 24px;
+            text-align: center;
+            z-index: 5;
+        }
+
+        .category-tag {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+            font-size: 52px;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+        }
+
+        .subtitle {
+            font-size: 17px;
+            color: var(--text-muted);
+            line-height: 1.65;
+            max-width: 620px;
+            margin: 0 auto 48px auto;
+            font-weight: 300;
+        }
+
+        /* --- CONTENEDOR ESCENA DEL CRISTAL REFRACTIVO --- */
+        .glass-scene {
+            position: relative;
+            width: 100%;
+            max-width: 750px;
+            margin: 0 auto 48px auto;
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-color);
+        }
+
+        .glass-bg {
+            background-color: var(--surface-color);
+            padding: 40px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            transition: background-color 0.5s ease;
+        }
+
+        .glass-wrapper {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
