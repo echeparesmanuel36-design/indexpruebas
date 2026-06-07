@@ -3,285 +3,409 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manuel Echepares | Axiom Systems ◤A-S◢</title>
+    <title>AXIOM SYSTEMS ◤A-S◢ | Soberanía desde el Silicio</title>
+    <meta name="description" content="Bare Metal. Zero Bloat. Herramientas extremas en Rust y Assembly para desarrolladores que exigen control total.">
+    
+    <!-- Fuentes premium -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Urbanist:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Urbanist:wght@700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    
+    <!-- Tailwind CDN (para rapidez y lujo) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
     <style>
         :root[data-theme="dark"] {
-            --bg-main: #0a1128;
-            --bg-canvas: rgba(10, 25, 64, 0.6);
-            --text-main: #f5f5f7;
-            --text-muted: #8a9fc4;
-            --accent-blue: #007aff;
-            --accent-neon: #00f5ff;
-            --card-bg: rgba(13, 27, 65, 0.7);
-            --glow-neon: rgba(0, 245, 255, 0.2);
-            --shadow-convex: 10px 10px 20px #050914, -10px -10px 20px #0f193c;
+            --bg: #05080f;
+            --text: #f5f5f7;
+            --accent: #00f5ff;
+            --accent2: #007aff;
+            --glass: rgba(255,255,255,0.06);
         }
-
+        
         :root[data-theme="light"] {
-            --bg-main: #f0f4f8;
-            --bg-canvas: rgba(235, 242, 250, 0.8);
-            --text-main: #0a1128;
-            --text-muted: #5c6b89;
-            --accent-blue: #007aff;
-            --accent-neon: #0056b3;
-            --card-bg: rgba(255, 255, 255, 0.85);
-            --glow-neon: rgba(0, 122, 255, 0.15);
-            --shadow-convex: 8px 8px 16px #cbd5e1, -8px -8px 16px #ffffff;
+            --bg: #f8fafc;
+            --text: #0a1128;
+            --accent: #007aff;
+            --accent2: #00b4d8;
+            --glass: rgba(0,0,0,0.06);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', system-ui, sans-serif;
             overflow-x: hidden;
-            min-height: 100vh;
-            transition: all 0.4s ease;
+        }
+        
+        .logo-font {
+            font-family: 'Urbanist', sans-serif;
+            font-weight: 900;
+            letter-spacing: -2px;
         }
 
-        #viewport-container {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none;
+        .glass {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
 
-        header {
-            position: fixed; top: 0; left: 0; width: 100%; border-bottom: 1px solid rgba(0,122,255,0.15);
-            background: var(--bg-canvas); backdrop-filter: blur(20px); z-index: 100;
-        }
-
-        .nav-wrapper {
-            max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 80px;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-
-        .logo {
-            font-family: 'Urbanist', sans-serif; font-size: 26px; font-weight: 900; letter-spacing: 2px;
-        }
-        .logo span { color: var(--accent-blue); }
-
-        .hero {
-            padding: 160px 24px 100px; text-align: center; max-width: 900px; margin: 0 auto;
-        }
-
-        .hero-tag {
-            color: var(--accent-blue); font-size: 14px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
-        }
-
-        .distort-title {
-            font-family: 'Urbanist', sans-serif; font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 900;
-            line-height: 0.95; letter-spacing: -4px; margin: 20px 0 32px;
-        }
-        .distort-title span { color: var(--accent-neon); text-shadow: 0 0 40px var(--glow-neon); }
-
-        .hero-bio {
-            font-size: 18px; color: var(--text-muted); line-height: 1.7; max-width: 680px; margin: 0 auto 40px;
-        }
-
-        .cta-buttons {
-            display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
-        }
-
-        .btn-primary, .btn-secondary {
-            padding: 16px 32px; border-radius: 12px; font-weight: 600; font-size: 15px;
-            cursor: pointer; transition: all 0.3s ease; text-decoration: none; display: inline-flex; align-items: center; gap: 10px;
-        }
-
-        .btn-primary {
-            background: var(--accent-blue); color: white; box-shadow: 0 0 20px rgba(0,122,255,0.4);
-        }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 0 30px rgba(0,122,255,0.6); }
-
-        .btn-secondary {
-            background: var(--card-bg); color: var(--text-main); border: 1px solid rgba(0,122,255,0.3);
-        }
-
-        .section {
-            padding: 80px 24px; max-width: 1200px; margin: 0 auto;
-        }
-
-        .section-headline {
-            font-family: 'Urbanist', sans-serif; font-size: 32px; font-weight: 800; text-align: center; margin-bottom: 50px;
-        }
-
-        .grid-products {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 28px;
-        }
-
-        .product-card {
-            background: var(--card-bg); border-radius: 16px; padding: 32px; box-shadow: var(--shadow-convex);
-            border: 1px solid rgba(0,122,255,0.1); transition: transform 0.3s ease; backdrop-filter: blur(15px);
-        }
-        .product-card:hover { transform: translateY(-8px); }
-
-        .product-status {
-            font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
-            padding: 6px 14px; border-radius: 20px; background: rgba(0,245,255,0.1); color: var(--accent-neon); display: inline-block; margin-bottom: 16px;
-        }
-
-        footer {
-            padding: 60px 24px; text-align: center; border-top: 1px solid rgba(0,122,255,0.1); background: var(--bg-canvas);
-        }
-
-        @media (max-width: 768px) {
-            .cta-buttons { flex-direction: column; align-items: center; }
+        .neon-text {
+            text-shadow: 0 0 20px var(--accent),
+                        0 0 40px var(--accent);
         }
     </style>
 </head>
-<body>
+<body class="bg-[#05080f] text-white">
 
-    <div id="viewport-container">
-        <canvas id="canvas-shader"></canvas>
-        <div id="canvas-3d"></div>
-    </div>
-
-    <header>
-        <div class="nav-wrapper">
-            <div class="logo">AXIOM<span>SYSTEMS</span></div>
-            <div>
-                <button id="themeBtn" style="background:none; border:none; color:var(--text-main); font-size:24px; cursor:pointer;">
-                    <i class="fa-solid fa-circle-half-stroke"></i>
+    <!-- NAVBAR PREMIUM -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
+        <div class="max-w-screen-2xl mx-auto px-8 py-6 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="logo-font text-3xl tracking-tighter">AXIOM</div>
+                <span class="text-[#00f5ff] text-xl">◤A-S◢</span>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-10 text-sm font-medium">
+                <a href="#proyectos" class="hover:text-[#00f5ff] transition-colors">Proyectos</a>
+                <a href="#filosofia" class="hover:text-[#00f5ff] transition-colors">Filosofía</a>
+                <a href="#demos" class="hover:text-[#00f5ff] transition-colors">Demos</a>
+                <a href="#contacto" class="hover:text-[#00f5ff] transition-colors">Contacto</a>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <button id="theme-toggle" 
+                        class="w-10 h-10 flex items-center justify-center rounded-2xl hover:bg-white/10 transition-colors">
+                    <i class="fa-solid fa-moon text-xl"></i>
                 </button>
+                <a href="https://github.com/echeparesmanuel36-design" target="_blank"
+                   class="px-6 py-3 bg-white/10 hover:bg-white/20 rounded-2xl text-sm font-semibold transition-all flex items-center gap-2">
+                    <i class="fa-brands fa-github"></i>
+                    GitHub
+                </a>
             </div>
         </div>
-    </header>
+    </nav>
 
-    <main>
-        <section class="hero">
-            <div class="hero-tag">◤ BARE-METAL ENGINEERING ◢</div>
-            <h1 class="distort-title">MANUEL ECHEPares<br><span>AXIOM FOUNDER</span></h1>
+    <!-- Espacio para el navbar fijo -->
+    <div class="h-24"></div>    <!-- HERO SECTION - LUXURY 3D -->
+    <section class="min-h-screen flex items-center relative overflow-hidden">
+        <!-- Fondo 3D -->
+        <div id="hero-3d" class="absolute inset-0 z-0"></div>
+        
+        <!-- Overlay sutil -->
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#05080f]/70 to-[#05080f] z-10"></div>
+        
+        <div class="relative z-20 max-w-screen-2xl mx-auto px-8 text-center">
+            <div class="inline-flex items-center gap-2 px-6 py-2.5 rounded-3xl glass border border-white/10 mb-8">
+                <span class="text-[#00f5ff] text-sm font-mono">◤ BARE METAL ENGINEERING ◢</span>
+            </div>
             
-            <div class="hero-bio">
-                Construyo herramientas de alto rendimiento en Rust puro y Assembly. 
-                Cero bloat, cero cloud, máxima soberanía. Velocidad extrema desde el silicio.
+            <h1 class="logo-font text-[5.5rem] md:text-[7rem] leading-none tracking-tighter mb-6 neon-text">
+                AXIOM<br>SYSTEMS
+            </h1>
+            
+            <p class="text-2xl md:text-3xl text-white/70 max-w-2xl mx-auto mb-12">
+                Soberanía desde el silicio.<br>
+                <span class="text-[#00f5ff]">Zero bloat. Zero cloud. Total control.</span>
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <a href="#proyectos" 
+                   class="px-10 py-6 bg-[#00f5ff] hover:bg-white text-black font-semibold text-lg rounded-3xl transition-all hover:scale-105 flex items-center gap-3">
+                    Explorar Proyectos
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                
+                <a href="https://echeparesmanuel36-design.github.io/axiom-blastify/" target="_blank"
+                   class="px-10 py-6 border border-white/30 hover:border-white/60 font-semibold text-lg rounded-3xl transition-all">
+                    Probar Blastify Ahora
+                </a>
+            </div>
+            
+            <div class="mt-16 flex justify-center gap-8 text-sm opacity-60">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-rust"></i>
+                    <span>Rust puro</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-microchip"></i>
+                    <span>Assembly x86_64</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>Latency &lt; 2ms</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-xs tracking-widest opacity-40">
+            <span>SCROLL PARA DESCUBRIR</span>
+            <div class="w-px h-12 bg-gradient-to-b from-transparent via-white to-transparent"></div>
+        </div>
+    </section>    <!-- PROYECTOS DESTACADOS -->
+    <section id="proyectos" class="py-32 relative">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="text-center mb-20">
+                <span class="inline-block px-5 py-2 rounded-3xl glass text-[#00f5ff] text-sm tracking-widest mb-4">SIGNATURE WORKS</span>
+                <h2 class="logo-font text-6xl tracking-tighter">Proyectos Forjados en el Silicio</h2>
+                <p class="text-xl text-white/60 mt-4 max-w-md mx-auto">Herramientas reales. Código extremo. Sin compromisos.</p>
             </div>
 
-            <div class="cta-buttons">
-                <a href="https://github.com/echeparesmanuel36-design" target="_blank" class="btn-primary">
-                    <i class="fa-brands fa-github"></i> Ver en GitHub
-                </a>
-                <a href="https://x.com/ManuelAxiom" target="_blank" class="btn-secondary">
-                    <i class="fa-brands fa-x-twitter"></i> @ManuelAxiom
-                </a>
-            </div>
-        </section>
-
-        <section class="section">
-            <h3 class="section-headline">◤ PROYECTOS ACTUALES ◢</h3>
-            <div class="grid-products">
-
-                <div class="product-card">
-                    <span class="product-status">Rust • 1 línea</span>
-                    <h4>Axiom Blastify</h4>
-                    <p>Notificaciones instantáneas a Discord, Telegram o Email. Ideal para scripts y automatizaciones.</p>
-                    <a href="https://echeparesmanuel36-design.github.io/axiom-blastify/" target="_blank" style="color:var(--accent-neon); text-decoration:underline;">Probar demo →</a>
+            <div class="grid md:grid-cols-3 gap-8">
+                
+                <!-- Proyecto 1 -->
+                <div class="group bg-white/5 border border-white/10 rounded-3xl p-10 hover:border-[#00f5ff]/30 transition-all hover:-translate-y-2">
+                    <div class="h-52 bg-gradient-to-br from-[#00f5ff]/10 to-transparent rounded-2xl mb-8 flex items-center justify-center text-6xl opacity-80 group-hover:scale-110 transition-transform">
+                        ⚡
+                    </div>
+                    <span class="text-xs tracking-widest text-[#00f5ff]">RUST • 1 LÍNEA</span>
+                    <h3 class="text-3xl font-semibold mt-3 mb-2">Axiom Blastify</h3>
+                    <p class="text-white/70">Notificaciones instantáneas a Discord, Telegram o Email. La herramienta más rápida para scripts y automatizaciones.</p>
+                    <a href="https://echeparesmanuel36-design.github.io/axiom-blastify/" target="_blank" 
+                       class="mt-8 inline-flex items-center gap-3 text-[#00f5ff] hover:text-white transition-colors">
+                        Probar Demo →
+                    </a>
                 </div>
 
-                <div class="product-card">
-                    <span class="product-status">Rust puro</span>
-                    <h4>Axiom Organon</h4>
-                    <p>Organizador de carpetas ultrarrápido, local, sin Electron ni cloud. Código abierto.</p>
-                    <a href="#" style="color:var(--accent-neon); text-decoration:underline;">Ver repositorio →</a>
+                <!-- Proyecto 2 -->
+                <div class="group bg-white/5 border border-white/10 rounded-3xl p-10 hover:border-[#00f5ff]/30 transition-all hover:-translate-y-2">
+                    <div class="h-52 bg-gradient-to-br from-[#00f5ff]/10 to-transparent rounded-2xl mb-8 flex items-center justify-center text-6xl opacity-80 group-hover:scale-110 transition-transform">
+                        📁
+                    </div>
+                    <span class="text-xs tracking-widest text-[#00f5ff]">RUST PURO</span>
+                    <h3 class="text-3xl font-semibold mt-3 mb-2">Axiom Organon</h3>
+                    <p class="text-white/70">Organizador de carpetas ultrarrápido, local y sin Electron. Máxima eficiencia sin cloud.</p>
+                    <a href="https://github.com/echeparesmanuel36-design" target="_blank" 
+                       class="mt-8 inline-flex items-center gap-3 text-[#00f5ff] hover:text-white transition-colors">
+                        Ver Repositorio →
+                    </a>
                 </div>
 
-                <div class="product-card">
-                    <span class="product-status">Assembly x86_64</span>
-                    <h4>Axiom Core</h4>
-                    <p>Micro-motor bare-metal escrito 100% en NASM. Máxima eficiencia a nivel silicio.</p>
-                    <a href="#" style="color:var(--accent-neon); text-decoration:underline;">Ver código →</a>
+                <!-- Proyecto 3 -->
+                <div class="group bg-white/5 border border-white/10 rounded-3xl p-10 hover:border-[#00f5ff]/30 transition-all hover:-translate-y-2">
+                    <div class="h-52 bg-gradient-to-br from-[#00f5ff]/10 to-transparent rounded-2xl mb-8 flex items-center justify-center text-6xl opacity-80 group-hover:scale-110 transition-transform">
+                        ⚙️
+                    </div>
+                    <span class="text-xs tracking-widest text-[#00f5ff]">ASSEMBLY x86_64</span>
+                    <h3 class="text-3xl font-semibold mt-3 mb-2">Axiom Core</h3>
+                    <p class="text-white/70">Micro-motor bare-metal escrito 100% en NASM. Control absoluto del silicio.</p>
+                    <a href="https://github.com/echeparesmanuel36-design" target="_blank" 
+                       class="mt-8 inline-flex items-center gap-3 text-[#00f5ff] hover:text-white transition-colors">
+                        Ver Código →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>    <!-- FILOSOFÍA AXIOM -->
+    <section id="filosofia" class="py-32 bg-black/40">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="grid md:grid-cols-12 gap-16 items-center">
+                <div class="md:col-span-5">
+                    <span class="text-[#00f5ff] text-sm tracking-widest">THE AXIOM STANDARD</span>
+                    <h2 class="logo-font text-6xl tracking-tighter leading-none mt-4 mb-8">
+                        No hacemos software.<br>
+                        Forjamos soberanía.
+                    </h2>
+                </div>
+                
+                <div class="md:col-span-7 grid md:grid-cols-3 gap-10">
+                    <div>
+                        <div class="text-5xl text-[#00f5ff] mb-4">01</div>
+                        <h4 class="text-xl font-semibold mb-3">Soberanía del Silicio</h4>
+                        <p class="text-white/70">Control absoluto desde el hardware. Sin middleware, sin abstracciones innecesarias.</p>
+                    </div>
+                    <div>
+                        <div class="text-5xl text-[#00f5ff] mb-4">02</div>
+                        <h4 class="text-xl font-semibold mb-3">Velocidad Extrema</h4>
+                        <p class="text-white/70">Menos de 2ms de latencia. Binarios minimalistas. Rendimiento bare-metal real.</p>
+                    </div>
+                    <div>
+                        <div class="text-5xl text-[#00f5ff] mb-4">03</div>
+                        <h4 class="text-xl font-semibold mb-3">Cero Bloat</h4>
+                        <p class="text-white/70">Odiamos Electron, clouds y dependencias inútiles. Solo código puro y eficiente.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DEMOS EN VIVO -->
+    <section id="demos" class="py-32">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="text-center mb-16">
+                <span class="inline-block px-5 py-2 rounded-3xl glass text-[#00f5ff] text-sm tracking-widest">LIVE LABORATORY</span>
+                <h2 class="logo-font text-6xl tracking-tighter mt-4">Prueba las herramientas ahora</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <a href="https://echeparesmanuel36-design.github.io/axiom-blastify/" target="_blank"
+                   class="group block bg-white/5 border border-white/10 rounded-3xl p-12 hover:border-[#00f5ff]/40 transition-all">
+                    <div class="text-[#00f5ff] text-sm mb-3">RECOMENDADO</div>
+                    <h3 class="text-4xl font-semibold mb-4 group-hover:text-[#00f5ff] transition-colors">Axiom Blastify</h3>
+                    <p class="text-xl text-white/70">Envía notificaciones en una sola línea de código.</p>
+                    <div class="mt-12 text-[#00f5ff] flex items-center gap-3 text-lg">
+                        Probar en vivo <span class="text-2xl">→</span>
+                    </div>
+                </a>
+                
+                <div class="group block bg-white/5 border border-white/10 rounded-3xl p-12 hover:border-[#00f5ff]/40 transition-all">
+                    <div class="text-[#00f5ff] text-sm mb-3">LOW-LEVEL</div>
+                    <h3 class="text-4xl font-semibold mb-4 group-hover:text-[#00f5ff] transition-colors">Axiom Organon + Core</h3>
+                    <p class="text-xl text-white/70">Organizador ultrarrápido y motor bare-metal en Assembly.</p>
+                    <div class="mt-12 text-[#00f5ff] flex items-center gap-3 text-lg">
+                        Ver en GitHub <span class="text-2xl">→</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>    <!-- CONTACTO PREMIUM -->
+    <section id="contacto" class="py-32 bg-black/60">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="grid md:grid-cols-2 gap-20">
+                <!-- Formulario -->
+                <div>
+                    <span class="text-[#00f5ff] text-sm tracking-widest">INYECCIÓN DIRECTA</span>
+                    <h2 class="logo-font text-6xl tracking-tighter mt-4 mb-10">¿Quieres saber más?</h2>
+                    
+                    <form action="https://formspree.io/f/tu-email-aqui" method="POST" class="space-y-8">
+                        <div>
+                            <input type="text" name="name" placeholder="Tu nombre" 
+                                   class="w-full bg-white/5 border border-white/20 rounded-2xl px-8 py-6 focus:border-[#00f5ff] outline-none transition-colors">
+                        </div>
+                        <div>
+                            <input type="email" name="email" placeholder="tu@email.com" 
+                                   class="w-full bg-white/5 border border-white/20 rounded-2xl px-8 py-6 focus:border-[#00f5ff] outline-none transition-colors">
+                        </div>
+                        <div>
+                            <textarea name="message" rows="6" placeholder="Tu mensaje o propuesta..." 
+                                      class="w-full bg-white/5 border border-white/20 rounded-2xl px-8 py-6 focus:border-[#00f5ff] outline-none transition-colors resize-none"></textarea>
+                        </div>
+                        <button type="submit"
+                                class="w-full py-7 bg-[#00f5ff] hover:bg-white text-black font-semibold text-lg rounded-3xl transition-all">
+                            ENVIAR INYECCIÓN
+                        </button>
+                    </form>
                 </div>
 
+                <!-- Enlaces directos -->
+                <div class="flex flex-col justify-center gap-6">
+                    <a href="https://x.com/ManuelAxiom" target="_blank"
+                       class="group flex items-center gap-6 p-8 bg-white/5 border border-white/10 hover:border-[#00f5ff]/50 rounded-3xl transition-all">
+                        <i class="fa-brands fa-x-twitter text-4xl text-[#00f5ff]"></i>
+                        <div>
+                            <div class="text-xl font-semibold">@ManuelAxiom</div>
+                            <div class="text-white/60">Sígueme en X</div>
+                        </div>
+                    </a>
+                    
+                    <a href="https://github.com/echeparesmanuel36-design" target="_blank"
+                       class="group flex items-center gap-6 p-8 bg-white/5 border border-white/10 hover:border-[#00f5ff]/50 rounded-3xl transition-all">
+                        <i class="fa-brands fa-github text-4xl text-[#00f5ff]"></i>
+                        <div>
+                            <div class="text-xl font-semibold">GitHub</div>
+                            <div class="text-white/60">Todos los repositorios</div>
+                        </div>
+                    </a>
+                    
+                    <a href="https://wa.me/34652607512" target="_blank"
+                       class="group flex items-center gap-6 p-8 bg-white/5 border border-white/10 hover:border-[#00f5ff]/50 rounded-3xl transition-all">
+                        <i class="fa-brands fa-whatsapp text-4xl text-[#00f5ff]"></i>
+                        <div>
+                            <div class="text-xl font-semibold">WhatsApp</div>
+                            <div class="text-white/60">Contacto directo</div>
+                        </div>
+                    </a>
+                    
+                    <a href="mailto:echeparesmanuel36@gmail.com"
+                       class="group flex items-center gap-6 p-8 bg-white/5 border border-white/10 hover:border-[#00f5ff]/50 rounded-3xl transition-all">
+                        <i class="fa-solid fa-envelope text-4xl text-[#00f5ff]"></i>
+                        <div>
+                            <div class="text-xl font-semibold">Correo</div>
+                            <div class="text-white/60">echeparesmanuel36@gmail.com</div>
+                        </div>
+                    </a>
+                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="section" style="text-align:center;">
-            <h3 class="section-headline">◤ INYECCIÓN DIRECTA ◢</h3>
-            <div style="display:flex; gap:20px; justify-content:center; flex-wrap:wrap; max-width:800px; margin:0 auto;">
-                <a href="https://x.com/ManuelAxiom" target="_blank" class="btn-secondary" style="padding:18px 32px;">
-                    <i class="fa-brands fa-x-twitter"></i> X (@ManuelAxiom)
-                </a>
-                <a href="mailto:echeparesmanuel36@gmail.com" class="btn-secondary" style="padding:18px 32px;">
-                    <i class="fa-solid fa-envelope"></i> Correo
-                </a>
-                <a href="https://wa.me/34652607512" target="_blank" class="btn-secondary" style="padding:18px 32px;">
-                    <i class="fa-brands fa-whatsapp"></i> WhatsApp
-                </a>
-                <a href="https://github.com/echeparesmanuel36-design" target="_blank" class="btn-secondary" style="padding:18px 32px;">
-                    <i class="fa-brands fa-github"></i> GitHub
-                </a>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p style="opacity:0.7;">© 2026 Axiom Systems • Manuel Echepares • Ingeniería Soberana</p>
+    <!-- FOOTER -->
+    <footer class="py-16 border-t border-white/10">
+        <div class="max-w-screen-2xl mx-auto px-8 text-center">
+            <div class="logo-font text-2xl mb-4">AXIOM SYSTEMS ◤A-S◢</div>
+            <p class="text-white/50 text-sm">© 2026 Manuel Echepares • Ingeniería Soberana desde el Silicio</p>
+        </div>
     </footer>
 
+    <!-- SCRIPTS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script type="module">
-        import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js';
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            themeToggle.innerHTML = isDark ? 
+                '<i class="fa-solid fa-sun text-xl"></i>' : 
+                '<i class="fa-solid fa-moon text-xl"></i>';
+        });
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const themeBtn = document.getElementById('themeBtn');
-            const html = document.documentElement;
-
-            // Toggle tema
-            themeBtn.addEventListener('click', () => {
-                const isDark = html.getAttribute('data-theme') === 'dark';
-                html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-                themeBtn.innerHTML = isDark ? 
-                    '<i class="fa-solid fa-sun"></i>' : 
-                    '<i class="fa-solid fa-circle-half-stroke"></i>';
-            });
-
-            // 3D Scene
-            const container = document.getElementById('canvas-3d');
+        // Simple 3D Logo in Hero
+        function init3D() {
+            const container = document.getElementById('hero-3d');
             const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
             const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             container.appendChild(renderer.domElement);
 
-            const geometry = new THREE.CylinderGeometry(1.8, 1.8, 5, 32);
-            const material = new THREE.MeshStandardMaterial({ 
-                color: 0x007aff, 
-                metalness: 0.95, 
-                roughness: 0.15,
-                clearcoat: 1
+            // Texto 3D simple (cubo como placeholder del logo)
+            const geometry = new THREE.BoxGeometry(4, 1.5, 0.5);
+            const material = new THREE.MeshPhongMaterial({ 
+                color: 0x00f5ff, 
+                shininess: 100,
+                specular: 0xffffff
             });
             const mesh = new THREE.Mesh(geometry, material);
             scene.add(mesh);
 
-            const light1 = new THREE.DirectionalLight(0x00f5ff, 2.5);
-            light1.position.set(5, 5, 5);
-            scene.add(light1);
-            scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+            const light = new THREE.DirectionalLight(0xffffff, 1.2);
+            light.position.set(5, 5, 5);
+            scene.add(light);
+            scene.add(new THREE.AmbientLight(0xaaaaaa, 0.6));
 
-            camera.position.z = 7;
+            camera.position.z = 8;
 
-            let mouseX = 0, mouseY = 0;
-            window.addEventListener('mousemove', e => {
-                mouseX = (e.clientX / window.innerWidth) - 0.5;
-                mouseY = (e.clientY / window.innerHeight) - 0.5;
+            let mouseX = 0;
+            window.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth) * 2 - 1;
             });
 
             function animate() {
                 requestAnimationFrame(animate);
-                mesh.rotation.y += (mouseX * 1.5 - mesh.rotation.y) * 0.08;
-                mesh.rotation.x += (mouseY * 1.2 - mesh.rotation.x) * 0.08;
-                mesh.rotation.y += 0.003;
+                mesh.rotation.y = mouseX * 0.3 + Date.now() * 0.0003;
                 renderer.render(scene, camera);
             }
             animate();
 
-            // Shader fondo
-            const gl = document.getElementById('canvas-shader').getContext('webgl');
-            // (Mantengo tu shader original, solo lo activamos si quieres)
-        });
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        window.onload = init3D;
     </script>
 </body>
 </html>
