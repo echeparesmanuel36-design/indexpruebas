@@ -9,372 +9,514 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght=0,400;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <style>
-        /* --- VARIABLES DE DISEÑO CON SOPORTE DE TEMAS (DISEÑO 1) --- */
-        :root[data-theme="dark"] {
-            --bg-color: #050608;
-            --surface-color: rgba(13, 15, 22, 0.96);
-            --text-main: #F5F6F8;
-            --text-muted: #8E919A;
-            --accent-glow-1: #00ff66; /* Verde Esmeralda Cyberpunk */
-            --accent-glow-2: #00e5ff; /* Cyan Eléctrico */
-            --border-color: rgba(255, 255, 255, 0.07);
-            --code-bg: #0A0C12;
-            --glass-fill: rgba(255, 255, 255, 0.03);
-            --glass-stroke: rgba(255, 255, 255, 0.14);
-        }
+<style>
+    /* --- VARIABLES DE DISEÑO CON SOPORTE DE TEMAS (DISEÑO 1) --- */
+    :root[data-theme="dark"] {
+        --bg-color: #050608;
+        --surface-color: rgba(13, 15, 22, 0.96);
+        --text-main: #F5F6F8;
+        --text-muted: #8E919A;
+        --accent-glow-1: #00ff66; /* Verde Esmeralda Cyberpunk */
+        --accent-glow-2: #00e5ff; /* Cyan Eléctrico */
+        --border-color: rgba(255, 255, 255, 0.07);
+        --code-bg: #0A0C12;
+        --glass-fill: rgba(255, 255, 255, 0.03);
+        --glass-stroke: rgba(255, 255, 255, 0.14);
+    }
 
-        :root[data-theme="light"] {
-            --bg-color: #F4F6F9;
-            --surface-color: rgba(255, 255, 255, 0.94);
-            --text-main: #12141C;
-            --text-muted: #626673;
-            --accent-glow-1: #00cc52; 
-            --accent-glow-2: #00b8cc; 
-            --border-color: rgba(0, 0, 0, 0.08);
-            --code-bg: #EAEFF5;
-            --glass-fill: rgba(0, 0, 0, 0.01);
-            --glass-stroke: rgba(0, 0, 0, 0.12);
-        }
+    :root[data-theme="light"] {
+        --bg-color: #F4F6F9;
+        --surface-color: rgba(255, 255, 255, 0.94);
+        --text-main: #12141C;
+        --text-muted: #626673;
+        --accent-glow-1: #00cc52; 
+        --accent-glow-2: #00b8cc; 
+        --border-color: rgba(0, 0, 0, 0.08);
+        --code-bg: #EAEFF5;
+        --glass-fill: rgba(0, 0, 0, 0.01);
+        --glass-stroke: rgba(0, 0, 0, 0.12);
+    }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            overflow-x: hidden;
-            position: relative;
-            transition: background-color 0.5s ease, color 0.5s ease;
-        }
+    body {
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        font-family: 'Inter', sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow-x: hidden;
+        position: relative;
+        transition: background-color 0.5s ease, color 0.5s ease;
+    }
 
-        /* --- GRADIENTES ORGÁNICOS DE FONDO --- */
-        .background-blob-1 {
-            position: absolute;
-            top: 20%;
-            left: 10%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, var(--accent-glow-1) 0%, transparent 65%);
-            opacity: 0.18;
-            z-index: 1;
-            pointer-events: none;
-        }
+    /* --- GRADIENTES ORGÁNICOS DE FONDO --- */
+    .background-blob-1 {
+        position: absolute;
+        top: 20%;
+        left: 10%;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, var(--accent-glow-1) 0%, transparent 65%);
+        opacity: 0.18;
+        z-index: 1;
+        pointer-events: none;
+    }
 
-        .background-blob-2 {
-            position: absolute;
-            top: 40%;
-            right: 10%;
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, var(--accent-glow-2) 0%, transparent 65%);
-            opacity: 0.15;
-            z-index: 1;
-            pointer-events: none;
-        }
-        /* --- ESTILOS DE ESTRUCTURA Y ETIQUETAS (DISEÑO 1) --- */
-        header {
-            width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 40px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 10;
-        }
+    .background-blob-2 {
+        position: absolute;
+        top: 40%;
+        right: 10%;
+        width: 450px;
+        height: 450px;
+        background: radial-gradient(circle, var(--accent-glow-2) 0%, transparent 65%);
+        opacity: 0.15;
+        z-index: 1;
+        pointer-events: none;
+    }
+    /* --- ESTILOS DE ESTRUCTURA Y ETIQUETAS (DISEÑO 1) --- */
+    header {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 40px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 10;
+    }
 
-        .logo {
-            font-weight: 600;
-            font-size: 13px;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-        }
+    .logo {
+        font-weight: 600;
+        font-size: 13px;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+    }
 
-        /* BOTÓN INTERCAMBIADOR DE TEMA */
-        .theme-toggle {
-            background: none;
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 8px 16px;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            cursor: pointer;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-        }
-        .theme-toggle:hover {
-            background: var(--text-main);
-            color: var(--bg-color);
-        }
+    /* BOTÓN INTERCAMBIADOR DE TEMA */
+    .theme-toggle {
+        background: none;
+        border: 1px solid var(--border-color);
+        color: var(--text-main);
+        padding: 8px 16px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        cursor: pointer;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+    }
+    .theme-toggle:hover {
+        background: var(--text-main);
+        color: var(--bg-color);
+    }
 
-        main {
-            max-width: 900px;
-            width: 100%;
-            margin: auto;
-            padding: 20px 24px 80px 24px;
-            text-align: center;
-            z-index: 5;
-        }
+    main {
+        max-width: 900px;
+        width: 100%;
+        margin: auto;
+        padding: 20px 24px 80px 24px;
+        text-align: center;
+        z-index: 5;
+    }
 
-        .category-tag {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--text-muted);
-            margin-bottom: 24px;
-            display: block;
-        }
+    .category-tag {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: var(--text-muted);
+        margin-bottom: 24px;
+        display: block;
+    }
 
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 400;
-            font-size: 52px;
-            line-height: 1.15;
-            letter-spacing: -0.02em;
-            margin-bottom: 24px;
-        }
+    h1 {
+        font-family: 'Playfair Display', serif;
+        font-weight: 400;
+        font-size: 52px;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        margin-bottom: 24px;
+    }
 
-        .subtitle {
-            font-size: 17px;
-            color: var(--text-muted);
-            line-height: 1.65;
-            max-width: 620px;
-            margin: 0 auto 48px auto;
-            font-weight: 300;
-        }
+    .subtitle {
+        font-size: 17px;
+        color: var(--text-muted);
+        line-height: 1.65;
+        max-width: 620px;
+        margin: 0 auto 48px auto;
+        font-weight: 300;
+    }
 
-        /* --- CONTENEDOR ESCENA DEL CRISTAL REFRACTIVO --- */
-        .glass-scene {
-            position: relative;
-            width: 100%;
-            max-width: 750px;
-            margin: 0 auto 48px auto;
-            border-radius: 40px;
-            overflow: hidden;
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
-            border: 1px solid var(--border-color);
-        }
+    /* --- CONTENEDOR ESCENA DEL CRISTAL REFRACTIVO --- */
+    .glass-scene {
+        position: relative;
+        width: 100%;
+        max-width: 750px;
+        margin: 0 auto 48px auto;
+        border-radius: 40px;
+        overflow: hidden;
+        box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
+        border: 1px solid var(--border-color);
+    }
 
-        .glass-bg {
-            background-color: var(--surface-color);
-            padding: 40px;
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            transition: background-color 0.5s ease;
-        }
+    .glass-bg {
+        background-color: var(--surface-color);
+        padding: 40px;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        transition: background-color 0.5s ease;
+    }
 
-        .glass-wrapper {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 10;
-        }
-        /* --- ESTILOS ESPECÍFICOS PARA LOS BOTONES DE CONTACTO (FUSIÓN) --- */
-        .contact-channels {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 16px;
-            margin-top: 24px;
-        }
+    .glass-wrapper {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 10;
+    }
+    /* --- ESTILOS ESPECÍFICOS PARA LOS BOTONES DE CONTACTO (FUSIÓN) --- */
+    .contact-channels {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin-top: 24px;
+    }
 
-        .btn-contact {
-            background-color: var(--code-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 16px 24px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            cursor: pointer;
-            border-radius: 8px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+    .btn-contact {
+        background-color: var(--code-bg);
+        border: 1px solid var(--border-color);
+        color: var(--text-main);
+        padding: 16px 24px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        cursor: pointer;
+        border-radius: 8px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-        .btn-contact:hover {
-            border-color: var(--text-main);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
+    .btn-contact:hover {
+        border-color: var(--text-main);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
 
-        /* Colores de acento sutiles en hover para cada red */
-        .btn-contact.x-btn:hover { color: #00e5ff; border-color: #00e5ff; }
-        .btn-contact.mail-btn:hover { color: #007aff; border-color: #007aff; }
-        .btn-contact.whatsapp-btn:hover { color: #00ff66; border-color: #00ff66; }
-        .btn-contact.github-btn:hover { color: #ffffff; border-color: #ffffff; }
+    /* Colores de acento sutiles en hover para cada red */
+    .btn-contact.x-btn:hover { color: #00e5ff; border-color: #00e5ff; }
+    .btn-contact.mail-btn:hover { color: #007aff; border-color: #007aff; }
+    .btn-contact.whatsapp-btn:hover { color: #00ff66; border-color: #00ff66; }
+    .btn-contact.github-btn:hover { color: #ffffff; border-color: #ffffff; }
 
-        @media (max-width: 600px) {
-            .contact-channels { grid-template-columns: 1fr; }
-        }
+    @media (max-width: 600px) {
+        .contact-channels { grid-template-columns: 1fr; }
+    }
 
-        /* --- ESTILO FOOTER (DISEÑO 1) --- */
-        footer {
-            padding: 40px 24px;
-            text-align: center;
-            font-size: 11px;
-            color: var(--text-muted);
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            border-top: 1px solid var(--border-color);
-            width: 100%;
-            z-index: 10;
-        }
-    </style>
+    /* --- BOTÓN FLOTANTE DE CONTACTO DIRECTO --- */
+    .floating-contact-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: linear-gradient(135deg, var(--accent-glow-1), var(--accent-glow-2));
+        color: #050608 !important;
+        padding: 14px 24px;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        text-decoration: none;
+        box-shadow: 0 10px 30px rgba(0, 255, 102, 0.3);
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .floating-contact-btn:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 15px 35px rgba(0, 255, 102, 0.5);
+    }
+
+    /* --- ESTILOS NUEVA SECCIÓN ENTERPRISE SOLUTIONS --- */
+    .enterprise-section {
+        margin-top: 100px;
+        text-align: left;
+        max-width: 750px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .enterprise-section h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 36px;
+        font-weight: 400;
+        margin-bottom: 16px;
+        text-align: center;
+    }
+    .enterprise-pitch {
+        font-size: 15px;
+        color: var(--text-muted);
+        text-align: center;
+        margin-bottom: 40px;
+        line-height: 1.6;
+    }
+    .grid-enterprise {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+        margin-bottom: 40px;
+    }
+    .enterprise-card {
+        background-color: var(--surface-color);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 28px;
+    }
+    .enterprise-card h3 {
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 12px;
+        color: var(--text-main);
+    }
+    .enterprise-card p {
+        font-size: 14px;
+        color: var(--text-muted);
+        line-height: 1.6;
+    }
+    .use-cases-list {
+        list-style: none;
+        margin-top: 12px;
+    }
+    .use-cases-list li {
+        font-size: 14px;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .use-cases-list li i {
+        color: var(--accent-glow-1);
+        font-size: 12px;
+    }
+    .demo-btn-container {
+        text-align: center;
+        margin-top: 40px;
+    }
+    .btn-demo {
+        display: inline-block;
+        background: transparent;
+        border: 2px solid var(--text-main);
+        color: var(--text-main);
+        padding: 18px 36px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    .btn-demo:hover {
+        background: var(--text-main);
+        color: var(--bg-color);
+        transform: translateY(-2px);
+    }
+
+    /* --- ESTILO FOOTER (DISEÑO 1) --- */
+    footer {
+        padding: 40px 24px;
+        text-align: center;
+        font-size: 11px;
+        color: var(--text-muted);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        border-top: 1px solid var(--border-color);
+        width: 100%;
+        z-index: 10;
+    }
+</style>
 </head>
 <body>
 
-    <div class="background-blob-1"></div>
-    <div class="background-blob-2"></div>
+<div class="background-blob-1"></div>
+<div class="background-blob-2"></div>
 
-    <header>
-        <div class="logo">Axiom Systems</div>
-        <button class="theme-toggle" id="themeToggle">Light Mode</button>
-    </header>
+<!-- BOTÓN FLOTANTE EN ESQUINA PARA MÁXIMA VISIBILIDAD -->
+<a href="#contacto-directo" class="floating-contact-btn">
+    <i class="fa-solid fa-bolt"></i> Contacto Directo
+</a>
 
-    <main>
-        <span class="category-tag">FUNDADOR Y ARQUITECTO PRINCIPAL</span>
-        <h1>Manuel // AXIOM SYSTEMS</h1>
-        <p class="subtitle">Bienvenidos a la capa base. Soy Manuel, fundador e ingeniero jefe de Axiom Systems. No diseñamos software genérico ni plantillas corporativas infladas de código muerto. Nos metemos directamente en el metal (Bare-Metal Design) para construir infraestructuras DeepTech puras.</p>
+<header>
+    <div class="logo">Axiom Systems</div>
+    <button class="theme-toggle" id="themeToggle">Light Mode</button>
+</header>
+<main>
+    <span class="category-tag">FUNDADOR Y ARQUITECTO PRINCIPAL</span>
+    <h1>Manuel // AXIOM SYSTEMS</h1>
+    <p class="subtitle">Bienvenidos a la capa base. Soy Manuel, fundador e ingeniero jefe de Axiom Systems. No diseñamos software genérico ni plantillas corporativas infladas de código muerto. Nos metemos directamente en el metal (Bare-Metal Design) para construir infraestructuras DeepTech puras.</p>
 
-        <div class="glass-scene" id="glassScene">
+    <div class="glass-scene" id="glassScene" id="contacto-directo">
 
-            <div class="glass-bg">
-                <p style="color: var(--text-muted); font-size: 14px; line-height: 1.7; margin-bottom: 20px;">Nuestra filosofía es radical y cristalina: Ingeniería Soberana. Despojamos los entornos operativos de middleware inútiles para otorgar al silicio el control absoluto del flujo de datos en microsegundos planos.</p>
-                
-                <label>INYECCIÓN DE COMANDOS / CONTACTO CANAL DIRECTO</label>
-                
-                <div class="contact-channels">
-                    <!-- Los botones de contacto van aquí -->
-                </div>
+        <div class="glass-bg">
+            <p style="color: var(--text-muted); font-size: 14px; line-height: 1.7; margin-bottom: 20px;">Nuestra filosofía es radical y cristalina: Ingeniería Soberana. Despojamos los entornos operativos de middleware inútiles para otorgar al silicio el control absoluto del flujo de datos en microsegundos planos.</p>
+
+            <label style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted);">INYECCIÓN DE COMANDOS / CONTACTO CANAL DIRECTO</label>
+
+            <div class="contact-channels">
+                <a href="https://x.com/ManuelAxiom" target="_blank" class="btn-contact x-btn">
+                    <i class="fa-brands fa-x-twitter"></i> Twitter Terminal
+                </a>
+                <a href="mailto:echeparesmanuel36@gmail.com" class="btn-contact mail-btn">
+                    <i class="fa-solid fa-envelope"></i> Inyectar Correo
+                </a>
+                <a href="https://wa.me/34652607512" target="_blank" class="btn-contact whatsapp-btn">
+                    <i class="fa-brands fa-whatsapp"></i> Canal WhatsApp
+                </a>
+                <a href="https://github.com/echeparesmanuel36-design" target="_blank" class="btn-contact github-btn">
+                    <i class="fa-brands fa-github"></i> GitHub Perfil
+                </a>
+            </div>
+        </div>
+
+        <div class="glass-wrapper" id="glassWrapper"></div>
+
+    </div>
+    <section class="enterprise-section">
+        <h2>Enterprise Solutions</h2>
+        <p class="enterprise-pitch">Soberanía tecnológica total + latencias sub-microsegundo. Diseñado para entornos de producción crítica y adquisición estratégica corporativa.</p>
+        
+        <div class="grid-enterprise">
+            <div class="enterprise-card">
+                <h3>Casos de Uso Críticos</h3>
+                <ul class="use-cases-list">
+                    <li><i class="fa-solid fa-code-branch"></i> Reducción de latencia extrema en simulaciones tácticas.</li>
+                    <li><i class="fa-solid fa-shield-halved"></i> Infraestructura soberana pura sin dependencia de cloud de terceros.</li>
+                    <li><i class="fa-solid fa-microchip"></i> Despliegues deterministas directo al silicio (Bare-Metal Core).</li>
+                </ul>
             </div>
 
-            <div class="glass-wrapper" id="glassWrapper"></div>
-
-        </div>
-                <div class="contact-channels">
-                    <a href="https://x.com/ManuelAxiom" target="_blank" class="btn-contact x-btn">
-                        <i class="fa-brands fa-x-twitter"></i> Twitter Terminal
-                    </a>
-                    <a href="mailto:echeparesmanuel36@gmail.com" class="btn-contact mail-btn">
-                        <i class="fa-solid fa-envelope"></i> Inyectar Correo
-                    </a>
-                    <a href="https://wa.me/34652607512" target="_blank" class="btn-contact whatsapp-btn">
-                        <i class="fa-brands fa-whatsapp"></i> Canal WhatsApp
-                    </a>
-                    <a href="https://github.com/echeparesmanuel36-design" target="_blank" class="btn-contact github-btn">
-                        <i class="fa-brands fa-github"></i> GitHub Perfil
-                    </a>
-                </div>
+            <div class="enterprise-card">
+                <h3>Modelos de Adquisición</h3>
+                <p><strong>Custom Quote / Licencia Propietaria:</strong> Desarrollos a medida según las especificaciones del ecosistema de su organización.</p>
+                <p style="margin-top: 10px; font-style: italic;"><i class="fa-solid fa-file-contract" style="color: var(--accent-glow-2); margin-right: 6px;"></i> Versiones privadas distribuidas con código fuente completo bajo estricto acuerdo NDA.</p>
             </div>
 
-            <div class="glass-wrapper" id="glassWrapper"></div>
-
+            <div class="enterprise-card">
+                <h3>Validación en Producción</h3>
+                <p style="font-style: italic; margin-bottom: 8px;">"La eliminación de capas intermedias redujo drásticamente el overhead del sistema. Axiom nos entregó un control operativo que el software comercial simplemente no puede ofrecer."</p>
+                <p style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent-glow-1);">— Director de Arquitectura de Sistemas (Infraestructura Crítica Auditada)</p>
+            </div>
         </div>
+
+        <div class="demo-btn-container">
+            <a href="mailto:echeparesmanuel36@gmail.com?subject=Solicitud%20de%20Demo%20Privada%20-%20Axiom%20Systems" class="btn-demo">
+                <i class="fa-solid fa-key" style="margin-right: 10px;"></i> Solicitar Demo Privada
+            </a>
+        </div>
+    </section>
     </main>
+<footer>
+    © 2026 Axiom Systems. MANTÉN LA SOBERANÍA. FUNDADOR MANUEL.
+</footer>
 
-    <footer>
-        © 2026 Axiom Systems. MANTÉN LA SOBERANÍA. FUNDADOR MANUEL.
-    </footer>
+<script>
+    // --- GESTOR EXCLUSIVO DE MODO CLARO / OSCURO (DISEÑO 1) ---
+    const themeToggle = document.getElementById('themeToggle');
+    const htmlElement = document.documentElement;
 
-    <script>
-        // --- GESTOR EXCLUSIVO DE MODO CLARO / OSCURO (DISEÑO 1) ---
-        const themeToggle = document.getElementById('themeToggle');
-        const htmlElement = document.documentElement;
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = htmlElement.getAttribute('data-theme');
+        if (currentTheme === 'dark') {
+            htmlElement.setAttribute('data-theme', 'light');
+            themeToggle.innerText = 'Dark Mode';
+        } else {
+            htmlElement.setAttribute('data-theme', 'dark');
+            themeToggle.innerText = 'Light Mode';
+        }
+        // Refrescar el cristal matemáticamente al cambiar de modo
+        applyAaveGlass();
+    });
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = htmlElement.getAttribute('data-theme');
-            if (currentTheme === 'dark') {
-                htmlElement.setAttribute('data-theme', 'light');
-                themeToggle.innerText = 'Dark Mode';
-            } else {
-                htmlElement.setAttribute('data-theme', 'dark');
-                themeToggle.innerText = 'Light Mode';
-            }
-            // Refrescar el cristal matemáticamente al cambiar de modo
-            applyAaveGlass();
-        });
+    // --- NÚCLEO MATEMÁTICO DE REFRACCIÓN DE CRISTAL (DISEÑO 1) ---
+    function applyAaveGlass() {
+        const wrapper = document.getElementById('glassWrapper');
+        const scene = document.getElementById('glassScene');
 
-        // --- NÚCLEO MATEMÁTICO DE REFRACCIÓN DE CRISTAL (DISEÑO 1) ---
-        function applyAaveGlass() {
-            const wrapper = document.getElementById('glassWrapper');
-            const scene = document.getElementById('glassScene');
+        if (!scene || !wrapper) return;
 
-            const w = scene.offsetWidth;
-            const h = scene.offsetHeight;
+        const w = scene.offsetWidth;
+        const h = scene.offsetHeight;
 
-            const canvas = document.createElement('canvas');
-            canvas.width = w; 
-            canvas.height = h;
-            const ctx = canvas.getContext('2d');
+        const canvas = document.createElement('canvas');
+        canvas.width = w; 
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
 
-            ctx.fillStyle = '#808080';
-            ctx.fillRect(0, 0, w, h);
+        ctx.fillStyle = '#808080';
+        ctx.fillRect(0, 0, w, h);
 
-            const imgData = ctx.getImageData(0, 0, w, h);
-            const centerX = w / 2;
-            const centerY = h / 2;
-            const radius = Math.min(w, h) * 0.46;
+        const imgData = ctx.getImageData(0, 0, w, h);
+        const centerX = w / 2;
+        const centerY = h / 2;
+        const radius = Math.min(w, h) * 0.46;
 
-            for (let y = 0; y < h; y++) {
-                for (let x = 0; x < w; x++) {
-                    const dx = x - centerX;
-                    const dy = y - centerY;
-                    const dist = Math.hypot(dx, dy);
+        for (let y = 0; y < h; y++) {
+            for (let x = 0; x < w; x++) {
+                const dx = x - centerX;
+                const dy = y - centerY;
+                const dist = Math.hypot(dx, dy);
 
-                    if (dist < radius) {
-                        const i = (y * w + x) * 4;
-                        imgData.data[i]   = 128 + (dx / radius) * 115; 
-                        imgData.data[i+1] = 128 + (dy / radius) * 115; 
-                        imgData.data[i+2] = 128;
-                        imgData.data[i+3] = 255;
-                    }
+                if (dist < radius) {
+                    const i = (y * w + x) * 4;
+                    imgData.data[i]   = 128 + (dx / radius) * 115; 
+                    imgData.data[i+1] = 128 + (dy / radius) * 115; 
+                    imgData.data[i+2] = 128;
+                    imgData.data[i+3] = 255;
                 }
             }
-            ctx.putImageData(imgData, 0, 0);
-            const mapUrl = canvas.toDataURL();
-
-            const theme = htmlElement.getAttribute('data-theme');
-            const rectFill = theme === 'dark' ? 'rgba(255, 255, 255, 0.02)' : 'rgba(0, 0, 0, 0.01)';
-            const rectStroke = theme === 'dark' ? 'rgba(255, 255, 255, 0.14)' : 'rgba(0, 0, 0, 0.10)';
-
-            wrapper.innerHTML = `
-                <svg width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg" style="display: block; position: absolute; inset:0;">
-                    <defs>
-                        <filter id="nomadGlassFilter" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
-                            <feImage href="${mapUrl}" result="displacementMap"/>
-                            <feDisplacementMap in="SourceGraphic" in2="displacementMap" scale="38" xChannelSelector="R" yChannelSelector="G"/>
-                            <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur"/>
-                            <feComposite in="blur" in2="SourceGraphic" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"/>
-                        </filter>
-                    </defs>
-                    <rect width="${w}" height="${h}" rx="40" ry="40" 
-                          fill="${rectFill}" 
-                          filter="url(#nomadGlassFilter)"
-                          stroke="${rectStroke}" 
-                          stroke-width="1.5"/>
-                </svg>
-            `;
         }
+        ctx.putImageData(imgData, 0, 0);
+        const mapUrl = canvas.toDataURL();
 
-        window.addEventListener('DOMContentLoaded', applyAaveGlass);
-        window.addEventListener('resize', applyAaveGlass);
-    </script>
+        const theme = htmlElement.getAttribute('data-theme');
+        const rectFill = theme === 'dark' ? 'rgba(255, 255, 255, 0.02)' : 'rgba(0, 0, 0, 0.01)';
+        const rectStroke = theme === 'dark' ? 'rgba(255, 255, 255, 0.14)' : 'rgba(0, 0, 0, 0.10)';
+
+        wrapper.innerHTML = `
+            <svg width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg" style="display: block; position: absolute; inset:0;">
+                <defs>
+                    <filter id="nomadGlassFilter" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+                        <feImage href="${mapUrl}" result="displacementMap"/>
+                        <feDisplacementMap in="SourceGraphic" in2="displacementMap" scale="38" xChannelSelector="R" yChannelSelector="G"/>
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur"/>
+                        <feComposite in="blur" in2="SourceGraphic" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"/>
+                    </filter>
+                </defs>
+                <rect width="${w}" height="${h}" rx="40" ry="40" 
+                      fill="${rectFill}" 
+                      filter="url(#nomadGlassFilter)"
+                      stroke="${rectStroke}" 
+                      stroke-width="1.5"/>
+            </svg>
+        `;
+    }
+
+    window.addEventListener('DOMContentLoaded', applyAaveGlass);
+    window.addEventListener('resize', applyAaveGlass);
+</script>
 </body>
 </html>
