@@ -1,82 +1,82 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manuel Echepares | Axiom Systems ◤A-S◢</title>
+    <title>Manuel | Fundador de Axiom Systems</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght=0,400;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
-        body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f0f0f; color: #e0e0e0; margin: 0; padding: 0; line-height: 1.7; }
-        header { background: linear-gradient(135deg, #1a1a1a, #0a0a0a); padding: 80px 40px; text-align: center; border-bottom: 1px solid #00ff9f33; }
-        h1 { font-size: 3em; margin: 0; color: #00ff9f; }
-        h2 { color: #00ccff; }
-        .container { max-width: 1100px; margin: auto; padding: 40px; }
-        .section { margin: 60px 0; }
-        .card { background: #1a1a1a; padding: 25px; border-radius: 8px; border: 1px solid #333; margin-bottom: 20px; }
-        .cta-button { 
-            display: inline-block; background: #00ff9f; color: #000; padding: 16px 36px; 
-            font-weight: bold; font-size: 1.1em; border-radius: 6px; text-decoration: none; margin: 10px; 
+        /* --- VARIABLES DE DISEÑO CON SOPORTE DE TEMAS (DISEÑO 1) --- */
+        :root[data-theme="dark"] {
+            --bg-color: #050608;
+            --surface-color: rgba(13, 15, 22, 0.96);
+            --text-main: #F5F6F8;
+            --text-muted: #8E919A;
+            --accent-glow-1: #00ff66; /* Verde Esmeralda Cyberpunk */
+            --accent-glow-2: #00e5ff; /* Cyan Eléctrico */
+            --border-color: rgba(255, 255, 255, 0.07);
+            --code-bg: #0A0C12;
+            --glass-fill: rgba(255, 255, 255, 0.03);
+            --glass-stroke: rgba(255, 255, 255, 0.14);
         }
-        .enterprise { background: #1f0a1a; border: 2px solid #ff00aa; }
-        a { color: #00ccff; }
-    </style>
-</head>
-<body>
 
-<header>
-    <h1>Manuel Echepares</h1>
-    <h2>Chief Architect & Founder — Axiom Systems ◤A-S◢</h2>
-    <p><strong>Ingeniería Soberana • Bare-Metal • Alto Rendimiento</strong></p>
-</header>
+        :root[data-theme="light"] {
+            --bg-color: #F4F6F9;
+            --surface-color: rgba(255, 255, 255, 0.94);
+            --text-main: #12141C;
+            --text-muted: #626673;
+            --accent-glow-1: #00cc52; 
+            --accent-glow-2: #00b8cc; 
+            --border-color: rgba(0, 0, 0, 0.08);
+            --code-bg: #EAEFF5;
+            --glass-fill: rgba(0, 0, 0, 0.01);
+            --glass-stroke: rgba(0, 0, 0, 0.12);
+        }
 
-<div class="container">
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    <div class="section">
-        <p><strong>Bienvenido a la capa base.</strong> Construyo sistemas DeepTech ultraligeros y soberanos: Rust puro, Assembly x86_64, motores de simulación, herramientas OSINT locales y arquitecturas sin dependencias de nube.</p>
-        <p>Mi filosofía: máximo control del silicio, mínimo bloat, latencias en microsegundos y soberanía tecnológica total.</p>
-    </div>
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+            position: relative;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
 
-    <div class="section">
-        <h2>◤ Proyectos Destacados ◢</h2>
-        <div class="card">
-            <strong>Axiom Silicon Core</strong> — Motor bare-metal en Assembly x86_64 NASM
-        </div>
-        <div class="card">
-            <strong>Axiom Megacore / Swarm AI</strong> — Motores de enjambres y simulaciones masivas en Rust #![no_std]
-        </div>
-        <div class="card">
-            <strong>Axiom Nomad-Scout</strong> — OSINT 100% local en navegador
-        </div>
-        <div class="card">
-            <strong>Axiom Taste Refiner</strong> — Refinador de prompts para LLMs
-        </div>
-        <div class="card">
-            <strong>Axiom Organon + Blastify</strong> — Herramientas de productividad y notificaciones ultrarrápidas
-        </div>
-        <p><a href="https://github.com/echeparesmanuel36-design" target="_blank">Ver todos los repos en GitHub →</a></p>
-    </div>
+        /* --- GRADIENTES ORGÁNICOS DE FONDO --- */
+        .background-blob-1 {
+            position: absolute;
+            top: 20%;
+            left: 10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--accent-glow-1) 0%, transparent 65%);
+            opacity: 0.18;
+            z-index: 1;
+            pointer-events: none;
+        }
 
-    <div class="section enterprise">
-        <h2>◤ Soluciones para Empresas ◢</h2>
-        <p>¿Necesitas una arquitectura soberana, motor bare-metal custom, integración de alto rendimiento o despliegue crítico sin cloud?</p>
-        <p>Ofrezco:</p>
-        <ul>
-            <li>Versiones privadas bajo NDA</li>
-            <li>Despliegues enterprise optimizados</li>
-            <li>Prueba de Concepto gratuita (2 semanas) para proyectos serios</li>
-            <li>Posibilidad de adquisición estratégica</li>
-        </ul>
-        
-        <a href="https://wa.me/34652607512" class="cta-button" target="_blank">Contactar por WhatsApp</a>
-        <a href="mailto:echeparesmanuel36@gmail.com" class="cta-button">Enviar Email</a>
-        <a href="https://x.com/ManuelAxiom" class="cta-button" target="_blank">DM en X</a>
-    </div>
-
-    <div class="section" style="text-align:center; margin-top:80px;">
-        <p><strong>Listo para misiones críticas y partnerships estratégicos.</strong></p>
-        <p>Control total del silicio. Sin intermediarios innecesarios.</p>
-    </div>
-
-</div>
-
-</body>
-</html>
+        .background-blob-2 {
+            position: absolute;
+            top: 40%;
+            right: 10%;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, var(--accent-glow-2) 0%, transparent 65%);
+            opacity: 0.15;
+            z-index: 1;
+            pointer-events: none;
+        }
