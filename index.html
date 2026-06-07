@@ -14,7 +14,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Tailwind CDN -->
+    <!-- Tailwind CDN (para rapidez y lujo) -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
@@ -93,11 +93,12 @@
     </nav>
 
     <!-- Espacio para el navbar fijo -->
-    <div class="h-24"></div>
-
-    <!-- HERO SECTION - LUXURY 3D -->
+    <div class="h-24"></div>    <!-- HERO SECTION - LUXURY 3D -->
     <section class="min-h-screen flex items-center relative overflow-hidden">
+        <!-- Fondo 3D -->
         <div id="hero-3d" class="absolute inset-0 z-0"></div>
+        
+        <!-- Overlay sutil -->
         <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#05080f]/70 to-[#05080f] z-10"></div>
         
         <div class="relative z-20 max-w-screen-2xl mx-auto px-8 text-center">
@@ -143,13 +144,12 @@
             </div>
         </div>
         
+        <!-- Scroll indicator -->
         <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-xs tracking-widest opacity-40">
             <span>SCROLL PARA DESCUBRIR</span>
             <div class="w-px h-12 bg-gradient-to-b from-transparent via-white to-transparent"></div>
         </div>
-    </section>
-
-    <!-- PROYECTOS DESTACADOS -->
+    </section>    <!-- PROYECTOS DESTACADOS -->
     <section id="proyectos" class="py-32 relative">
         <div class="max-w-screen-2xl mx-auto px-8">
             <div class="text-center mb-20">
@@ -159,34 +159,51 @@
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
+                
+                <!-- Proyecto 1 -->
                 <div class="group bg-white/5 border border-white/10 rounded-3xl p-10 hover:border-[#00f5ff]/30 transition-all hover:-translate-y-2">
-                    <div class="h-52 bg-gradient-to-br from-[#00f5ff]/10 to-transparent rounded-2xl mb-8 flex items-center justify-center text-6xl opacity-80 group-hover:scale-110 transition-transform">⚡</div>
+                    <div class="h-52 bg-gradient-to-br from-[#00f5ff]/10 to-transparent rounded-2xl mb-8 flex items-center justify-center text-6xl opacity-80 group-hover:scale-110 transition-transform">
+                        ⚡
+                    </div>
                     <span class="text-xs tracking-widest text-[#00f5ff]">RUST • 1 LÍNEA</span>
                     <h3 class="text-3xl font-semibold mt-3 mb-2">Axiom Blastify</h3>
                     <p class="text-white/70">Notificaciones instantáneas a Discord, Telegram o Email. La herramienta más rápida para scripts y automatizaciones.</p>
-                    <a href="https://echeparesmanuel36-design.github.io/axiom-blastify/" target="_blank" class="mt-8 inline-flex items-center gap-3 text-[#00f5ff] hover:text-white transition-colors">Probar Demo →</a>
+                    <a href="https://echeparesmanuel36-design.github.io/axiom-blastify/" target="_blank" 
+                       class="mt-8 inline-flex items-center gap-3 text-[#00f5ff] hover:text-white transition-colors">
+                        Probar Demo →
+                    </a>
                 </div>
 
+                <!-- Proyecto 2 -->
                 <div class="group bg-white/5 border border-white/10 rounded-3xl p-10 hover:border-[#00f5ff]/30 transition-all hover:-translate-y-2">
-                    <div class="h-52 bg-gradient-to-br from-[#00f5ff]/10 to-transparent rounded-2xl mb-8 flex items-center justify-center text-6xl opacity-80 group-hover:scale-110 transition-transform">📁</div>
+                    <div class="h-52 bg-gradient-to-br from-[#00f5ff]/10 to-transparent rounded-2xl mb-8 flex items-center justify-center text-6xl opacity-80 group-hover:scale-110 transition-transform">
+                        📁
+                    </div>
                     <span class="text-xs tracking-widest text-[#00f5ff]">RUST PURO</span>
                     <h3 class="text-3xl font-semibold mt-3 mb-2">Axiom Organon</h3>
                     <p class="text-white/70">Organizador de carpetas ultrarrápido, local y sin Electron. Máxima eficiencia sin cloud.</p>
-                    <a href="https://github.com/echeparesmanuel36-design" target="_blank" class="mt-8 inline-flex items-center gap-3 text-[#00f5ff] hover:text-white transition-colors">Ver Repositorio →</a>
+                    <a href="https://github.com/echeparesmanuel36-design" target="_blank" 
+                       class="mt-8 inline-flex items-center gap-3 text-[#00f5ff] hover:text-white transition-colors">
+                        Ver Repositorio →
+                    </a>
                 </div>
 
+                <!-- Proyecto 3 -->
                 <div class="group bg-white/5 border border-white/10 rounded-3xl p-10 hover:border-[#00f5ff]/30 transition-all hover:-translate-y-2">
-                    <div class="h-52 bg-gradient-to-br from-[#00f5ff]/10 to-transparent rounded-2xl mb-8 flex items-center justify-center text-6xl opacity-80 group-hover:scale-110 transition-transform">⚙️</div>
+                    <div class="h-52 bg-gradient-to-br from-[#00f5ff]/10 to-transparent rounded-2xl mb-8 flex items-center justify-center text-6xl opacity-80 group-hover:scale-110 transition-transform">
+                        ⚙️
+                    </div>
                     <span class="text-xs tracking-widest text-[#00f5ff]">ASSEMBLY x86_64</span>
                     <h3 class="text-3xl font-semibold mt-3 mb-2">Axiom Core</h3>
                     <p class="text-white/70">Micro-motor bare-metal escrito 100% en NASM. Control absoluto del silicio.</p>
-                    <a href="https://github.com/echeparesmanuel36-design" target="_blank" class="mt-8 inline-flex items-center gap-3 text-[#00f5ff] hover:text-white transition-colors">Ver Código →</a>
+                    <a href="https://github.com/echeparesmanuel36-design" target="_blank" 
+                       class="mt-8 inline-flex items-center gap-3 text-[#00f5ff] hover:text-white transition-colors">
+                        Ver Código →
+                    </a>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- FILOSOFÍA AXIOM -->
+    </section>    <!-- FILOSOFÍA AXIOM -->
     <section id="filosofia" class="py-32 bg-black/40">
         <div class="max-w-screen-2xl mx-auto px-8">
             <div class="grid md:grid-cols-12 gap-16 items-center">
@@ -228,48 +245,47 @@
             </div>
             
             <div class="grid md:grid-cols-2 gap-8">
-                <a href="https://echeparesmanuel36-design.github.io/axiom-blastify/" target="_blank" class="group block bg-white/5 border border-white/10 rounded-3xl p-12 hover:border-[#00f5ff]/40 transition-all">
+                <a href="https://echeparesmanuel36-design.github.io/axiom-blastify/" target="_blank"
+                   class="group block bg-white/5 border border-white/10 rounded-3xl p-12 hover:border-[#00f5ff]/40 transition-all">
                     <div class="text-[#00f5ff] text-sm mb-3">RECOMENDADO</div>
                     <h3 class="text-4xl font-semibold mb-4 group-hover:text-[#00f5ff] transition-colors">Axiom Blastify</h3>
                     <p class="text-xl text-white/70">Envía notificaciones en una sola línea de código.</p>
-                    <div class="mt-12 text-[#00f5ff] flex items-center gap-3 text-lg">Probar en vivo <span class="text-2xl">→</span></div>
+                    <div class="mt-12 text-[#00f5ff] flex items-center gap-3 text-lg">
+                        Probar en vivo <span class="text-2xl">→</span>
+                    </div>
                 </a>
                 
                 <div class="group block bg-white/5 border border-white/10 rounded-3xl p-12 hover:border-[#00f5ff]/40 transition-all">
                     <div class="text-[#00f5ff] text-sm mb-3">LOW-LEVEL</div>
                     <h3 class="text-4xl font-semibold mb-4 group-hover:text-[#00f5ff] transition-colors">Axiom Organon + Core</h3>
                     <p class="text-xl text-white/70">Organizador ultrarrápido y motor bare-metal en Assembly.</p>
-                    <div class="mt-12 text-[#00f5ff] flex items-center gap-3 text-lg">Ver en GitHub <span class="text-2xl">→</span></div>
+                    <div class="mt-12 text-[#00f5ff] flex items-center gap-3 text-lg">
+                        Ver en GitHub <span class="text-2xl">→</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- CONTACTO PREMIUM -->
+    </section>    <!-- CONTACTO PREMIUM -->
     <section id="contacto" class="py-32 bg-black/60">
         <div class="max-w-screen-2xl mx-auto px-8">
             <div class="grid md:grid-cols-2 gap-20">
+                <!-- Formulario -->
                 <div>
                     <span class="text-[#00f5ff] text-sm tracking-widest">INYECCIÓN DIRECTA</span>
                     <h2 class="logo-font text-6xl tracking-tighter mt-4 mb-10">¿Quieres saber más?</h2>
                     
-                    <!-- FORMULARIO CON WEB3FORMS (tu clave) -->
-                    <form action="https://api.web3forms.com/submit" method="POST" class="space-y-8">
-                        <input type="hidden" name="access_key" value="9bf0d3c9-93a9-4ee8-a4c7-860ec9599dc4">
-                        <input type="hidden" name="subject" value="Nueva propuesta desde Axiom Website">
-                        <input type="hidden" name="from_name" value="Axiom Systems">
-                        
+                    <form action="https://formspree.io/f/tu-email-aqui" method="POST" class="space-y-8">
                         <div>
                             <input type="text" name="name" placeholder="Tu nombre" 
-                                   class="w-full bg-white/5 border border-white/20 rounded-2xl px-8 py-6 focus:border-[#00f5ff] outline-none transition-colors" required>
+                                   class="w-full bg-white/5 border border-white/20 rounded-2xl px-8 py-6 focus:border-[#00f5ff] outline-none transition-colors">
                         </div>
                         <div>
                             <input type="email" name="email" placeholder="tu@email.com" 
-                                   class="w-full bg-white/5 border border-white/20 rounded-2xl px-8 py-6 focus:border-[#00f5ff] outline-none transition-colors" required>
+                                   class="w-full bg-white/5 border border-white/20 rounded-2xl px-8 py-6 focus:border-[#00f5ff] outline-none transition-colors">
                         </div>
                         <div>
                             <textarea name="message" rows="6" placeholder="Tu mensaje o propuesta..." 
-                                      class="w-full bg-white/5 border border-white/20 rounded-2xl px-8 py-6 focus:border-[#00f5ff] outline-none transition-colors resize-none" required></textarea>
+                                      class="w-full bg-white/5 border border-white/20 rounded-2xl px-8 py-6 focus:border-[#00f5ff] outline-none transition-colors resize-none"></textarea>
                         </div>
                         <button type="submit"
                                 class="w-full py-7 bg-[#00f5ff] hover:bg-white text-black font-semibold text-lg rounded-3xl transition-all">
@@ -280,28 +296,35 @@
 
                 <!-- Enlaces directos -->
                 <div class="flex flex-col justify-center gap-6">
-                    <a href="https://x.com/ManuelAxiom" target="_blank" class="group flex items-center gap-6 p-8 bg-white/5 border border-white/10 hover:border-[#00f5ff]/50 rounded-3xl transition-all">
+                    <a href="https://x.com/ManuelAxiom" target="_blank"
+                       class="group flex items-center gap-6 p-8 bg-white/5 border border-white/10 hover:border-[#00f5ff]/50 rounded-3xl transition-all">
                         <i class="fa-brands fa-x-twitter text-4xl text-[#00f5ff]"></i>
                         <div>
                             <div class="text-xl font-semibold">@ManuelAxiom</div>
                             <div class="text-white/60">Sígueme en X</div>
                         </div>
                     </a>
-                    <a href="https://github.com/echeparesmanuel36-design" target="_blank" class="group flex items-center gap-6 p-8 bg-white/5 border border-white/10 hover:border-[#00f5ff]/50 rounded-3xl transition-all">
+                    
+                    <a href="https://github.com/echeparesmanuel36-design" target="_blank"
+                       class="group flex items-center gap-6 p-8 bg-white/5 border border-white/10 hover:border-[#00f5ff]/50 rounded-3xl transition-all">
                         <i class="fa-brands fa-github text-4xl text-[#00f5ff]"></i>
                         <div>
                             <div class="text-xl font-semibold">GitHub</div>
                             <div class="text-white/60">Todos los repositorios</div>
                         </div>
                     </a>
-                    <a href="https://wa.me/34652607512" target="_blank" class="group flex items-center gap-6 p-8 bg-white/5 border border-white/10 hover:border-[#00f5ff]/50 rounded-3xl transition-all">
+                    
+                    <a href="https://wa.me/34652607512" target="_blank"
+                       class="group flex items-center gap-6 p-8 bg-white/5 border border-white/10 hover:border-[#00f5ff]/50 rounded-3xl transition-all">
                         <i class="fa-brands fa-whatsapp text-4xl text-[#00f5ff]"></i>
                         <div>
                             <div class="text-xl font-semibold">WhatsApp</div>
                             <div class="text-white/60">Contacto directo</div>
                         </div>
                     </a>
-                    <a href="mailto:echeparesmanuel36@gmail.com" class="group flex items-center gap-6 p-8 bg-white/5 border border-white/10 hover:border-[#00f5ff]/50 rounded-3xl transition-all">
+                    
+                    <a href="mailto:echeparesmanuel36@gmail.com"
+                       class="group flex items-center gap-6 p-8 bg-white/5 border border-white/10 hover:border-[#00f5ff]/50 rounded-3xl transition-all">
                         <i class="fa-solid fa-envelope text-4xl text-[#00f5ff]"></i>
                         <div>
                             <div class="text-xl font-semibold">Correo</div>
@@ -346,6 +369,7 @@
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             container.appendChild(renderer.domElement);
 
+            // Texto 3D simple (cubo como placeholder del logo)
             const geometry = new THREE.BoxGeometry(4, 1.5, 0.5);
             const material = new THREE.MeshPhongMaterial({ 
                 color: 0x00f5ff, 
