@@ -3,49 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Axiom Systems | Especímenes Caninos</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Axiom Systems | Directorio Canino</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root[data-theme="dark"] {
             --bg-color: #050608;
             --surface-color: rgba(13, 15, 22, 0.96);
             --text-main: #F5F6F8;
             --text-muted: #8E919A;
-            --accent: #00ff66;
-            --border-color: rgba(255, 255, 255, 0.07);
+            --border-color: rgba(255, 255, 255, 0.12);
         }
         :root[data-theme="light"] {
             --bg-color: #F4F6F9;
-            --surface-color: rgba(255, 255, 255, 0.94);
+            --surface-color: rgba(255, 255, 255, 1);
             --text-main: #12141C;
             --text-muted: #626673;
-            --accent: #00cc52;
-            --border-color: rgba(0, 0, 0, 0.08);
+            --border-color: rgba(0, 0, 0, 0.12);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
-            transition: all 0.4s ease;
-            padding-bottom: 50px;
+            transition: background-color 0.4s ease;
         }
-        header {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 40px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        header { max-width: 1100px; margin: 0 auto; padding: 40px 24px; display: flex; justify-content: space-between; align-items: center; }
         .logo { font-weight: 600; font-size: 13px; letter-spacing: 0.25em; text-transform: uppercase; }
         .theme-toggle {
             background: none; border: 1px solid var(--border-color); color: var(--text-main);
             padding: 8px 16px; font-size: 11px; cursor: pointer; border-radius: 20px;
         }
         .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
-        h1 { font-family: 'Playfair Display'; font-size: 40px; margin-bottom: 40px; text-align: center; }
+        h1 { font-size: 32px; margin-bottom: 40px; text-align: center; font-weight: 300; }
     </style>
 </head>
 <body>
@@ -57,9 +46,8 @@
 
     <main class="container">
         <h1>Directorio de Especímenes</h1>
-        ```
-      <div class="grid" id="dogGrid">
-        <div class="card" onclick="this.classList.toggle('active')">
+        <div class="grid" id="dogGrid">
+            <div class="card" onclick="this.classList.toggle('active')">
                 <div class="card-front"><h3>Pastor Alemán 🛡️</h3><p>Inteligencia operativa y lealtad incondicional.</p></div>
                 <div class="card-back">
                     <p>⏳ <b>Edad:</b> 9-13 años</p><p>🌍 <b>Origen:</b> Alemania</p><p>🥩 <b>Nutrición:</b> Alta en proteína</p><p>🧠 <b>Comportamiento:</b> Protector y atento</p><p>🎓 <b>Educación:</b> Entrenamiento avanzado</p>
@@ -162,11 +150,11 @@
                     <p>El estándar de oro en compañía y lealtad.</p>
                 </div>
                 <div class="card-back">
-                    <p><strong>⏳ Edad:</strong> 10-12 años</p>
-                    <p><strong>🌍 Nacionalidad:</strong> Terranova (Canadá)</p>
-                    <p><strong>🥩 Nutrición:</strong> Alta proteína, control de peso</p>
-                    <p><strong>🧠 Comportamiento:</strong> Amigable y enérgico</p>
-                    <p><strong>🎓 Educación:</strong> Alta facilidad de aprendizaje</p>
+                    <p>⏳ <b>Edad:</b> 10-12 años</p>
+                    <p>🌍 <b>Origen:</b> Canadá</p>
+                    <p>🥩 <b>Nutrición:</b> Alta proteína</p>
+                    <p>🧠 <b>Comportamiento:</b> Amigable</p>
+                    <p>🎓 <b>Educación:</b> Alta</p>
                 </div>
             </div>
             </div>
@@ -175,16 +163,19 @@
     <style>
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
         .card { 
-            background: var(--surface-color); border: 1px solid var(--border-color);
-            padding: 24px; border-radius: 16px; cursor: pointer;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-            position: relative; overflow: hidden;
+            background: var(--surface-color); 
+            border: 1px solid var(--border-color);
+            padding: 24px; 
+            border-radius: 8px; /* Bordes menos redondeados para look minimalista */
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-        .card:hover { border-color: var(--accent); transform: translateY(-5px); }
-        .card.active { grid-column: span 1; height: auto; }
-        .card-back { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color); }
+        .card:hover { border-color: var(--text-muted); }
+        .card.active { border-color: var(--text-main); }
+        .card-back { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color); color: var(--text-muted); }
         .card.active .card-back { display: block; }
-        .card h3 { margin-bottom: 10px; color: var(--accent); }
+        .card h3 { margin-bottom: 10px; font-size: 16px; font-weight: 600; color: var(--text-main); }
+        .card p { font-size: 14px; color: var(--text-muted); }
     </style>
     <script>
         const themeToggle = document.getElementById('themeToggle');
