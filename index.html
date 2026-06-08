@@ -1,522 +1,506 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manuel | Fundador de Axiom Systems</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght=0,400;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>AXIOM_PULSE_LINE // Kinetic Tethers Simulation</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  
+  <meta name="theme-color" content="#00ff66">
 
-<style>
-    /* --- VARIABLES DE DISEÑO CON SOPORTE DE TEMAS (DISEÑO 1) --- */
-    :root[data-theme="dark"] {
-        --bg-color: #050608;
-        --surface-color: rgba(13, 15, 22, 0.96);
-        --text-main: #F5F6F8;
-        --text-muted: #8E919A;
-        --accent-glow-1: #00ff66; /* Verde Esmeralda Cyberpunk */
-        --accent-glow-2: #00e5ff; /* Cyan Eléctrico */
-        --border-color: rgba(255, 255, 255, 0.07);
-        --code-bg: #0A0C12;
-        --glass-fill: rgba(255, 255, 255, 0.03);
-        --glass-stroke: rgba(255, 255, 255, 0.14);
+  <style>
+    /* VARIABLES BARE-METAL KINETIC */
+    :root {
+      --bg-deep: #040406;
+      --panel-glass: rgba(8, 8, 12, 0.6);
+      --neon-primary: #00ff66; /* Verde Tensor */
+      --neon-accent: #00d9ff;  /* Cian Magnético */
+      --text-main: #ffffff;
+      --text-muted: rgba(255, 255, 255, 0.3);
+      --border-glow: rgba(0, 255, 102, 0.15);
+      --font-hud: 'Orbitron', sans-serif;
+      --font-mono: 'Share Tech Mono', monospace;
     }
 
-    :root[data-theme="light"] {
-        --bg-color: #F4F6F9;
-        --surface-color: rgba(255, 255, 255, 0.94);
-        --text-main: #12141C;
-        --text-muted: #626673;
-        --accent-glow-1: #00cc52; 
-        --accent-glow-2: #00b8cc; 
-        --border-color: rgba(0, 0, 0, 0.08);
-        --code-bg: #EAEFF5;
-        --glass-fill: rgba(0, 0, 0, 0.01);
-        --glass-stroke: rgba(0, 0, 0, 0.12);
+    html.light-mode {
+      --bg-deep: #f4f6f0;
+      --panel-glass: rgba(240, 245, 235, 0.75);
+      --neon-primary: #00aa44;
+      --neon-accent: #0088cc;
+      --text-main: #0c0c12;
+      --text-muted: rgba(12, 12, 18, 0.4);
+      --border-glow: rgba(0, 170, 68, 0.1);
     }
 
     * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
     }
 
     body {
-        background-color: var(--bg-color);
-        color: var(--text-main);
-        font-family: 'Inter', sans-serif;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        overflow-x: hidden;
-        position: relative;
-        transition: background-color 0.5s ease, color 0.5s ease;
+      background-color: var(--bg-deep);
+      color: var(--text-main);
+      font-family: var(--font-hud);
+      overflow: hidden;
+      width: 100vw;
+      height: 100dvh;
+      position: relative;
+      transition: background-color 0.4s ease;
     }
 
-    /* --- GRADIENTES ORGÁNICOS DE FONDO --- */
-    .background-blob-1 {
-        position: absolute;
-        top: 20%;
-        left: 10%;
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(circle, var(--accent-glow-1) 0%, transparent 65%);
-        opacity: 0.18;
-        z-index: 1;
-        pointer-events: none;
+    #canvas-viewport {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
     }
 
-    .background-blob-2 {
-        position: absolute;
-        top: 40%;
-        right: 10%;
-        width: 450px;
-        height: 450px;
-        background: radial-gradient(circle, var(--accent-glow-2) 0%, transparent 65%);
-        opacity: 0.15;
-        z-index: 1;
-        pointer-events: none;
-    }
-    /* --- ESTILOS DE ESTRUCTURA Y ETIQUETAS (DISEÑO 1) --- */
-    header {
-        width: 100%;
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 40px 24px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        z-index: 10;
+    /* HUD OVERLAY PERIFÉRICO */
+    .hud-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 40;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px;
+      padding-top: calc(16px + env(safe-area-inset-top));
+      padding-bottom: calc(16px + env(safe-area-inset-bottom));
     }
 
-    .logo {
-        font-weight: 600;
-        font-size: 13px;
-        letter-spacing: 0.25em;
-        text-transform: uppercase;
+    .interactive-element {
+      pointer-events: auto;
     }
 
-    /* BOTÓN INTERCAMBIADOR DE TEMA */
+    .glass-panel {
+      background: var(--panel-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-glow);
+      border-radius: 8px;
+      padding: 10px 14px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    /* MÉTRICAS ESQUINA SUPERIOR DERECHA */
+    .hud-header {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .metrics-cluster {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .metric-value {
+      font-weight: 900;
+      font-size: 1.4rem;
+      color: var(--neon-primary);
+      letter-spacing: 1px;
+    }
+
     .theme-toggle {
-        background: none;
-        border: 1px solid var(--border-color);
-        color: var(--text-main);
-        padding: 8px 16px;
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        cursor: pointer;
-        border-radius: 20px;
-        transition: all 0.3s ease;
-    }
-    .theme-toggle:hover {
-        background: var(--text-main);
-        color: var(--bg-color);
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-glow);
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    main {
-        max-width: 900px;
-        width: 100%;
-        margin: auto;
-        padding: 20px 24px 80px 24px;
-        text-align: center;
-        z-index: 5;
+    /* BÚNKER DE NOTIFICACIONES ASÍNCRONAS */
+    #pique-message-bunker {
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      transform: translate(-100%, -50%);
+      width: 85%;
+      max-width: 380px;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      background: rgba(255, 0, 60, 0.9);
+      border: 1px solid #ff003c;
+      padding: 12px;
+      border-radius: 6px;
+      color: #fff;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+      z-index: 50;
     }
 
-    .category-tag {
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 0.2em;
-        color: var(--text-muted);
-        margin-bottom: 24px;
-        display: block;
+    #pique-message-bunker.active {
+      opacity: 1;
+      transform: translate(-50%, -50%);
     }
 
-    h1 {
-        font-family: 'Playfair Display', serif;
-        font-weight: 400;
-        font-size: 52px;
-        line-height: 1.15;
-        letter-spacing: -0.02em;
-        margin-bottom: 24px;
+    /* DIRECTIVA MANUEL: ENCLAVE MINIATURIZADO ESQUINA INFERIOR IZQUIERDA */
+    .dropzone-bunker {
+      align-self: flex-start; /* Forzar esquina izquierda */
+      width: 100%;
+      max-width: 220px;       /* Tamaño súper ultra compacto */
+      margin-bottom: 4px;
     }
 
-    .subtitle {
-        font-size: 17px;
-        color: var(--text-muted);
-        line-height: 1.65;
-        max-width: 620px;
-        margin: 0 auto 48px auto;
-        font-weight: 300;
+    .auth-title {
+      font-family: var(--font-hud);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      color: var(--neon-accent);
     }
 
-    /* --- CONTENEDOR ESCENA DEL CRISTAL REFRACTIVO --- */
-    .glass-scene {
-        position: relative;
-        width: 100%;
-        max-width: 750px;
-        margin: 0 auto 48px auto;
-        border-radius: 40px;
-        overflow: hidden;
-        box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
-        border: 1px solid var(--border-color);
+    .form-group {
+      display: flex;
+      gap: 4px;
     }
 
-    .glass-bg {
-        background-color: var(--surface-color);
-        padding: 40px;
-        text-align: left;
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-        transition: background-color 0.5s ease;
+    .auth-input {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid var(--border-glow);
+      padding: 6px 8px;
+      border-radius: 4px;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      outline: none;
+      width: 60%;
     }
 
-    .glass-wrapper {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        z-index: 10;
-    }
-    /* --- ESTILOS ESPECÍFICOS PARA LOS BOTONES DE CONTACTO (FUSIÓN) --- */
-    .contact-channels {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 16px;
-        margin-top: 24px;
-    }
-
-    .btn-contact {
-        background-color: var(--code-bg);
-        border: 1px solid var(--border-color);
-        color: var(--text-main);
-        padding: 16px 24px;
-        font-size: 11px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.15em;
-        cursor: pointer;
-        border-radius: 8px;
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px;
-        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    .auth-btn {
+      background: var(--neon-primary);
+      border: none;
+      color: #000;
+      font-family: var(--font-hud);
+      font-weight: 700;
+      padding: 0 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.65rem;
+      text-transform: uppercase;
     }
 
-    .btn-contact:hover {
-        border-color: var(--text-main);
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    }
+    .hidden { display: none !important; }
 
-    /* Colores de acento sutiles en hover para cada red */
-    .btn-contact.x-btn:hover { color: #00e5ff; border-color: #00e5ff; }
-    .btn-contact.mail-btn:hover { color: #007aff; border-color: #007aff; }
-    .btn-contact.whatsapp-btn:hover { color: #00ff66; border-color: #00ff66; }
-    .btn-contact.github-btn:hover { color: #ffffff; border-color: #ffffff; }
-
-    @media (max-width: 600px) {
-        .contact-channels { grid-template-columns: 1fr; }
+    /* WATERMARK DISCRETO EN LA OTRA ESQUINA INFERIOR */
+    #axiom-watermark {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--watermark-color);
+      pointer-events: none;
+      z-index: 100;
+      letter-spacing: 1px;
     }
-
-    /* --- BOTÓN FLOTANTE DE CONTACTO DIRECTO --- */
-    .floating-contact-btn {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        background: linear-gradient(135deg, var(--accent-glow-1), var(--accent-glow-2));
-        color: #050608 !important;
-        padding: 14px 24px;
-        border-radius: 30px;
-        font-weight: 600;
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 0.15em;
-        text-decoration: none;
-        box-shadow: 0 10px 30px rgba(0, 255, 102, 0.3);
-        z-index: 999;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .floating-contact-btn:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 15px 35px rgba(0, 255, 102, 0.5);
-    }
-
-    /* --- ESTILOS NUEVA SECCIÓN ENTERPRISE SOLUTIONS --- */
-    .enterprise-section {
-        margin-top: 100px;
-        text-align: left;
-        max-width: 750px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .enterprise-section h2 {
-        font-family: 'Playfair Display', serif;
-        font-size: 36px;
-        font-weight: 400;
-        margin-bottom: 16px;
-        text-align: center;
-    }
-    .enterprise-pitch {
-        font-size: 15px;
-        color: var(--text-muted);
-        text-align: center;
-        margin-bottom: 40px;
-        line-height: 1.6;
-    }
-    .grid-enterprise {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 24px;
-        margin-bottom: 40px;
-    }
-    .enterprise-card {
-        background-color: var(--surface-color);
-        border: 1px solid var(--border-color);
-        border-radius: 16px;
-        padding: 28px;
-    }
-    .enterprise-card h3 {
-        font-size: 14px;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        margin-bottom: 12px;
-        color: var(--text-main);
-    }
-    .enterprise-card p {
-        font-size: 14px;
-        color: var(--text-muted);
-        line-height: 1.6;
-    }
-    .use-cases-list {
-        list-style: none;
-        margin-top: 12px;
-    }
-    .use-cases-list li {
-        font-size: 14px;
-        color: var(--text-muted);
-        margin-bottom: 8px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    .use-cases-list li i {
-        color: var(--accent-glow-1);
-        font-size: 12px;
-    }
-    .demo-btn-container {
-        text-align: center;
-        margin-top: 40px;
-    }
-    .btn-demo {
-        display: inline-block;
-        background: transparent;
-        border: 2px solid var(--text-main);
-        color: var(--text-main);
-        padding: 18px 36px;
-        font-size: 12px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.2em;
-        border-radius: 8px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-    }
-    .btn-demo:hover {
-        background: var(--text-main);
-        color: var(--bg-color);
-        transform: translateY(-2px);
-    }
-
-    /* --- ESTILO FOOTER (DISEÑO 1) --- */
-    footer {
-        padding: 40px 24px;
-        text-align: center;
-        font-size: 11px;
-        color: var(--text-muted);
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        border-top: 1px solid var(--border-color);
-        width: 100%;
-        z-index: 10;
-    }
-</style>
+  </style>
 </head>
 <body>
 
-<div class="background-blob-1"></div>
-<div class="background-blob-2"></div>
+  <canvas id="canvas-viewport"></canvas>
 
-<!-- BOTÓN FLOTANTE EN ESQUINA PARA MÁXIMA VISIBILIDAD -->
-<a href="#contacto-directo" class="floating-contact-btn">
-    <i class="fa-solid fa-bolt"></i> Contacto Directo
-</a>
+  <div id="axiom-watermark">[AXIOM_PULSE_LINE // V1.0]</div>
 
-<header>
-    <div class="logo">Axiom Systems</div>
-    <button class="theme-toggle" id="themeToggle">Light Mode</button>
-</header>
-<main>
-    <span class="category-tag">FUNDADOR Y ARQUITECTO PRINCIPAL</span>
-    <h1>Manuel // AXIOM SYSTEMS</h1>
-    <p class="subtitle">Bienvenidos a la capa base. Soy Manuel, fundador e ingeniero jefe de Axiom Systems. No diseñamos software genérico ni plantillas corporativas infladas de código muerto. Nos metemos directamente en el metal (Bare-Metal Design) para construir infraestructuras DeepTech puras.</p>
-
-    <div class="glass-scene" id="glassScene" id="contacto-directo">
-
-        <div class="glass-bg">
-            <p style="color: var(--text-muted); font-size: 14px; line-height: 1.7; margin-bottom: 20px;">Nuestra filosofía es radical y cristalina: Ingeniería Soberana. Despojamos los entornos operativos de middleware inútiles para otorgar al silicio el control absoluto del flujo de datos en microsegundos planos.</p>
-
-            <label style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted);">INYECCIÓN DE COMANDOS / CONTACTO CANAL DIRECTO</label>
-
-            <div class="contact-channels">
-                <a href="https://x.com/ManuelAxiom" target="_blank" class="btn-contact x-btn">
-                    <i class="fa-brands fa-x-twitter"></i> Twitter Terminal
-                </a>
-                <a href="mailto:echeparesmanuel36@gmail.com" class="btn-contact mail-btn">
-                    <i class="fa-solid fa-envelope"></i> Inyectar Correo
-                </a>
-                <a href="https://wa.me/34652607512" target="_blank" class="btn-contact whatsapp-btn">
-                    <i class="fa-brands fa-whatsapp"></i> Canal WhatsApp
-                </a>
-                <a href="https://github.com/echeparesmanuel36-design" target="_blank" class="btn-contact github-btn">
-                    <i class="fa-brands fa-github"></i> GitHub Perfil
-                </a>
-            </div>
+  <div class="hud-overlay">
+    
+    <header class="hud-header interactive-element">
+      <div class="glass-panel metrics-cluster">
+        <div style="text-align: right;">
+          <div style="font-size: 8px; color: var(--text-muted); letter-spacing: 1px;">INERTIA_SCORE</div>
+          <div id="score-display" class="metric-value">000000</div>
         </div>
+        <button id="theme-btn" class="theme-toggle" onclick="toggleThemeEngine()">
+          <span id="theme-icon">⚡</span>
+        </button>
+      </div>
+    </header>
 
-        <div class="glass-wrapper" id="glassWrapper"></div>
-
+    <div id="pique-message-bunker" class="interactive-element">
+      <div id="pique-text">◤ ENLACE DE INERCIA ROTO ◢</div>
     </div>
-    <section class="enterprise-section">
-        <h2>Enterprise Solutions</h2>
-        <p class="enterprise-pitch">Soberanía tecnológica total + latencias sub-microsegundo. Diseñado para entornos de producción crítica y adquisición estratégica corporativa.</p>
-        
-        <div class="grid-enterprise">
-            <div class="enterprise-card">
-                <h3>Casos de Uso Críticos</h3>
-                <ul class="use-cases-list">
-                    <li><i class="fa-solid fa-code-branch"></i> Reducción de latencia extrema en simulaciones tácticas.</li>
-                    <li><i class="fa-solid fa-shield-halved"></i> Infraestructura soberana pura sin dependencia de cloud de terceros.</li>
-                    <li><i class="fa-solid fa-microchip"></i> Despliegues deterministas directo al silicio (Bare-Metal Core).</li>
-                </ul>
-            </div>
 
-            <div class="enterprise-card">
-                <h3>Modelos de Adquisición</h3>
-                <p><strong>Custom Quote / Licencia Propietaria:</strong> Desarrollos a medida según las especificaciones del ecosistema de su organización.</p>
-                <p style="margin-top: 10px; font-style: italic;"><i class="fa-solid fa-file-contract" style="color: var(--accent-glow-2); margin-right: 6px;"></i> Versiones privadas distribuidas con código fuente completo bajo estricto acuerdo NDA.</p>
-            </div>
-
-            <div class="enterprise-card">
-                <h3>Validación en Producción</h3>
-                <p style="font-style: italic; margin-bottom: 8px;">"La eliminación de capas intermedias redujo drásticamente el overhead del sistema. Axiom nos entregó un control operativo que el software comercial simplemente no puede ofrecer."</p>
-                <p style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent-glow-1);">— Director de Arquitectura de Sistemas (Infraestructura Crítica Auditada)</p>
-            </div>
+    <div class="dropzone-bunker glass-panel interactive-element" id="auth-gate-bunker">
+      <div id="login-form-wrapper">
+        <h3 class="auth-title">◤ Enclave Auth ◢</h3>
+        <div class="form-group">
+          <input type="email" id="auth-email" class="auth-input" placeholder="EMAIL">
+          <button id="auth-submit-btn" class="auth-btn" onclick="executeSupabaseAuth()">OK</button>
         </div>
+      </div>
+      
+      <div id="user-logged-wrapper" class="hidden">
+        <h3 class="auth-title" style="color: var(--neon-primary); margin: 0;">◤ Sincronizado ◢</h3>
+      </div>
+    </div>
 
-        <div class="demo-btn-container">
-            <a href="mailto:echeparesmanuel36@gmail.com?subject=Solicitud%20de%20Demo%20Privada%20-%20Axiom%20Systems" class="btn-demo">
-                <i class="fa-solid fa-key" style="margin-right: 10px;"></i> Solicitar Demo Privada
-            </a>
-        </div>
-    </section>
-    </main>
-<footer>
-    © 2026 Axiom Systems. MANTÉN LA SOBERANÍA. FUNDADOR MANUEL.
-</footer>
-
-<script>
-    // --- GESTOR EXCLUSIVO DE MODO CLARO / OSCURO (DISEÑO 1) ---
-    const themeToggle = document.getElementById('themeToggle');
-    const htmlElement = document.documentElement;
-
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = htmlElement.getAttribute('data-theme');
-        if (currentTheme === 'dark') {
-            htmlElement.setAttribute('data-theme', 'light');
-            themeToggle.innerText = 'Dark Mode';
-        } else {
-            htmlElement.setAttribute('data-theme', 'dark');
-            themeToggle.innerText = 'Light Mode';
-        }
-        // Refrescar el cristal matemáticamente al cambiar de modo
-        applyAaveGlass();
-    });
-
-    // --- NÚCLEO MATEMÁTICO DE REFRACCIÓN DE CRISTAL (DISEÑO 1) ---
-    function applyAaveGlass() {
-        const wrapper = document.getElementById('glassWrapper');
-        const scene = document.getElementById('glassScene');
-
-        if (!scene || !wrapper) return;
-
-        const w = scene.offsetWidth;
-        const h = scene.offsetHeight;
-
-        const canvas = document.createElement('canvas');
-        canvas.width = w; 
-        canvas.height = h;
-        const ctx = canvas.getContext('2d');
-
-        ctx.fillStyle = '#808080';
-        ctx.fillRect(0, 0, w, h);
-
-        const imgData = ctx.getImageData(0, 0, w, h);
-        const centerX = w / 2;
-        const centerY = h / 2;
-        const radius = Math.min(w, h) * 0.46;
-
-        for (let y = 0; y < h; y++) {
-            for (let x = 0; x < w; x++) {
-                const dx = x - centerX;
-                const dy = y - centerY;
-                const dist = Math.hypot(dx, dy);
-
-                if (dist < radius) {
-                    const i = (y * w + x) * 4;
-                    imgData.data[i]   = 128 + (dx / radius) * 115; 
-                    imgData.data[i+1] = 128 + (dy / radius) * 115; 
-                    imgData.data[i+2] = 128;
-                    imgData.data[i+3] = 255;
-                }
-            }
-        }
-        ctx.putImageData(imgData, 0, 0);
-        const mapUrl = canvas.toDataURL();
-
-        const theme = htmlElement.getAttribute('data-theme');
-        const rectFill = theme === 'dark' ? 'rgba(255, 255, 255, 0.02)' : 'rgba(0, 0, 0, 0.01)';
-        const rectStroke = theme === 'dark' ? 'rgba(255, 255, 255, 0.14)' : 'rgba(0, 0, 0, 0.10)';
-
-        wrapper.innerHTML = `
-            <svg width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg" style="display: block; position: absolute; inset:0;">
-                <defs>
-                    <filter id="nomadGlassFilter" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
-                        <feImage href="${mapUrl}" result="displacementMap"/>
-                        <feDisplacementMap in="SourceGraphic" in2="displacementMap" scale="38" xChannelSelector="R" yChannelSelector="G"/>
-                        <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur"/>
-                        <feComposite in="blur" in2="SourceGraphic" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"/>
-                    </filter>
-                </defs>
-                <rect width="${w}" height="${h}" rx="40" ry="40" 
-                      fill="${rectFill}" 
-                      filter="url(#nomadGlassFilter)"
-                      stroke="${rectStroke}" 
-                      stroke-width="1.5"/>
-            </svg>
-        `;
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // ==========================================
+    // 1. AUDIO-ID: SINTETIZADOR DE INERCIA DE FRECUENCIAS
+    // ==========================================
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playPulseSound(freq, type = 'sine', duration = 0.1) {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+      osc.connect(gain); gain.connect(audioCtx.destination);
+      osc.start(); osc.stop(audioCtx.currentTime + duration);
     }
 
-    window.addEventListener('DOMContentLoaded', applyAaveGlass);
-    window.addEventListener('resize', applyAaveGlass);
-</script>
+    // ==========================================
+    // 2. VARIABLES DE SISTEMA Y CONFIGURACIÓN (120HZ)
+    // ==========================================
+    let scene, camera, renderer, player, nodes = [], tetherLine;
+    let score = 0, lastTime = performance.now();
+    
+    // Físicas del Núcleo Cuántico
+    let playerVel = new THREE.Vector3(0, 0, -6); // Avance continuo en Z
+    let attachedNode = null;
+    let tetherAngle = 0;
+    let tetherRadius = 0;
+    let isPressing = false;
+    
+    const RECORD_MANUEL = 1200;
+
+    // ==========================================
+    // 3. ARQUITECTURA DEL MOTOR DE FÍSICAS KINETIC
+    // ==========================================
+    function initEngine3D() {
+      const canvas = document.getElementById('canvas-viewport');
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x040406);
+
+      // Perspectiva cenital inclinada limpia
+      camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
+      camera.position.set(0, 8, 4); 
+
+      renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, powerPreference: "high-performance" });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // Grid de datos infinito de fondo
+      const gridHelper = new THREE.GridHelper(200, 100, 0x112211, 0x081108);
+      gridHelper.position.y = -0.5;
+      scene.add(gridHelper);
+
+      // Jugador: Núcleo de luz cuántico (Esfera de Vectores)
+      const playerGeo = new THREE.SphereGeometry(0.2, 8, 8);
+      const playerMat = new THREE.MeshBasicMaterial({ color: 0x00ff66, wireframe: true });
+      player = new THREE.Mesh(playerGeo, playerMat);
+      scene.add(player);
+
+      // Rayo Tensor Metálico (Línea dinámica)
+      const lineMat = new THREE.LineBasicMaterial({ color: 0x00d9ff });
+      const lineGeo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3()]);
+      tetherLine = new THREE.Line(lineGeo, lineMat);
+      tetherLine.visible = false;
+      scene.add(tetherLine);
+
+      // Spawn procedural de los primeros satélites/nodos de órbita
+      for(let i = 0; i < 10; i++) {
+        spawnSatelliteNode(-i * 12);
+      }
+
+      // Captura de eventos táctiles (Toda la pantalla actúa de pulsador)
+      window.addEventListener('pointerdown', () => { isPressing = true; });
+      window.addEventListener('pointerup', () => { isPressing = false; attachedNode = null; tetherLine.visible = false; });
+      window.addEventListener('resize', onWindowResize);
+
+      animateEngineLoop();
+    }
+
+    function spawnSatelliteNode(zPos) {
+      const xPos = (Math.random() - 0.5) * 8;
+      const nodeGeo = new THREE.CylinderGeometry(0.4, 0.4, 0.2, 6);
+      const nodeMat = new THREE.MeshBasicMaterial({ color: 0x00d9ff, wireframe: true });
+      const nodeMesh = new THREE.Mesh(nodeGeo, nodeMat);
+      nodeMesh.position.set(xPos, 0, zPos);
+      scene.add(nodeMesh);
+      nodes.push(nodeMesh);
+    }
+
+    function onWindowResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    // ==========================================
+    // 4. BUCLE DE EJECUCIÓN CONTINUO (120HZ)
+    // ==========================================
+    function animateEngineLoop() {
+      requestAnimationFrame(animateEngineLoop);
+
+      const time = performance.now();
+      const delta = Math.min((time - lastTime) / 1000, 0.1); // Capar saltos de frames
+      lastTime = time;
+
+      if (!attachedNode) {
+        // --- MODO 1: AVANCE E INERCIA LINEAL ---
+        player.position.addScaledVector(playerVel, delta);
+        
+        // Si el operador pulsa, buscar el nodo más cercano hacia adelante para enganchar
+        if (isPressing) {
+          let closest = null;
+          let minDist = 6; // Rango máximo de atracción magnética
+          
+          nodes.forEach(node => {
+            let dist = player.position.distanceTo(node.position);
+            if (dist < minDist && node.position.z < player.position.z) {
+              minDist = dist;
+              closest = node;
+            }
+          });
+
+          if (closest) {
+            attachedNode = closest;
+            tetherRadius = minDist;
+            // Calcular ángulo inicial respecto al satélite magnético
+            tetherAngle = Math.atan2(player.position.z - attachedNode.position.z, player.position.x - attachedNode.position.x);
+            tetherLine.visible = true;
+            playPulseSound(587, 'square', 0.1); // Sonido metálico de enganche exitoso
+          }
+        }
+      } else {
+        // --- MODO 2: FÍSICAS DE FUERZA CENTRÍFUGA (ÓRBITA) ---
+        // La velocidad lineal se convierte en velocidad angular basado en el radio del tensor
+        const angularVelocity = playerVel.length() / tetherRadius;
+        tetherAngle += angularVelocity * delta;
+
+        // Calcular nueva posición matricial de la órbita
+        player.position.x = attachedNode.position.x + Math.cos(tetherAngle) * tetherRadius;
+        player.position.z = attachedNode.position.z + Math.sin(tetherAngle) * tetherRadius;
+
+        // Recalcular el vector de velocidad de escape tangente a la curva por si suelta el dedo
+        playerVel.set(-Math.sin(tetherAngle), 0, Math.cos(tetherAngle)).normalize().multiplyScalar(6.5);
+
+        // Actualizar posiciones de la línea del tensor de luz
+        const positions = tetherLine.geometry.attributes.position.array;
+        positions[0] = player.position.x; positions[1] = player.position.y; positions[2] = player.position.z;
+        positions[3] = attachedNode.position.x; positions[4] = attachedNode.position.y; positions[5] = attachedNode.position.z;
+        tetherLine.geometry.attributes.position.needsUpdate = true;
+
+        // Score dinámico por mantener el flujo del tensor activo
+        score += Math.floor(10 * delta * angularVelocity);
+        document.getElementById('score-display').innerText = String(score).padStart(6, '0');
+
+        // Generar oscilación de audio procedural armónica según la fuerza del giro
+        if (Math.random() < 0.15) {
+          playPulseSound(200 + (angularVelocity * 30), 'sine', 0.05);
+        }
+      }
+
+      // Seguimiento rígido y suave de la cámara tras el jugador
+      camera.position.x = player.position.x;
+      camera.position.z = player.position.z + 4;
+      camera.lookAt(player.position.x, 0, player.position.z - 2);
+
+      // Gestión procedural del mapa infinito (Reciclaje de nodos que quedan atrás)
+      nodes.forEach(node => {
+        if (node.position.z > player.position.z + 6) {
+          node.position.z = player.position.z - 60 - (Math.random() * 10);
+          node.position.x = (Math.random() - 0.5) * 8;
+        }
+
+        // Detección de colisiones directa contra el núcleo de los satélites
+        if (player.position.distanceTo(node.position) < 0.4 && node !== attachedNode) {
+          triggerColapsoInercial();
+        }
+      });
+
+      // Límite de fuga lateral de control de mapa (Salirse del perímetro)
+      if (Math.abs(player.position.x) > 12) {
+        triggerColapsoInercial();
+      }
+
+      renderer.render(scene, camera);
+    }
+
+    // COLAPSO POR IMPACTO O FUGA DE LÍNEA
+    function triggerColapsoInercial() {
+      playPulseSound(120, 'sawtooth', 0.3);
+      
+      attachedNode = null;
+      tetherLine.visible = false;
+      isPressing = false;
+
+      const piqueBunker = document.getElementById('pique-message-bunker');
+      const diff = RECORD_MANUEL - score;
+
+      if (diff > 0) {
+        piqueBunker.innerHTML = `◤ COLAPSO VECTORIAL ◢<br><br>Has quedado a <span style="color:var(--neon-accent); font-weight:900;">${diff}</span> puntos de inercia del récord de Manuel.`;
+      } else {
+        piqueBunker.innerHTML = `◤ MARCA SOBERANA SUPERADA ◢<br><br>Has reventado el límite por ${Math.abs(diff)} unidades de inercia cuántica.`;
+      }
+
+      piqueBunker.classList.add('active');
+      if (navigator.vibrate) navigator.vibrate([150, 50, 150]);
+
+      // Reseteo en caliente del bus de la simulación
+      score = 0;
+      player.position.set(0, 0, 0);
+      playerVel.set(0, 0, -6);
+      document.getElementById('score-display').innerText = "000000";
+
+      setTimeout(() => piqueBunker.classList.remove('active'), 3200);
+    }
+
+    // CONMUTACIÓN ELÁSTICA DEL MODO AMBIENTAL
+    function toggleThemeEngine() {
+      const htmlEl = document.documentElement;
+      const icon = document.getElementById('theme-icon');
+      if (htmlEl.classList.contains('light-mode')) {
+        htmlEl.classList.remove('light-mode');
+        icon.innerText = "⚡";
+        if(scene) scene.background.setHex(0x040406);
+      } else {
+        htmlEl.classList.add('light-mode');
+        icon.innerText = "🌙";
+        if(scene) scene.background.setHex(0xf4f6f0);
+      }
+      playPulseSound(700, 'sine', 0.04);
+    }
+
+    // FORMULARIO DE ACCESO ULTRA-COMPACTO SUPABASE
+    function executeSupabaseAuth() {
+      const email = document.getElementById('auth-email').value;
+      if (!email || !email.includes('@')) return;
+      playPulseSound(900, 'sine', 0.08);
+      document.getElementById('login-form-wrapper').classList.add('hidden');
+      document.getElementById('user-logged-wrapper').classList.remove('hidden');
+    }
+
+    window.onload = initEngine3D;
+  </script>
 </body>
 </html>
