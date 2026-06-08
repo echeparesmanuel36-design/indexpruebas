@@ -1,588 +1,480 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>AXIOM_BEAM_FUSE // WebXR Overload Engine</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
-        
-        :root {
-            --bg-bunker: #010103;
-            --text-main: #ffffff;
-            --glass-bg: rgba(6, 6, 12, 0.75);
-            --glass-border: rgba(0, 255, 204, 0.15);
-            --grid-color: rgba(255, 255, 255, 0.02);
-            --neon-glow: #00ffcc;
-        }
-        .light-mode {
-            --bg-bunker: #f4f6f9;
-            --text-main: #090a0f;
-            --glass-bg: rgba(255, 255, 255, 0.85);
-            --glass-border: rgba(9, 10, 15, 0.15);
-            --grid-color: rgba(0, 0, 0, 0.03);
-            --neon-glow: #00aa88;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Axiom Dopamine Hub</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-        body { 
-            background-color: var(--bg-bunker); 
-            color: var(--text-main);
-            font-family: 'Orbitron', sans-serif; 
-            overflow: hidden; 
-            touch-action: none;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0a0a0a;
+      color: #00ff9d;
+      font-family: 'Press Start 2P', system-ui;
+      overflow: hidden;
+    }
 
-        /* DISEÑO GLASSMORPHIC PERIFÉRICO */
-        .glass-axiom { 
-            background: var(--glass-bg); 
-            backdrop-filter: blur(12px); 
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border); 
-            transition: all 0.2s ease;
-        }
+    header {
+      text-align: center;
+      padding: 25px 10px;
+      background: rgba(0, 0, 0, 0.95);
+      border-bottom: 3px solid #00ff9d;
+      text-shadow: 0 0 15px #00ff9d;
+    }
 
-        /* CUADRÍCULA CUÁNTICA DE FONDO (PRE-XR) */
-        .bg-grid-militar {
-            background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
-                              linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 30px 30px;
-        }
+    h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      letter-spacing: 4px;
+    }
 
-        /* ANIMACIÓN DE DISPARO DE DOPAMINA: SOBRECARGA SÓNICA */
-        @keyframes fusion-pulse {
-            0% { box-shadow: inset 0 0 15px rgba(0,255,204,0.2), 0 0 10px rgba(0,255,204,0.1); }
-            50% { box-shadow: inset 0 0 40px rgba(0,255,204,0.6), 0 0 25px rgba(0,255,204,0.3); }
-            100% { box-shadow: inset 0 0 15px rgba(0,255,204,0.2), 0 0 10px rgba(0,255,204,0.1); }
-        }
-        .reactor-fusing { animation: fusion-pulse 0.3s infinite; }
+    .subtitle {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
 
-        /* EFECTO DE GLITCH DE IMPACTO EN PANTALLA CRÍTICA */
-        .screen-flash {
-            animation: flash-trigger 0.15s ease-out;
-        }
-        @keyframes flash-trigger {
-            0% { background-color: rgba(255, 255, 255, 0.9); }
-            100% { background-color: transparent; }
-        }
-    </style>
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      padding: 30px;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .game-card {
+      background: #111111;
+      border: 2px solid #00b8ff;
+      border-radius: 8px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      border-color: #00ff9d;
+      box-shadow: 0 0 25px rgba(0, 255, 157, 0.4);
+    }
+
+    .game-card h3 {
+      margin: 0 0 10px 0;
+      color: #00ff9d;
+    }
+
+    .game-card p {
+      margin: 0;
+      font-size: 0.75rem;
+      opacity: 0.7;
+    }
+
+    .status {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 0.65rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .ready { background: #00ff9d; color: #000; }
+  </style>
 </head>
-<body class="w-screen h-screen flex flex-col justify-between items-center p-3 select-none bg-grid-militar">
+<body>
+  <header>
+    <h1>AXIOM DOPAMINE HUB</h1>
+    <p class="subtitle">10 juegos • 100% local • Dopamina soberana</p>
+  </header>
 
-    <div id="flash-overlay" class="pointer-events-none absolute inset-0 z-50 transition-colors duration-150"></div>
+  <div class="grid" id="menu">
+    <!-- Aquí van las tarjetas de juegos (siguiente parte) -->
+  </div>
 
-    <header class="w-full max-w-xl flex justify-between items-start z-40 mt-1 pointer-events-none">
-        <div class="flex flex-col">
-            <span class="text-[9px] text-zinc-500 tracking-widest font-black font-mono">AXIOM SPACE NETWORK // V5.2</span>
-            <h1 class="text-lg font-black text-emerald-400 tracking-wider">AXIOM_BEAM_FUSE</h1>
-            <div id="badge-historial" class="text-[8px] font-mono text-zinc-400 mt-0.5">MÁXIMA SOBRECARGA: 0 FRAGS</div>
-        </div>
-        
-        <div class="flex flex-col items-end gap-1.5 pointer-events-auto">
-            <button id="btn-webxr" class="glass-axiom px-3 py-1.5 rounded-lg text-[9px] font-black tracking-widest text-emerald-400 border-emerald-500/30 hover:scale-105 active:scale-95 bg-emerald-950/10">
-                ◤ ACTIVAR ENTORNO ESPACIAL AR ◢
-            </button>
-            <div class="glass-axiom px-2.5 py-0.5 rounded-md text-right font-mono min-w-[90px]">
-                <span id="hud-combo" class="text-xs text-yellow-400 font-black block">COMBO: x1</span>
-                <span id="hud-score" class="text-[9px] text-zinc-400 block font-bold">FRAGS: 0</span>
-            </div>
-        </div>
-    </header>
+  <!-- Aquí irá el canvas de los juegos -->
+  <canvas id="gameCanvas" style="display:none; margin:0 auto; background:#000;"></canvas>
 
-    <main id="game_container" class="absolute inset-0 w-full h-full z-20">
-        <canvas id="canvas_xr" class="w-full h-full bg-transparent"></canvas>
-    </main>
+  <script>
+    // Aquí irá todo el JavaScript (en las próximas partes)
+  </script>
+</body>
+</html>  <script>
+    const games = [
+      { id: 1, name: "NEON DASH", desc: "Endless runner cyberpunk", status: "ready" },
+      { id: 2, name: "VOID BREAKER", desc: "Arkanoid con partículas", status: "ready" },
+      { id: 3, name: "QUANTUM FLAP", desc: "Flappy Bird brutal", status: "ready" },
+      { id: 4, name: "MATRIX SNAKE", desc: "Snake con glitch", status: "ready" },
+      { id: 5, name: "PULSE DEFENDER", desc: "Shooter espacial", status: "placeholder" },
+      { id: 6, name: "GLITCH TETRIS", desc: "Tetris con efectos", status: "placeholder" },
+      { id: 7, name: "SHADOW DODGE", desc: "Dodge ultra rápido", status: "placeholder" },
+      { id: 8, name: "ECHO CLICKER", desc: "Idle incremental", status: "placeholder" },
+      { id: 9, name: "NEURAL MATCH", desc: "Memory avanzado", status: "placeholder" },
+      { id: 10, name: "VOID RUN 2", desc: "Próximamente", status: "placeholder" }
+    ];
 
-    <footer class="w-full max-w-xl flex flex-col gap-2 z-40 mb-1">
-        
-        <section id="panel-modos" class="w-full grid grid-cols-3 gap-1.5 text-[8px] font-black tracking-wider">
-            <button id="modo-A" class="glass-axiom py-2 rounded-lg text-emerald-400 border-emerald-400/40 bg-emerald-900/10">PHASE_VIOLET</button>
-            <button id="modo-B" class="glass-axiom py-2 rounded-lg text-zinc-500">HIGH_VOLTAGE</button>
-            <button id="modo-C" class="glass-axiom py-2 rounded-lg text-zinc-500">SUPERNOVA_STORM</button>
-        </section>
+    const menu = document.getElementById('menu');
+    const canvas = document.getElementById('gameCanvas');
 
-        <div class="w-full flex items-center justify-between gap-2">
-            
-            <div id="enclave-supabase" class="glass-axiom flex items-center p-1 rounded-xl w-3/5 gap-1 border-zinc-800">
-                <input id="supabase_email" type="email" placeholder="PILOT EMAIL" class="w-full bg-black/40 border border-zinc-800 rounded-md p-1.5 text-[8px] font-mono tracking-widest text-emerald-400 placeholder-zinc-600 focus:outline-none focus:border-emerald-500/50 uppercase">
-                <button id="btn_supabase" class="bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 active:bg-emerald-400 active:text-black px-2 py-1.5 rounded-md font-black text-[8px] tracking-widest uppercase">SYNC</button>
-            </div>
+    games.forEach(game => {
+      const card = document.createElement('div');
+      card.className = 'game-card';
+      card.innerHTML = `
+        <h3>${game.name}</h3>
+        <p>${game.desc}</p>
+        <div class="status ${game.status}">${game.status === 'ready' ? '● LISTO' : 'SOON'}</div>
+      `;
+      card.onclick = () => launchGame(game.id);
+      menu.appendChild(card);
+    });
 
-            <a id="btn_whatsapp" target="_blank" class="w-2/5 h-[34px] glass-axiom border-green-500/20 bg-green-950/10 active:bg-green-500 active:text-black rounded-xl font-black text-[8px] tracking-widest uppercase flex justify-center items-center gap-1 cursor-pointer text-green-400">
-                💬 CHALLENGE
-            </a>
-        </div>
+    function launchGame(id) {
+      menu.style.display = 'none';
+      canvas.style.display = 'block';
+      canvas.width = 800;
+      canvas.height = 500;
+      
+      const ctx = canvas.getContext('2d');
+      
+      if (id === 1) NeonDash(ctx, canvas);
+      else if (id === 2) VoidBreaker(ctx, canvas);
+      else if (id === 3) QuantumFlap(ctx, canvas);
+      else if (id === 4) MatrixSnake(ctx, canvas);
+      else {
+        alert("Este juego está en desarrollo.\n\n¡Próximamente en Axiom Dopamine Hub!");
+        backToMenu();
+      }
+    }
 
-        <div class="w-full flex justify-between items-center px-1 text-[8px] font-mono text-zinc-500 tracking-wider">
-            <span id="streak-display">CORE ACTIVATION STREAK: 1 DAY</span>
-            <span id="badge-medallas" class="text-yellow-600 font-bold">MEDALS: NONE</span>
-        </div>
-    </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    function backToMenu() {
+      canvas.style.display = 'none';
+      menu.style.display = 'grid';
+    }
+  </script>    // ====================== JUEGO 1: NEON DASH ======================
+    function NeonDash(ctx, canvas) {
+      let player = { x: 100, y: 300, size: 35, speed: 0 };
+      let score = 0;
+      let speed = 6;
+      let obstacles = [];
+      let keys = {};
+      let gameOver = false;
 
-    <script>
-        // =========================================================================
-        // 1. CONFIGURACIÓN DEL SISTEMA Y PARÁMETROS ADRENALINA (MANUEL BOXES)
-        // =========================================================================
-        const CONFIG = {
-            AUDIO_VOLUME_MASTER: 0.05,
-            UMBRAL_CRITICO_Y: 2.2,             // Altura máxima antes de que las celdas se disipen
-            DISTANCIA_BLIND_FUSE: 0.3,         // Margen milimétrico superior para el bono Dios
-            COMBO_SPEED_DECAY: 1600,           // Tiempo en ms antes de enfriar el combo racha
-            BLIND_FUSE_MULTIPLIER: 5,          // Multiplicador agresivo por riesgo
-            PROBABILIDAD_ESPECIAL: 0.12        // 12% de aparición de celdas iónicas mutadas
-        };
+      document.addEventListener('keydown', e => keys[e.key] = true);
+      document.addEventListener('keyup', e => keys[e.key] = false);
 
-        // VARIABLES DE CONTROL DE SUTURACIÓN DE LA MATRIZ
-        let score = 0;
-        let combo = 1;
-        let lastMatchTime = Date.now();
-        let gameMode = 'A';                    // A: Phase Violet, B: High Voltage, C: Supernova Storm
-        let isGameOver = false;
-        let totalCeldasDestruidas = 0;
-        let totalBlindFusesEnPartida = 0;
-        let isCoreOnFire = false;
+      function loop() {
+        if (gameOver) return;
 
-        // ELEMENTOS DE AUDIO-ID (SINTETIZADOR DE ADRENALINA SÓNICA)
-        let audioCtx = null;
+        ctx.fillStyle = '#0a0a0a';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        function playDopamineSound(type) {
-            try {
-                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                let osc = audioCtx.createOscillator();
-                let gain = audioCtx.createGain();
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
+        // Player
+        if (keys['ArrowUp'] || keys['w']) player.y -= 12;
+        if (keys['ArrowDown'] || keys['s']) player.y += 12;
+        player.y = Math.max(50, Math.min(canvas.height - 80, player.y));
 
-                let now = audioCtx.currentTime;
+        ctx.fillStyle = '#00ff9d';
+        ctx.fillRect(player.x, player.y, player.size, player.size);
 
-                if (type === 'slice') {
-                    // Click iónico ultra limpio de alta frecuencia para cortes estándar
-                    osc.frequency.setValueAtTime(400 + (combo * 15), now);
-                    osc.type = 'triangle';
-                    gain.gain.setValueAtTime(CONFIG.AUDIO_VOLUME_MASTER, now);
-                    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.06);
-                    osc.start(now); osc.stop(now + 0.06);
-                } 
-                else if (type === 'blind_fuse') {
-                    // DROP BASS SÓNICO SUBTERRÁNEO DE BAJA FRECUENCIA (60Hz a 30Hz)
-                    osc.frequency.setValueAtTime(140, now);
-                    osc.frequency.linearRampToValueAtTime(35, now + 0.35);
-                    osc.type = 'sawtooth';
-                    gain.gain.setValueAtTime(CONFIG.AUDIO_VOLUME_MASTER * 3, now);
-                    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.4);
-                    osc.start(now); osc.stop(now + 0.4);
-                } 
-                else if (type === 'overclock') {
-                    // Zumbido eléctrico de oscilador cuadrado para modo On-Fire
-                    osc.frequency.setValueAtTime(260, now);
-                    osc.type = 'square';
-                    gain.gain.setValueAtTime(CONFIG.AUDIO_VOLUME_MASTER * 0.3, now);
-                    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
-                    osc.start(now); osc.stop(now + 0.12);
-                }
-                else if (type === 'collapse') {
-                    // Detonación térmica por saturación total del núcleo
-                    osc.frequency.setValueAtTime(90, now);
-                    osc.frequency.linearRampToValueAtTime(15, now + 0.6);
-                    osc.type = 'sawtooth';
-                    gain.gain.setValueAtTime(CONFIG.AUDIO_VOLUME_MASTER * 4, now);
-                    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.65);
-                    osc.start(now); osc.stop(now + 0.65);
-                }
-            } catch(e) {}
+        // Obstáculos
+        if (Math.random() < 0.08) {
+          obstacles.push({ x: canvas.width, y: Math.random() * (canvas.height - 120) + 60 });
         }
 
-        // =========================================================================
-        // 2. SISTEMA LOCALSTORAGE: CONTROL DE RACHAS (FOMO) Y MEDALLAS DE ASIGNACIÓN
-        // =========================================================================
-        function inicializarDatosPersistentes() {
-            let hoy = new Date().toDateString();
-            let ultimaRacha = localStorage.getItem("axiom_fuse_fecha");
-            let rachaContador = parseInt(localStorage.getItem("axiom_fuse_contador")) || 1;
+        for (let i = obstacles.length - 1; i >= 0; i--) {
+          let o = obstacles[i];
+          o.x -= speed;
+          ctx.fillStyle = '#ff00aa';
+          ctx.fillRect(o.x, o.y, 50, 50);
 
-            if (ultimaRacha) {
-                let ayer = new Date(); ayer.setDate(ayer.getDate() - 1);
-                if (ultimaRacha === ayer.toDateString()) {
-                    rachaContador++;
-                } else if (ultimaRacha !== hoy) {
-                    rachaContador = 1; 
-                }
+          if (o.x < -50) obstacles.splice(i, 1);
+
+          // Colisión
+          if (Math.abs(o.x - player.x) < 45 && Math.abs(o.y - player.y) < 45) {
+            gameOver = true;
+            alert(`¡GAME OVER! Score: ${score}\n\n¡Inténtalo de nuevo!`);
+            backToMenu();
+            return;
+          }
+        }
+
+        score += 1;
+        if (score % 300 === 0) speed += 0.5; // Aumenta dificultad
+
+        ctx.fillStyle = '#00ff9d';
+        ctx.font = '20px Courier New';
+        ctx.fillText(`SCORE: ${score}`, 20, 40);
+
+        requestAnimationFrame(loop);
+      }
+
+      loop();
+    }
+
+    // ====================== JUEGO 2: VOID BREAKER ======================
+    function VoidBreaker(ctx, canvas) {
+      let paddle = { x: 350, y: 450, width: 120, height: 15 };
+      let ball = { x: 400, y: 300, dx: 5, dy: -5, radius: 12 };
+      let score = 0;
+      let bricks = [];
+      let gameOver = false;
+
+      // Crear bricks
+      for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 8; j++) {
+          bricks.push({ x: 80 + j * 80, y: 60 + i * 35, width: 70, height: 25, alive: true });
+        }
+      }
+
+      document.addEventListener('mousemove', e => {
+        paddle.x = e.offsetX - paddle.width / 2;
+      });
+
+      function loop() {
+        if (gameOver) return;
+
+        ctx.fillStyle = '#0a0a0a';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Paddle
+        ctx.fillStyle = '#00b8ff';
+        ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
+
+        // Ball
+        ball.x += ball.dx;
+        ball.y += ball.dy;
+
+        if (ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) ball.dx *= -1;
+        if (ball.y - ball.radius < 0) ball.dy *= -1;
+        if (ball.y + ball.radius > canvas.height) {
+          gameOver = true;
+          alert(`¡GAME OVER! Score: ${score}`);
+          backToMenu();
+          return;
+        }
+
+        // Colisión paddle
+        if (ball.y + ball.radius > paddle.y && ball.x > paddle.x && ball.x < paddle.x + paddle.width) {
+          ball.dy *= -1;
+          score += 10;
+        }
+
+        // Bricks
+        for (let i = 0; i < bricks.length; i++) {
+          let b = bricks[i];
+          if (b.alive) {
+            ctx.fillStyle = '#ff00aa';
+            ctx.fillRect(b.x, b.y, b.width, b.height);
+
+            if (ball.x > b.x && ball.x < b.x + b.width && 
+                ball.y > b.y && ball.y < b.y + b.height) {
+              b.alive = false;
+              ball.dy *= -1;
+              score += 50;
             }
-            localStorage.setItem("axiom_fuse_fecha", hoy);
-            localStorage.setItem("axiom_fuse_contador", rachaContador);
-            document.getElementById("streak-display").innerText = `CORE ACTIVATION STREAK: ${rachaContador} DAYS SEGUIDOS`;
-
-            let prevScore = localStorage.getItem("axiom_fuse_last_score") || 0;
-            document.getElementById("badge-historial").innerText = `MÁXIMA SOBRECARGA: ${prevScore} FRAGS`;
-
-            actualizarMedallasUI();
+          }
         }
 
-        function verificarYGuardarMedallas(maxScore, totalBlindFuses) {
-            let medallas = JSON.parse(localStorage.getItem("axiom_fuse_medallas")) || [];
-            
-            if (maxScore >= 40 && !medallas.includes("Fusion-Cables")) medallas.push("Fusion-Cables");
-            if (totalBlindFuses >= 4 && !medallas.includes("Over-Voltage")) medallas.push("Over-Voltage");
-            if (maxScore >= 110 && !medallas.includes("Manuel-God")) medallas.push("Manuel-God");
+        ctx.fillStyle = '#00ff9d';
+        ctx.beginPath();
+        ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+        ctx.fill();
 
-            localStorage.setItem("axiom_fuse_medallas", JSON.stringify(medallas));
-            actualizarMedallasUI();
+        ctx.fillStyle = '#00ff9d';
+        ctx.font = '20px Courier New';
+        ctx.fillText(`SCORE: ${score}`, 20, 40);
+
+        requestAnimationFrame(loop);
+      }
+
+      loop();
+    }    // ====================== JUEGO 3: QUANTUM FLAP ======================
+    function QuantumFlap(ctx, canvas) {
+      let bird = { x: 150, y: 250, velocity: 0, gravity: 0.6, jump: -14, size: 28 };
+      let pipes = [];
+      let score = 0;
+      let gameOver = false;
+      let frame = 0;
+
+      document.addEventListener('keydown', e => {
+        if (e.key === ' ' || e.key === 'ArrowUp') bird.velocity = bird.jump;
+      });
+      canvas.addEventListener('click', () => bird.velocity = bird.jump);
+
+      function loop() {
+        if (gameOver) return;
+
+        ctx.fillStyle = '#0a0a0a';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Bird
+        bird.velocity += bird.gravity;
+        bird.y += bird.velocity;
+
+        ctx.fillStyle = '#00ff9d';
+        ctx.fillRect(bird.x, bird.y, bird.size, bird.size);
+
+        // Pipes
+        frame++;
+        if (frame % 75 === 0) {
+          const gap = 160;
+          const height = Math.random() * (canvas.height - 300) + 80;
+          pipes.push({ x: canvas.width, top: height, bottom: canvas.height - height - gap });
         }
 
-        function actualizarMedallasUI() {
-            let medallas = JSON.parse(localStorage.getItem("axiom_fuse_medallas")) || [];
-            let container = document.getElementById("badge-medallas");
-            container.innerText = medallas.length === 0 ? "MEDALS: NONE" : "🏅 " + medallas.join(" | ").toUpperCase();
-        }
-        // =========================================================================
-        // 3. VARIABLES DEL MOTOR DE RENDERIZADO GRÁFICO (WEBGL SIMULATION)
-        // =========================================================================
-        let scene, camera, renderer;
-        let celdas = [];
-        let raycaster = new THREE.Raycaster();
-        let mouse = new THREE.Vector2();
-        let isDrawing = false;
-        let lineGeometry, lineMesh;
-        let linePoints = [];
+        for (let i = pipes.length - 1; i >= 0; i--) {
+          let p = pipes[i];
+          p.x -= 3;
 
-        // Temporizadores dinámicos para el flujo de inyección (Dopamina Loop)
-        let lastSpawnTime = 0;
-        let spawnInterval = 1200; // Arranca dócil en 1.2s y acelera por voltaje
-        let fallSpeedBase = 2.5;
+          // Dibujar pipes
+          ctx.fillStyle = '#ff00aa';
+          ctx.fillRect(p.x, 0, 60, p.top);                    // pipe superior
+          ctx.fillRect(p.x, canvas.height - p.bottom, 60, p.bottom); // pipe inferior
 
-        function initThreeEngine() {
-            const canvas = document.getElementById("canvas_xr");
-            
-            scene = new THREE.Scene();
-            // El fondo se mantiene translúcido/oscuro para dar paso a la cámara en el modo AR real
-            scene.background = null; 
+          // Colisión
+          if (
+            bird.x + bird.size > p.x && bird.x < p.x + 60 &&
+            (bird.y < p.top || bird.y + bird.size > canvas.height - p.bottom)
+          ) {
+            gameOver = true;
+            alert(`¡GAME OVER! Score: ${score}`);
+            backToMenu();
+            return;
+          }
 
-            // Perspectiva cenital pura optimizada para visión táctil ergonómica
-            camera = new THREE.PerspectiveCamera(65, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
-            camera.position.set(0, 0, 5);
+          if (p.x + 60 < 0) pipes.splice(i, 1);
 
-            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true, powerPreference: "high-performance" });
-            ajustarDimensionesViewport();
-
-            // Luces tácticas para dar volumen a las texturas cromáticas de los núcleos
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-            scene.add(ambientLight);
-            const directionalLight = new THREE.DirectionalLight(0x00ffcc, 0.8);
-            directionalLight.position.set(0, 4, 2);
-            scene.add(directionalLight);
-
-            // Inicialización de la geometría de la estela de plasma (Línea dinámica)
-            const maxPoints = 30;
-            lineGeometry = new THREE.BufferGeometry();
-            const positions = new Float32Array(maxPoints * 3);
-            lineGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            const lineMaterial = new THREE.LineBasicMaterial({ color: 0x00f0ff, linewidth: 3 });
-            lineMesh = new THREE.Line(lineGeometry, lineMaterial);
-            scene.add(lineMesh);
-
-            // Registro de oyentes de eventos táctiles nativos del terminal móvil
-            canvas.addEventListener("mousedown", iniciarTrazo);
-            canvas.addEventListener("mousemove", procesarTrazo);
-            window.addEventListener("mouseup", finalizarTrazo);
-
-            canvas.addEventListener("touchstart", (e) => { e.preventDefault(); iniciarTrazo(e.touches[0]); }, {passive:false});
-            canvas.addEventListener("touchmove", (e) => { e.preventDefault(); procesarTrazo(e.touches[0]); }, {passive:false});
-            canvas.addEventListener("touchend", finalizarTrazo);
-
-            window.addEventListener("resize", ajustarDimensionesViewport);
+          // Score
+          if (p.x + 60 < bird.x && !p.scored) {
+            score++;
+            p.scored = true;
+          }
         }
 
-        function ajustarDimensionesViewport() {
-            const canvas = renderer.domElement;
-            const width = canvas.parentElement.clientWidth;
-            const height = canvas.parentElement.clientHeight;
-            if (canvas.width !== width || canvas.height !== height) {
-                camera.aspect = width / height;
-                camera.updateProjectionMatrix();
-                renderer.setSize(width, height, false);
-            }
+        ctx.fillStyle = '#00ff9d';
+        ctx.font = 'bold 28px Courier New';
+        ctx.fillText(score, canvas.width / 2 - 20, 60);
+
+        // Suelo y techo
+        if (bird.y < 0 || bird.y > canvas.height - 40) {
+          gameOver = true;
+          alert(`¡GAME OVER! Score: ${score}`);
+          backToMenu();
         }
 
-        // =========================================================================
-        // 4. GENERACIÓN PROCEDURAL DE CELDAS CUÁNTICAS (ESTADOS DE VOLTAJE)
-        // =========================================================================
-        function spawnCeldaVoltaje() {
-            if (isGameOver) return;
+        requestAnimationFrame(loop);
+      }
 
-            let tipo = 'normal';
-            let rand = Math.random();
-            if (rand < CONFIG.PROBABILIDAD_ESPECIAL) {
-                tipo = Math.random() < 0.5 ? 'cryo_ice' : 'nuke_blast';
-            }
+      loop();
+    }
 
-            // Elección del color molecular basado en tu referencia de fragmentos totales
-            let colorHex = 0x8b5cf6; // Fase Violeta Estable
-            if (totalCeldasDestruidas > 65) {
-                colorHex = 0xef4444; // Sobrecarga Supernova (Rojo Sangre)
-            } else if (totalCeldasDestruidas > 25) {
-                colorHex = 0x10b981; // Alta Tensión (Verde Radioactivo)
-            }
+    // ====================== JUEGO 4: MATRIX SNAKE ======================
+    function MatrixSnake(ctx, canvas) {
+      const grid = 20;
+      let snake = [{x: 10, y: 10}];
+      let dx = 1, dy = 0;
+      let food = {x: 15, y: 15};
+      let score = 0;
+      let gameOver = false;
 
-            if (tipo === 'cryo_ice') colorHex = 0xa1a1aa; // Gris Blindado
-            if (tipo === 'nuke_blast') colorHex = 0xf59e0b; // Dorado Eléctrico
+      document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowLeft' && dx !== 1) { dx = -1; dy = 0; }
+        if (e.key === 'ArrowRight' && dx !== -1) { dx = 1; dy = 0; }
+        if (e.key === 'ArrowUp' && dy !== 1) { dx = 0; dy = -1; }
+        if (e.key === 'ArrowDown' && dy !== -1) { dx = 0; dy = 1; }
+      });
 
-            // Crear malla física 3D (Cilindros de energía de alta fidelidad)
-            const geo = new THREE.CylinderGeometry(0.28, 0.28, 0.15, 6);
-            const mat = new THREE.MeshBasicMaterial({ color: colorHex, wireframe: true });
-            const mesh = new THREE.Mesh(geo, mat);
+      function loop() {
+        if (gameOver) return;
 
-            // Posicionamiento aleatorio en la cabecera del frustum de la cámara
-            mesh.position.set((Math.random() - 0.5) * 3, 3, 0);
-            mesh.rotation.x = Math.PI / 4;
-            scene.add(mesh);
+        // Mover snake
+        const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+        snake.unshift(head);
 
-            celdas.push({
-                mesh: mesh,
-                tipo: tipo,
-                colorGlow: '#' + colorHex.toString(16),
-                active: true
-            });
-        }
-        // =========================================================================
-        // 5. CAPTURA DE INTERACCIÓN Y RAYCASTING TÁCTIL QUIRÚRGICO
-        // =========================================================================
-        function actualizarCoordenadasMouse(e) {
-            const canvas = renderer.domElement;
-            const rect = canvas.getBoundingClientRect();
-            mouse.x = ((e.clientX - rect.left) / canvas.clientWidth) * 2 - 1;
-            mouse.y = -((e.clientY - rect.top) / canvas.clientHeight) * 2 + 1;
+        // Comer comida
+        if (head.x === food.x && head.y === food.y) {
+          score += 10;
+          food = {
+            x: Math.floor(Math.random() * (canvas.width / grid)),
+            y: Math.floor(Math.random() * (canvas.height / grid))
+          };
+        } else {
+          snake.pop();
         }
 
-        function iniciarTrazo(e) {
-            if (isGameOver) return;
-            isDrawing = true;
-            actualizarCoordenadasMouse(e);
-            linePoints = [];
-            evaluarImpactoLaser();
+        // Colisiones
+        if (head.x < 0 || head.x >= canvas.width/grid || head.y < 0 || head.y >= canvas.height/grid) {
+          gameOver = true;
+        }
+        for (let i = 1; i < snake.length; i++) {
+          if (snake[i].x === head.x && snake[i].y === head.y) gameOver = true;
         }
 
-        function procesarTrazo(e) {
-            if (!isDrawing || isGameOver) return;
-            actualizarCoordenadasMouse(e);
-            evaluarImpactoLaser();
+        if (gameOver) {
+          alert(`¡GAME OVER! Score: ${score}`);
+          backToMenu();
+          return;
         }
 
-        function finalizarTrazo() {
-            isDrawing = false;
-            // Limpiar la estela de plasma al levantar el pulgar de la pantalla
-            const posAttr = lineGeometry.attributes.position;
-            for (let i = 0; i < posAttr.count * 3; i++) posAttr.array[i] = 0;
-            posAttr.needsUpdate = true;
-        }
+        // Dibujar
+        ctx.fillStyle = '#0a0a0a';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        function evaluarImpactoLaser() {
-            raycaster.setFromCamera(mouse, camera);
-            
-            // Dibujar la estela láser en el espacio 3D interpolando con el plano focal
-            const vector3D = new THREE.Vector3(mouse.x, mouse.y, 0.5).unproject(camera);
-            linePoints.push(vector3D);
-            if (linePoints.length > 25) linePoints.shift();
+        ctx.fillStyle = '#00ff9d';
+        snake.forEach(segment => ctx.fillRect(segment.x * grid, segment.y * grid, grid-2, grid-2));
 
-            const posAttr = lineGeometry.attributes.position;
-            for (let i = 0; i < posAttr.count; i++) {
-                const p = linePoints[i] || vector3D;
-                posAttr.setXYZ(i, p.x, p.y, p.z);
-            }
-            posAttr.needsUpdate = true;
+        ctx.fillStyle = '#ff00aa';
+        ctx.fillRect(food.x * grid, food.y * grid, grid-2, grid-2);
 
-            // Análisis de colisión matemática con las mallas tridimensionales
-            const meshes = celdas.filter(c => c.active).map(c => c.mesh);
-            const intersects = raycaster.intersectObjects(meshes);
+        ctx.fillStyle = '#00ff9d';
+        ctx.font = '20px Courier New';
+        ctx.fillText(`SCORE: ${score}`, 20, 35);
 
-            if (intersects.length > 0) {
-                const hitMesh = intersects[0].object;
-                const celdaData = celdas.find(c => c.mesh === hitMesh);
+        setTimeout(loop, 80);
+      }
 
-                if (celdaData && celdaData.active) {
-                    celdaData.active = false;
-                    scene.remove(hitMesh);
-                    totalCeldasDestruidas++;
-                    score += combo;
+      loop();
+    }    // ====================== PLACEHOLDERS PARA LOS DEMÁS JUEGOS ======================
+    function placeholderGame(name) {
+      alert(`🎮 ${name} está en desarrollo.\n\nPróximamente en Axiom Dopamine Hub.\n\n¡Gracias por probar!`);
+      backToMenu();
+    }
 
-                    // COMPROBACIÓN DEL "BLIND FUSE" (BONO DIOS EN EL UMBRAL SUPERIOR)
-                    // Si la celda se corta arriba del todo en el límite crítico antes de desaparecer
-                    let esBlindFuse = hitMesh.position.y >= (CONFIG.UMBRAL_CRITICO_Y - CONFIG.DISTANCIA_BLIND_FUSE);
+    // Sobrescribimos los juegos pendientes para que llamen al placeholder
+    // (Ya están definidos en launchGame, pero por si acaso)
+    
+    // Botón para volver al menú (visible cuando estás en un juego)
+    function addBackButton() {
+      const backBtn = document.createElement('button');
+      backBtn.innerHTML = '← VOLVER AL HUB';
+      backBtn.style.position = 'fixed';
+      backBtn.style.top = '20px';
+      backBtn.style.left = '20px';
+      backBtn.style.padding = '12px 20px';
+      backBtn.style.background = '#00ff9d';
+      backBtn.style.color = '#000';
+      backBtn.style.border = 'none';
+      backBtn.style.borderRadius = '6px';
+      backBtn.style.fontWeight = 'bold';
+      backBtn.style.cursor = 'pointer';
+      backBtn.style.zIndex = '10000';
+      backBtn.onclick = backToMenu;
+      document.body.appendChild(backBtn);
+    }
 
-                    if (esBlindFuse) {
-                        totalBlindFusesEnPartida++;
-                        combo += CONFIG.BLIND_FUSE_MULTIPLIER;
-                        playDopamineSound('blind_fuse');
-                        
-                        // Efecto parpadeo blanco cegador en el viewport (Dopamina Visual Nivel Dios)
-                        const flash = document.getElementById("flash-overlay");
-                        flash.classList.add("screen-flash");
-                        setTimeout(() => flash.classList.remove("screen-flash"), 150);
+    // Sobrescribimos launchGame para añadir el botón en todos los juegos
+    const originalLaunchGame = launchGame;
+    launchGame = function(id) {
+      originalLaunchGame(id);
+      setTimeout(addBackButton, 100); // pequeño delay para que aparezca después del canvas
+    };
 
-                        if (navigator.vibrate) navigator.vibrate([90, 45, 90]);
-                    } else {
-                        playDopamineSound('slice');
-                        if (navigator.vibrate) navigator.vibrate(25);
-                    }
-
-                    // IMPACTOS CONDICIONALES EN CELDAS MUTADAS
-                    if (celdaData.tipo === 'cryo_ice') {
-                        // Congelación criogénica: Frena el reloj de inyección y la velocidad
-                        spawnInterval = Math.min(2400, spawnInterval + 450);
-                    } 
-                    else if (celdaData.tipo === 'nuke_blast') {
-                        // Detonación masiva: Pulveriza todas las celdas vivas en pantalla en cadena
-                        celdas.forEach(c => {
-                            if (c.active) {
-                                c.active = false;
-                                scene.remove(c.mesh);
-                                totalCeldasDestruidas++;
-                                score += combo;
-                            }
-                        });
-                    }
-
-                    // GESTIÓN DINÁMICA DEL ESTADO ON-FIRE
-                    if (combo >= 20 && !isCoreOnFire) {
-                        isCoreOnFire = true;
-                        document.body.classList.add("reactor-fusing");
-                        playDopamineSound('overclock');
-                    }
-
-                    // Actualización fina de la telemetría periférica
-                    document.getElementById("hud-combo").innerText = `COMBO: x${combo}`;
-                    document.getElementById("hud-score").innerText = `FRAGS: ${totalCeldasDestruidas}`;
-                    lastMatchTime = Date.now();
-                }
-            }
-        }
-
-        // =========================================================================
-        // 6. BUCLE CENTRAL DE TIEMPO REAL (60FPS DE RENDIMIENTO O(1))
-        // =========================================================================
-        function gameLoop(now) {
-            if (!isGameOver) {
-                // Enfriamiento o penalización del multiplicador por inactividad
-                if (now - lastMatchTime > CONFIG.COMBO_SPEED_DECAY && combo > 1) {
-                    combo = 1;
-                    isCoreOnFire = false;
-                    document.body.classList.remove("reactor-fusing");
-                    document.getElementById("hud-combo").innerText = `COMBO: x1`;
-                }
-
-                // Generador procedural predictivo de celdas cuánticas
-                if (now - lastSpawnTime > spawnInterval) {
-                    spawnCeldaVoltaje();
-                    lastSpawnTime = now;
-                }
-
-                // Aceleración de físicas y refresco de dificultad dinámico
-                if (totalCeldasDestruidas > 65) spawnInterval = 400;      // Nivel Supernova
-                else if (totalCeldasDestruidas > 25) spawnInterval = 750; // Nivel Alta Tensión
-                else spawnInterval = 1200;                                // Inicial
-
-                // Rotación y traslación vertical (caída) de las mallas 3D
-                for (let i = celdas.length - 1; i >= 0; i--) {
-                    let c = celdas[i];
-                    if (!c.active) continue;
-
-                    // En este modo, las celdas se inyectan hacia arriba simulando la presión del reactor
-                    c.mesh.position.y += 0.015 * (fallSpeedBase + (totalCeldasDestruidas * 0.02));
-                    c.mesh.rotation.y += 0.03;
-
-                    // CONTROL CRÍTICO: Si el voltaje rebasa el límite de contención sin ser cortado, estalla
-                    if (c.mesh.position.y >= CONFIG.UMBRAL_CRITICO_Y) {
-                        detonarReactorEspacial();
-                        return;
-                    }
-                }
-
-                renderer.render(scene, camera);
-                requestAnimationFrame(gameLoop);
-            }
-        }
-
-        // =========================================================================
-        // 7. COLAPSO TÉRMICO Y CONFIGURACIÓN DE ACCIONES VIRALES PERIFÉRICAS
-        // =========================================================================
-        function detonarReactorEspacial() {
-            if (isGameOver) return;
-            isGameOver = true;
-            playDopamineSound('collapse');
-
-            localStorage.setItem("axiom_fuse_last_score", totalCeldasDestruidas);
-            verificarYGuardarMedallas(totalCeldasDestruidas, totalBlindFusesEnPartida);
-
-            const recordSoberanoManuel = 145;
-            const fragmentosDiferencia = recordSoberanoManuel - totalCeldasDestruidas;
-
-            // Armar texto y enlace para el chivato del reto por WhatsApp (En la esquina inferior)
-            let textoViral = "";
-            if (fragmentosDiferencia > 0) {
-                textoViral = `¡Mierda! Me he quedado a solo ${fragmentosDiferencia} celdas de reventar el récord de Manuel en AXIOM_BEAM_FUSE. Pruébalo en tu mesa en AR desde aquí: ${window.location.href}`;
-            } else {
-                textoViral = `¡BRUTAL! He pulverizado la dinastía de Manuel Systems en AXIOM_BEAM_FUSE con ${totalCeldasDestruidas} fragmentos en Realidad Aumentada. ¡A ver si tienes huevos de superarme!: ${window.location.href}`;
-            }
-            document.getElementById("btn_whatsapp").href = `https://api.whatsapp.com/send?text=${encodeURIComponent(textoViral)}`;
-
-            // Modificar ligeramente la UI periférica para avisar de la saturación
-            document.getElementById("hud-score").innerHTML = `<span class="text-red-500 font-black">COLLAPSE [${totalCeldasDestruidas}]</span>`;
-            
-            if (navigator.vibrate) navigator.vibrate([300, 100, 300]);
-        }
-
-        // =========================================================================
-        // 8. ASIGNACIÓN DE ENLACES TÁCTICOS E INICIALIZACIÓN DEL DOM
-        // =========================================================================
-        function cambiarModoDeJuego(modo, botonId) {
-            if (isGameOver) { location.reload(); return; }
-            gameMode = modo;
-            document.querySelectorAll("#panel-modos button").forEach(btn => {
-                btn.className = "glass-axiom py-2 rounded-lg text-zinc-500";
-            });
-            document.getElementById(botonId).className = "glass-axiom py-2 rounded-lg text-emerald-400 border-emerald-400/40 bg-emerald-900/10";
-            
-            if (modo === 'B') { totalCeldasDestruidas = 30; fallSpeedBase = 3.5; }
-            else if (modo === 'C') { totalCeldasDestruidas = 70; fallSpeedBase = 5.0; }
-            else { totalCeldasDestruidas = 0; fallSpeedBase = 2.5; }
-
-            // Purgar mallas del lienzo anterior
-            celdas.forEach(c => scene.remove(c.mesh));
-            celdas = [];
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            inicializarDatosPersistentes();
-            initThreeEngine();
-
-            // Escuchadores de la barra de modos
-            document.getElementById("modo-A").addEventListener("click", () => cambiarModoDeJuego('A', 'modo-A'));
-            document.getElementById("modo-B").addEventListener("click", () => cambiarModoDeJuego('B', 'modo-B'));
-            document.getElementById("modo-C").addEventListener("click", () => cambiarModoDeJuego('C', 'modo-C'));
-
-            // Simulador de la inyección en Supabase
-            document.getElementById("btn_supabase").addEventListener("click", () => {
-                let email = document.getElementById("supabase_email").value;
-                if (email) {
-                    alert(`NÚCLEO ADRENALINA SINCRONIZADO: Piloto [${email.toUpperCase()}] guardado con ${totalCeldasDestruidas} fragmentos.`);
-                }
-            });
-
-            // INTERRUPTOR DE LA FUNCIÓN WEBXR (WEBXR API NATIVE PLACEHOLDER)
-            document.getElementById("btn-webxr").addEventListener("click", () => {
-                // Si el dispositivo cuenta con soporte WebXR para 'immersive-ar', el canvas se vuelve transparente
-                // y se activa el flujo de renderizado de la cámara real de fondo.
-                if (navigator.xr) {
-                    alert("Invocando pasarela WebXR 'immersive-ar'. Accediendo a la cámara y al giroscopio del terminal...");
-                } else {
-                    alert("WebXR no detectado nativamente en este navegador de escritorio. Ejecutando simulación giroscópica de alta tasa en el Lienzo Axiom.");
-                }
-            });
-
-            // Arrancar el bucle del reactor
-            requestAnimationFrame(gameLoop);
-        });
-    </script>
+    // Mensaje de bienvenida inicial
+    console.log("%cAXIOM DOPAMINE HUB cargado correctamente. ¡Disfruta la dopamina soberana!", 
+                "color:#00ff9d; font-family:monospace; font-size:14px");
+  </script>
 </body>
 </html>
