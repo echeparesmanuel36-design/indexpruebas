@@ -28,7 +28,8 @@
             transition: background-color 0.4s ease;
         }
         header { max-width: 1100px; margin: 0 auto; padding: 40px 24px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 600; font-size: 13px; letter-spacing: 0.25em; text-transform: uppercase; }
+        .logo { font-weight: 600; font-size: 13px; letter-spacing: 0.25em; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
+        .logo img { height: 24px; width: auto; }
         .theme-toggle {
             background: none; border: 1px solid var(--border-color); color: var(--text-main);
             padding: 8px 16px; font-size: 11px; cursor: pointer; border-radius: 20px;
@@ -40,133 +41,83 @@
 <body>
 
     <header>
-        <div class="logo">Axiom Systems</div>
+        <div class="logo">
+            <img src="assets/logo2.png" alt="Logo"> Axiom Systems
+        </div>
         <button class="theme-toggle" id="themeToggle">Light Mode</button>
     </header>
-
     <main class="container">
         <h1>Directorio de Especímenes</h1>
         <div class="grid" id="dogGrid">
             <div class="card" onclick="this.classList.toggle('active')">
                 <div class="card-front"><h3>Pastor Alemán 🛡️</h3><p>Inteligencia operativa y lealtad incondicional.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 9-13 años</p><p>🌍 <b>Origen:</b> Alemania</p><p>🥩 <b>Nutrición:</b> Alta en proteína</p><p>🧠 <b>Comportamiento:</b> Protector y atento</p><p>🎓 <b>Educación:</b> Entrenamiento avanzado</p>
-                </div>
+                <div class="card-back"><p>⏳ <b>Edad:</b> 9-13 años</p><p>🌍 <b>Origen:</b> Alemania</p><p>🥩 <b>Nutrición:</b> Alta en proteína</p><p>🧠 <b>Comportamiento:</b> Protector y atento</p><p>🎓 <b>Educación:</b> Entrenamiento avanzado</p></div>
             </div>
-
             <div class="card" onclick="this.classList.toggle('active')">
                 <div class="card-front"><h3>Golden Retriever 🦺</h3><p>El compañero perfecto para entornos familiares.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 10-12 años</p><p>🌍 <b>Origen:</b> Escocia</p><p>🥩 <b>Nutrición:</b> Equilibrada, propensos a peso</p><p>🧠 <b>Comportamiento:</b> Paciente y bondadoso</p><p>🎓 <b>Educación:</b> Muy cooperativos</p>
-                </div>
+                <div class="card-back"><p>⏳ <b>Edad:</b> 10-12 años</p><p>🌍 <b>Origen:</b> Escocia</p><p>🥩 <b>Nutrición:</b> Equilibrada</p><p>🧠 <b>Comportamiento:</b> Paciente y bondadoso</p><p>🎓 <b>Educación:</b> Muy cooperativos</p></div>
             </div>
-
             <div class="card" onclick="this.classList.toggle('active')">
                 <div class="card-front"><h3>Bulldog Francés 🐾</h3><p>Compacto, urbano y con mucha personalidad.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 10-12 años</p><p>🌍 <b>Origen:</b> Francia</p><p>🥩 <b>Nutrición:</b> Controlada (baja en calorías)</p><p>🧠 <b>Comportamiento:</b> Juguetón y calmado</p><p>🎓 <b>Educación:</b> Moderada (testarudos)</p>
-                </div>
+                <div class="card-back"><p>⏳ <b>Edad:</b> 10-12 años</p><p>🌍 <b>Origen:</b> Francia</p><p>🥩 <b>Nutrición:</b> Controlada</p><p>🧠 <b>Comportamiento:</b> Juguetón y calmado</p><p>🎓 <b>Educación:</b> Moderada</p></div>
             </div>
-
             <div class="card" onclick="this.classList.toggle('active')">
                 <div class="card-front"><h3>Beagle 🔍</h3><p>Un explorador nato con un olfato privilegiado.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 12-15 años</p><p>🌍 <b>Origen:</b> Reino Unido</p><p>🥩 <b>Nutrición:</b> Dieta controlada, comen mucho</p><p>🧠 <b>Comportamiento:</b> Curioso y sociable</p><p>🎓 <b>Educación:</b> Requiere paciencia</p>
-                </div>
+                <div class="card-back"><p>⏳ <b>Edad:</b> 12-15 años</p><p>🌍 <b>Origen:</b> Reino Unido</p><p>🥩 <b>Nutrición:</b> Dieta controlada</p><p>🧠 <b>Comportamiento:</b> Curioso y sociable</p><p>🎓 <b>Educación:</b> Requiere paciencia</p></div>
             </div>
-
             <div class="card" onclick="this.classList.toggle('active')">
                 <div class="card-front"><h3>Poodle (Caniche) 🐩</h3><p>Elegancia y una inteligencia fuera de serie.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 12-15 años</p><p>🌍 <b>Origen:</b> Alemania/Francia</p><p>🥩 <b>Nutrición:</b> Alta calidad, cuida el pelo</p><p>🧠 <b>Comportamiento:</b> Alerta y muy astuto</p><p>🎓 <b>Educación:</b> Excelente (muy hábiles)</p>
-                </div>
+                <div class="card-back"><p>⏳ <b>Edad:</b> 12-15 años</p><p>🌍 <b>Origen:</b> Alemania/Francia</p><p>🥩 <b>Nutrición:</b> Alta calidad</p><p>🧠 <b>Comportamiento:</b> Alerta y muy astuto</p><p>🎓 <b>Educación:</b> Excelente</p></div>
             </div>
-
             <div class="card" onclick="this.classList.toggle('active')">
                 <div class="card-front"><h3>Rottweiler ⛓️</h3><p>Fuerza bruta con un corazón noble.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 8-10 años</p><p>🌍 <b>Origen:</b> Alemania</p><p>🥩 <b>Nutrición:</b> Necesita mucha proteína</p><p>🧠 <b>Comportamiento:</b> Valiente y seguro</p><p>🎓 <b>Educación:</b> Firme y constante</p>
-                </div>
+                <div class="card-back"><p>⏳ <b>Edad:</b> 8-10 años</p><p>🌍 <b>Origen:</b> Alemania</p><p>🥩 <b>Nutrición:</b> Alta proteína</p><p>🧠 <b>Comportamiento:</b> Valiente y seguro</p><p>🎓 <b>Educación:</b> Firme</p></div>
             </div>
-
             <div class="card" onclick="this.classList.toggle('active')">
                 <div class="card-front"><h3>Boxer 🥊</h3><p>Energía pura en un paquete atlético.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 10-12 años</p><p>🌍 <b>Origen:</b> Alemania</p><p>🥩 <b>Nutrición:</b> Alta en nutrientes energéticos</p><p>🧠 <b>Comportamiento:</b> Alegre y protector</p><p>🎓 <b>Educación:</b> Muy juguetón, requiere guía</p>
-                </div>
+                <div class="card-back"><p>⏳ <b>Edad:</b> 10-12 años</p><p>🌍 <b>Origen:</b> Alemania</p><p>🥩 <b>Nutrición:</b> Alta energía</p><p>🧠 <b>Comportamiento:</b> Alegre y protector</p><p>🎓 <b>Educación:</b> Muy juguetón</p></div>
             </div>
-
             <div class="card" onclick="this.classList.toggle('active')">
                 <div class="card-front"><h3>Dachshund 🌭</h3><p>Pequeño de estatura, gigante de espíritu.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 12-16 años</p><p>🌍 <b>Origen:</b> Alemania</p><p>🥩 <b>Nutrición:</b> Vigilar columna (no sobrepeso)</p><p>🧠 <b>Comportamiento:</b> Valiente y testarudo</p><p>🎓 <b>Educación:</b> Moderada</p>
-                </div>
+                <div class="card-back"><p>⏳ <b>Edad:</b> 12-16 años</p><p>🌍 <b>Origen:</b> Alemania</p><p>🥩 <b>Nutrición:</b> Vigilar columna</p><p>🧠 <b>Comportamiento:</b> Valiente y testarudo</p><p>🎓 <b>Educación:</b> Moderada</p></div>
             </div>
-
             <div class="card" onclick="this.classList.toggle('active')">
                 <div class="card-front"><h3>Border Collie ⚡</h3><p>El cerebro más rápido del mundo canino.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 12-15 años</p><p>🌍 <b>Origen:</b> Reino Unido</p><p>🥩 <b>Nutrición:</b> Dieta para alta actividad</p><p>🧠 <b>Comportamiento:</b> Incansable y trabajador</p><p>🎓 <b>Educación:</b> Genial, aprenden al instante</p>
-                </div>
+                <div class="card-back"><p>⏳ <b>Edad:</b> 12-15 años</p><p>🌍 <b>Origen:</b> Reino Unido</p><p>🥩 <b>Nutrición:</b> Alta actividad</p><p>🧠 <b>Comportamiento:</b> Incansable</p><p>🎓 <b>Educación:</b> Excelente</p></div>
             </div>
-
             <div class="card" onclick="this.classList.toggle('active')">
                 <div class="card-front"><h3>Siberian Husky ❄️</h3><p>Un aventurero ártico hecho para correr.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 12-14 años</p><p>🌍 <b>Origen:</b> Rusia (Siberia)</p><p>🥩 <b>Nutrición:</b> Balanceada, metabolizan bien</p><p>🧠 <b>Comportamiento:</b> Independiente y amable</p><p>🎓 <b>Educación:</b> Requiere paciencia (fuga)</p>
-                </div>
+                <div class="card-back"><p>⏳ <b>Edad:</b> 12-14 años</p><p>🌍 <b>Origen:</b> Rusia</p><p>🥩 <b>Nutrición:</b> Balanceada</p><p>🧠 <b>Comportamiento:</b> Independiente</p><p>🎓 <b>Educación:</b> Requiere paciencia</p></div>
             </div>
-
             <div class="card" onclick="this.classList.toggle('active')">
                 <div class="card-front"><h3>Shih Tzu 🎀</h3><p>Pequeño aristócrata de gran compañía.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 10-16 años</p><p>🌍 <b>Origen:</b> Tíbet (China)</p><p>🥩 <b>Nutrición:</b> Especial para pelaje largo</p><p>🧠 <b>Comportamiento:</b> Cariñoso y digno</p><p>🎓 <b>Educación:</b> Requiere constancia</p>
-                </div>
+                <div class="card-back"><p>⏳ <b>Edad:</b> 10-16 años</p><p>🌍 <b>Origen:</b> Tíbet (China)</p><p>🥩 <b>Nutrición:</b> Especial pelo largo</p><p>🧠 <b>Comportamiento:</b> Cariñoso</p><p>🎓 <b>Educación:</b> Constante</p></div>
             </div>
-
             <div class="card" onclick="this.classList.toggle('active')">
                 <div class="card-front"><h3>Dóberman 🕶️</h3><p>Elegancia atlética con instinto guardián.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 10-13 años</p><p>🌍 <b>Origen:</b> Alemania</p><p>🥩 <b>Nutrición:</b> Alta en proteína</p><p>🧠 <b>Comportamiento:</b> Leal y muy atento</p><p>🎓 <b>Educación:</b> Excelente respuesta</p>
-                </div>
+                <div class="card-back"><p>⏳ <b>Edad:</b> 10-13 años</p><p>🌍 <b>Origen:</b> Alemania</p><p>🥩 <b>Nutrición:</b> Alta proteína</p><p>🧠 <b>Comportamiento:</b> Leal y atento</p><p>🎓 <b>Educación:</b> Excelente respuesta</p></div>
             </div>
-
             <div class="card" onclick="this.classList.toggle('active')">
                 <div class="card-front"><h3>Chihuahua 🌶️</h3><p>Diminutos, pero con un corazón de león.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 12-20 años</p><p>🌍 <b>Origen:</b> México</p><p>🥩 <b>Nutrición:</b> Pequeñas porciones energéticas</p><p>🧠 <b>Comportamiento:</b> Alerta y muy leal</p><p>🎓 <b>Educación:</b> Moderada</p>
-                </div>
+                <div class="card-back"><p>⏳ <b>Edad:</b> 12-20 años</p><p>🌍 <b>Origen:</b> México</p><p>🥩 <b>Nutrición:</b> Porciones pequeñas</p><p>🧠 <b>Comportamiento:</b> Alerta y leal</p><p>🎓 <b>Educación:</b> Moderada</p></div>
             </div>
-
             <div class="card" onclick="this.classList.toggle('active')">
                 <div class="card-front"><h3>Akita Inu 🇯🇵</h3><p>Dignidad soberana y lealtad milenaria.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 10-12 años</p><p>🌍 <b>Origen:</b> Japón</p><p>🥩 <b>Nutrición:</b> Alta calidad</p><p>🧠 <b>Comportamiento:</b> Reservado y valiente</p><p>🎓 <b>Educación:</b> Firme (personalidad fuerte)</p>
-                </div>
+                <div class="card-back"><p>⏳ <b>Edad:</b> 10-12 años</p><p>🌍 <b>Origen:</b> Japón</p><p>🥩 <b>Nutrición:</b> Alta calidad</p><p>🧠 <b>Comportamiento:</b> Reservado y valiente</p><p>🎓 <b>Educación:</b> Firme</p></div>
             </div>
             <div class="card" onclick="this.classList.toggle('active')">
-                <div class="card-front">
-                    <h3>Labrador Retriever 🐕</h3>
-                    <p>El estándar de oro en compañía y lealtad.</p>
-                </div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 10-12 años</p>
-                    <p>🌍 <b>Origen:</b> Canadá</p>
-                    <p>🥩 <b>Nutrición:</b> Alta proteína</p>
-                    <p>🧠 <b>Comportamiento:</b> Amigable</p>
-                    <p>🎓 <b>Educación:</b> Alta</p>
-                </div>
+                <div class="card-front"><h3>Labrador Retriever 🐕</h3><p>El estándar de oro en compañía y lealtad.</p></div>
+                <div class="card-back"><p>⏳ <b>Edad:</b> 10-12 años</p><p>🌍 <b>Origen:</b> Canadá</p><p>🥩 <b>Nutrición:</b> Alta proteína</p><p>🧠 <b>Comportamiento:</b> Amigable</p><p>🎓 <b>Educación:</b> Alta</p></div>
             </div>
-            </div>
+        </div>
     </main>
-
     <style>
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
         .card { 
             background: var(--surface-color); 
             border: 1px solid var(--border-color);
             padding: 24px; 
-            border-radius: 8px; /* Bordes menos redondeados para look minimalista */
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -176,6 +127,8 @@
         .card.active .card-back { display: block; }
         .card h3 { margin-bottom: 10px; font-size: 16px; font-weight: 600; color: var(--text-main); }
         .card p { font-size: 14px; color: var(--text-muted); }
+        
+        [data-theme="dark"] .logo img { filter: invert(1); }
     </style>
     <script>
         const themeToggle = document.getElementById('themeToggle');
