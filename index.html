@@ -2,191 +2,67 @@
 <html lang="es" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Axiom Systems | Directorio Canino</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Axiom | Asset Manager</title>
     <style>
-        :root[data-theme="dark"] {
-            --bg-color: #050608;
-            --surface-color: rgba(13, 15, 22, 0.96);
-            --text-main: #F5F6F8;
-            --text-muted: #8E919A;
-            --border-color: rgba(255, 255, 255, 0.12);
+        :root {
+            --bg: #050505;
+            --surface: #0a0a0a;
+            --border: #1a1a1a;
+            --text: #e0e0e0;
+            --accent: #ffffff;
         }
-        :root[data-theme="light"] {
-            --bg-color: #F4F6F9;
-            --surface-color: rgba(255, 255, 255, 1);
-            --text-main: #12141C;
-            --text-muted: #626673;
-            --border-color: rgba(0, 0, 0, 0.12);
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            transition: background-color 0.4s ease;
-        }
-        header { max-width: 1100px; margin: 0 auto; padding: 40px 24px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 600; font-size: 13px; letter-spacing: 0.25em; text-transform: uppercase; }
-        .theme-toggle {
-            background: none; border: 1px solid var(--border-color); color: var(--text-main);
-            padding: 8px 16px; font-size: 11px; cursor: pointer; border-radius: 20px;
-        }
-        .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
-        h1 { font-size: 32px; margin-bottom: 40px; text-align: center; font-weight: 300; }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding: 40px; }
+        .header { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 40px; }
+        .logo { font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; }
+        
+        /* Sistema de Lista Técnica */
+        .asset-row { border-bottom: 1px solid var(--border); cursor: pointer; padding: 20px 0; transition: 0.2s; }
+        .asset-row:hover { border-color: var(--accent); }
+        .asset-header { display: grid; grid-template-columns: 2fr 1fr 1fr; align-items: center; }
+        .asset-details { display: none; padding: 20px 0; color: #888; font-size: 13px; line-height: 1.6; }
+        
+        .active .asset-details { display: block; }
+        .status { font-size: 10px; border: 1px solid var(--border); padding: 4px 8px; border-radius: 4px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">Axiom Systems</div>
-        <button class="theme-toggle" id="themeToggle">Light Mode</button>
+    <header class="header">
+        <div class="logo">Axiom Systems // Asset Manager</div>
+        <div id="themeToggle" style="cursor:pointer">Toggle Mode</div>
     </header>
 
-    <main class="container">
-        <h1>Directorio de Especímenes</h1>
-        <div class="grid" id="dogGrid">
-            <div class="card" onclick="this.classList.toggle('active')">
-                <div class="card-front"><h3>Pastor Alemán 🛡️</h3><p>Inteligencia operativa y lealtad incondicional.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 9-13 años</p><p>🌍 <b>Origen:</b> Alemania</p><p>🥩 <b>Nutrición:</b> Alta en proteína</p><p>🧠 <b>Comportamiento:</b> Protector y atento</p><p>🎓 <b>Educación:</b> Entrenamiento avanzado</p>
-                </div>
+    <div id="assetList">
+        <div class="asset-row" onclick="this.classList.toggle('active')">
+            <div class="asset-header">
+                <div><strong>PROYECTO_ALPHA</strong></div>
+                <div>Status: Online</div>
+                <div style="text-align: right;">v 1.0.4</div>
             </div>
+            <div class="asset-details">
+                <p>Descripción técnica: Sistema de gestión de datos en tiempo real.</p>
+                <p>Último acceso: 08/06/2026</p>
+                <button>Configurar</button>
+            </div>
+        </div>
+        <div class="asset-row" onclick="this.classList.toggle('active')">
+            <div class="asset-header">
+                <div><strong>STORAGE_NODE_01</strong></div>
+                <div>Status: Syncing</div>
+                <div style="text-align: right;">v 2.1.0</div>
+            </div>
+            <div class="asset-details">
+                <p>Ubicación: Sector Privado Local.</p>
+                <p>Capacidad: 4.2 TB / 10 TB</p>
+                <button>Acceder</button>
+            </div>
+        </div>
+    </div>
 
-            <div class="card" onclick="this.classList.toggle('active')">
-                <div class="card-front"><h3>Golden Retriever 🦺</h3><p>El compañero perfecto para entornos familiares.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 10-12 años</p><p>🌍 <b>Origen:</b> Escocia</p><p>🥩 <b>Nutrición:</b> Equilibrada, propensos a peso</p><p>🧠 <b>Comportamiento:</b> Paciente y bondadoso</p><p>🎓 <b>Educación:</b> Muy cooperativos</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="this.classList.toggle('active')">
-                <div class="card-front"><h3>Bulldog Francés 🐾</h3><p>Compacto, urbano y con mucha personalidad.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 10-12 años</p><p>🌍 <b>Origen:</b> Francia</p><p>🥩 <b>Nutrición:</b> Controlada (baja en calorías)</p><p>🧠 <b>Comportamiento:</b> Juguetón y calmado</p><p>🎓 <b>Educación:</b> Moderada (testarudos)</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="this.classList.toggle('active')">
-                <div class="card-front"><h3>Beagle 🔍</h3><p>Un explorador nato con un olfato privilegiado.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 12-15 años</p><p>🌍 <b>Origen:</b> Reino Unido</p><p>🥩 <b>Nutrición:</b> Dieta controlada, comen mucho</p><p>🧠 <b>Comportamiento:</b> Curioso y sociable</p><p>🎓 <b>Educación:</b> Requiere paciencia</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="this.classList.toggle('active')">
-                <div class="card-front"><h3>Poodle (Caniche) 🐩</h3><p>Elegancia y una inteligencia fuera de serie.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 12-15 años</p><p>🌍 <b>Origen:</b> Alemania/Francia</p><p>🥩 <b>Nutrición:</b> Alta calidad, cuida el pelo</p><p>🧠 <b>Comportamiento:</b> Alerta y muy astuto</p><p>🎓 <b>Educación:</b> Excelente (muy hábiles)</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="this.classList.toggle('active')">
-                <div class="card-front"><h3>Rottweiler ⛓️</h3><p>Fuerza bruta con un corazón noble.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 8-10 años</p><p>🌍 <b>Origen:</b> Alemania</p><p>🥩 <b>Nutrición:</b> Necesita mucha proteína</p><p>🧠 <b>Comportamiento:</b> Valiente y seguro</p><p>🎓 <b>Educación:</b> Firme y constante</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="this.classList.toggle('active')">
-                <div class="card-front"><h3>Boxer 🥊</h3><p>Energía pura en un paquete atlético.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 10-12 años</p><p>🌍 <b>Origen:</b> Alemania</p><p>🥩 <b>Nutrición:</b> Alta en nutrientes energéticos</p><p>🧠 <b>Comportamiento:</b> Alegre y protector</p><p>🎓 <b>Educación:</b> Muy juguetón, requiere guía</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="this.classList.toggle('active')">
-                <div class="card-front"><h3>Dachshund 🌭</h3><p>Pequeño de estatura, gigante de espíritu.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 12-16 años</p><p>🌍 <b>Origen:</b> Alemania</p><p>🥩 <b>Nutrición:</b> Vigilar columna (no sobrepeso)</p><p>🧠 <b>Comportamiento:</b> Valiente y testarudo</p><p>🎓 <b>Educación:</b> Moderada</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="this.classList.toggle('active')">
-                <div class="card-front"><h3>Border Collie ⚡</h3><p>El cerebro más rápido del mundo canino.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 12-15 años</p><p>🌍 <b>Origen:</b> Reino Unido</p><p>🥩 <b>Nutrición:</b> Dieta para alta actividad</p><p>🧠 <b>Comportamiento:</b> Incansable y trabajador</p><p>🎓 <b>Educación:</b> Genial, aprenden al instante</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="this.classList.toggle('active')">
-                <div class="card-front"><h3>Siberian Husky ❄️</h3><p>Un aventurero ártico hecho para correr.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 12-14 años</p><p>🌍 <b>Origen:</b> Rusia (Siberia)</p><p>🥩 <b>Nutrición:</b> Balanceada, metabolizan bien</p><p>🧠 <b>Comportamiento:</b> Independiente y amable</p><p>🎓 <b>Educación:</b> Requiere paciencia (fuga)</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="this.classList.toggle('active')">
-                <div class="card-front"><h3>Shih Tzu 🎀</h3><p>Pequeño aristócrata de gran compañía.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 10-16 años</p><p>🌍 <b>Origen:</b> Tíbet (China)</p><p>🥩 <b>Nutrición:</b> Especial para pelaje largo</p><p>🧠 <b>Comportamiento:</b> Cariñoso y digno</p><p>🎓 <b>Educación:</b> Requiere constancia</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="this.classList.toggle('active')">
-                <div class="card-front"><h3>Dóberman 🕶️</h3><p>Elegancia atlética con instinto guardián.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 10-13 años</p><p>🌍 <b>Origen:</b> Alemania</p><p>🥩 <b>Nutrición:</b> Alta en proteína</p><p>🧠 <b>Comportamiento:</b> Leal y muy atento</p><p>🎓 <b>Educación:</b> Excelente respuesta</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="this.classList.toggle('active')">
-                <div class="card-front"><h3>Chihuahua 🌶️</h3><p>Diminutos, pero con un corazón de león.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 12-20 años</p><p>🌍 <b>Origen:</b> México</p><p>🥩 <b>Nutrición:</b> Pequeñas porciones energéticas</p><p>🧠 <b>Comportamiento:</b> Alerta y muy leal</p><p>🎓 <b>Educación:</b> Moderada</p>
-                </div>
-            </div>
-
-            <div class="card" onclick="this.classList.toggle('active')">
-                <div class="card-front"><h3>Akita Inu 🇯🇵</h3><p>Dignidad soberana y lealtad milenaria.</p></div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 10-12 años</p><p>🌍 <b>Origen:</b> Japón</p><p>🥩 <b>Nutrición:</b> Alta calidad</p><p>🧠 <b>Comportamiento:</b> Reservado y valiente</p><p>🎓 <b>Educación:</b> Firme (personalidad fuerte)</p>
-                </div>
-            </div>
-            <div class="card" onclick="this.classList.toggle('active')">
-                <div class="card-front">
-                    <h3>Labrador Retriever 🐕</h3>
-                    <p>El estándar de oro en compañía y lealtad.</p>
-                </div>
-                <div class="card-back">
-                    <p>⏳ <b>Edad:</b> 10-12 años</p>
-                    <p>🌍 <b>Origen:</b> Canadá</p>
-                    <p>🥩 <b>Nutrición:</b> Alta proteína</p>
-                    <p>🧠 <b>Comportamiento:</b> Amigable</p>
-                    <p>🎓 <b>Educación:</b> Alta</p>
-                </div>
-            </div>
-            </div>
-    </main>
-
-    <style>
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .card { 
-            background: var(--surface-color); 
-            border: 1px solid var(--border-color);
-            padding: 24px; 
-            border-radius: 8px; /* Bordes menos redondeados para look minimalista */
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .card:hover { border-color: var(--text-muted); }
-        .card.active { border-color: var(--text-main); }
-        .card-back { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color); color: var(--text-muted); }
-        .card.active .card-back { display: block; }
-        .card h3 { margin-bottom: 10px; font-size: 16px; font-weight: 600; color: var(--text-main); }
-        .card p { font-size: 14px; color: var(--text-muted); }
-    </style>
     <script>
-        const themeToggle = document.getElementById('themeToggle');
-        const htmlElement = document.documentElement;
-
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = htmlElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            htmlElement.setAttribute('data-theme', newTheme);
-            themeToggle.innerText = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
         });
     </script>
 </body>
