@@ -341,3 +341,15 @@ footer {
 .heartbeat {
     animation: heartbeat 0.3s ease-in-out;
 }
+/* Favicons como base64 (para que no necesites archivos externos) */
+/* Estos son favicons genéricos. Puedes reemplazarlos con los tuyos */
+
+/* Apple touch icon */
+.apple-touch-icon {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%2300e5ff'/%3E%3Ctext x='50' y='68' text-anchor='middle' fill='%2303060a' font-size='48' font-family='monospace'%3EA%3C/text%3E%3C/svg%3E");
+}
+
+/* Opengraph image */
+.opengraph-image {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%2303060a'/%3E%3Ctext x='600' y='315' text-anchor='middle' fill='%2300e5ff' font-size='48' font-family='monospace'%3EAXIOM QR FACTORY%3C/text%3E%3C/svg%3E");
+}
