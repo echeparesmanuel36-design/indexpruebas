@@ -1,40 +1,87 @@
-// AXIOM VOID PULSE - CORE ENGINE v2.0
-// Análisis emocional + métricas de impacto
+// AXIOM VOID PULSE - CORE ENGINE v3.0
+// Análisis emocional + sarcasmo + legibilidad + manipulación
 
 const EMOTION_LEXICON = {
-    ira: ['odio', 'rabia', 'enfadado', 'puto', 'mierda', 'cabrón', 'basura', 'detesto', 'asco', 'furia', 'indignación'],
-    alegria: ['feliz', 'genial', 'increíble', 'maravilloso', 'alegría', 'risa', 'disfrutar', 'amor', 'gracias', 'perfecto', 'excelente'],
-    tristeza: ['triste', 'deprimido', 'llorar', 'dolor', 'soledad', 'perdida', 'vacío', 'melancolía', 'nostalgia'],
-    miedo: ['miedo', 'terror', 'pánico', 'ansiedad', 'preocupación', 'amenaza', 'peligro', 'inseguro', 'alarma'],
-    sorpresa: ['sorpresa', 'impactante', 'increíble', 'wow', 'oh', 'vaya', 'inesperado', 'asombro'],
-    amor: ['amor', 'cariño', 'aprecio', 'adorar', 'corazón', 'abrazar', 'querer', 'pasion', 'romance'],
-    frustracion: ['frustración', 'harto', 'cansado', 'agotado', 'colapsado', 'no puedo', 'imposible', 'fracaso'],
-    calma: ['tranquilo', 'paz', 'sereno', 'relajado', 'zen', 'meditación', 'quietud', 'armonía'],
-    ansiedad: ['ansiedad', 'nervios', 'inquietud', 'preocupado', 'estrés', 'angustia', 'desasosiego'],
-    confianza: ['confío', 'seguro', 'certeza', 'garantía', 'fiable', 'solidez', 'firmeza'],
-    desprecio: ['asqueroso', 'despreciable', 'vil', 'repugnante', 'desprecio', 'menosprecio'],
-    entusiasmo: ['emocionado', 'ansioso', 'energía', 'motivado', 'impaciente', 'fuego', 'poder', 'fuerza']
+    ira: ['odio', 'rabia', 'enfadado', 'puto', 'mierda', 'cabrón', 'basura', 'detesto', 'asco', 'furia', 'indignación', 'vergüenza', 'humillación'],
+    alegria: ['feliz', 'genial', 'increíble', 'maravilloso', 'alegría', 'risa', 'disfrutar', 'amor', 'gracias', 'perfecto', 'excelente', 'fantástico', 'genial'],
+    tristeza: ['triste', 'deprimido', 'llorar', 'dolor', 'soledad', 'perdida', 'vacío', 'melancolía', 'nostalgia', 'pena', 'desolación'],
+    miedo: ['miedo', 'terror', 'pánico', 'ansiedad', 'preocupación', 'amenaza', 'peligro', 'inseguro', 'alarma', 'espanto', 'horror'],
+    sorpresa: ['sorpresa', 'impactante', 'increíble', 'wow', 'oh', 'vaya', 'inesperado', 'asombro', 'impresionante'],
+    amor: ['amor', 'cariño', 'aprecio', 'adorar', 'corazón', 'abrazar', 'querer', 'pasion', 'romance', 'afecto', 'ternura'],
+    frustracion: ['frustración', 'harto', 'cansado', 'agotado', 'colapsado', 'no puedo', 'imposible', 'fracaso', 'bloqueo', 'atasco'],
+    calma: ['tranquilo', 'paz', 'sereno', 'relajado', 'zen', 'meditación', 'quietud', 'armonía', 'balance', 'equilibrio'],
+    ansiedad: ['ansiedad', 'nervios', 'inquietud', 'preocupado', 'estrés', 'angustia', 'desasosiego', 'tensión', 'inquietante'],
+    confianza: ['confío', 'seguro', 'certeza', 'garantía', 'fiable', 'solidez', 'firmeza', 'determinación'],
+    desprecio: ['asqueroso', 'despreciable', 'vil', 'repugnante', 'desprecio', 'menosprecio', 'desdén', 'indigno'],
+    entusiasmo: ['emocionado', 'ansioso', 'energía', 'motivado', 'impaciente', 'fuego', 'poder', 'fuerza', 'vamos', 'dale']
 };
 
-const INTENSITY_WORDS = {
-    high: ['absolutamente', 'completamente', 'totalmente', 'extremadamente', 'increíblemente', 'terriblemente', 'horriblemente', 'maravillosamente'],
-    medium: ['muy', 'bastante', 'realmente', 'particularmente', 'especialmente'],
-    low: ['un poco', 'ligeramente', 'algo', 'medianamente']
-};
+const SARCASM_PATTERNS = [
+    { pattern: /claro que sí.*pero|claro que no.*pero/i, weight: 0.8 },
+    { pattern: /qué bien.*¿no\?|qué bonito.*¿no\?/i, weight: 0.7 },
+    { pattern: /por supuesto que.*pero/i, weight: 0.6 },
+    { pattern: /vaya.*como siempre/i, weight: 0.6 },
+    { pattern: /qué gran idea/i, weight: 0.5 },
+    { pattern: /me encanta.*cuando/i, weight: 0.5 }
+];
+
+const URGENCY_WORDS = ['ahora', 'inmediato', 'urgente', 'ya', 'cuanto antes', 'asap', 'rápido', 'inmediatamente'];
+const MANIPULATION_WORDS = ['deberías', 'tendrías que', 'tienes que', 'obligado', 'necesitas', 'es tu responsabilidad'];
+
+function analyzeSarcasm(text) {
+    let sarcasmScore = 0;
+    for (let item of SARCASM_PATTERNS) {
+        if (item.pattern.test(text)) sarcasmScore += item.weight;
+    }
+    // Detectar contradicciones emocionales
+    const lower = text.toLowerCase();
+    if (lower.includes('me encanta') && lower.includes('odio')) sarcasmScore += 0.4;
+    if (lower.includes('qué bien') && lower.includes('problema')) sarcasmScore += 0.3;
+    
+    return { score: Math.min(1, sarcasmScore), isSarcastic: sarcasmScore > 0.4 };
+}
+
+function calculateReadability(text) {
+    const words = text.split(/\s+/).length;
+    const sentences = text.split(/[.!?]+/).length;
+    const syllables = text.toLowerCase().replace(/[^aeiouáéíóú]/g, '').length;
+    if (sentences === 0) return 50;
+    const score = 206.84 - 1.015 * (words / sentences) - 84.6 * (syllables / words);
+    return Math.min(100, Math.max(0, Math.round(score)));
+}
+
+function detectManipulation(text) {
+    let found = [];
+    for (let word of MANIPULATION_WORDS) {
+        if (text.toLowerCase().includes(word)) found.push(word);
+    }
+    return { hasManipulation: found.length > 0, words: found };
+}
+
+function detectUrgency(text) {
+    let found = [];
+    for (let word of URGENCY_WORDS) {
+        if (text.toLowerCase().includes(word)) found.push(word);
+    }
+    return { urgencyScore: Math.min(1, found.length / 3), words: found };
+}
+
+function analyzeByPhrases(text) {
+    const phrases = text.split(/[.!?]+/).filter(p => p.trim().length > 10);
+    return phrases.slice(0, 5).map(phrase => {
+        const tempAnalysis = analyzeVoidPulse(phrase);
+        return { text: phrase.substring(0, 60), score: tempAnalysis.pulseScore, emotion: tempAnalysis.dominantEmotion };
+    });
+}
 
 function analyzeVoidPulse(text) {
     if (!text || text.trim().length === 0) {
         return {
-            pulseScore: 0,
-            dominantEmotion: 'neutro',
-            backlashRisk: 'bajo',
-            viralityPrediction: 0,
-            intensity: 0,
-            emotionBreakdown: {},
-            triggerWords: [],
-            coherenceScore: 0,
-            emotionalWave: [],
-            recommendedAction: 'silence'
+            pulseScore: 0, dominantEmotion: 'neutro', backlashRisk: 'bajo', viralityPrediction: 0,
+            intensity: 0, emotionBreakdown: {}, triggerWords: [], coherenceScore: 0, emotionalWave: [],
+            recommendedAction: 'silence', sarcasm: { score: 0, isSarcastic: false }, readability: 50,
+            manipulation: { hasManipulation: false, words: [] }, urgency: { urgencyScore: 0, words: [] },
+            phraseAnalysis: [], legibilidad: 'Normal', tonoComercial: false, neutralWords: 0
         };
     }
 
@@ -42,7 +89,6 @@ function analyzeVoidPulse(text) {
     const words = lowerText.split(/\s+/);
     const wordCount = words.length;
     
-    // Detección de emociones
     let emotionCounts = {};
     let triggerWords = [];
     
@@ -53,94 +99,55 @@ function analyzeVoidPulse(text) {
             const matches = (text.match(regex) || []).length;
             if (matches > 0) {
                 emotionCounts[emotion] += matches;
-                if (matches > 0 && !triggerWords.includes(keyword)) {
-                    triggerWords.push(keyword);
-                }
+                if (!triggerWords.includes(keyword)) triggerWords.push(keyword);
             }
         }
     }
     
-    // Intensidad emocional
-    let intensityScore = 0;
-    for (let word of INTENSITY_WORDS.high) {
-        if (lowerText.includes(word)) intensityScore += 0.3;
-    }
-    for (let word of INTENSITY_WORDS.medium) {
-        if (lowerText.includes(word)) intensityScore += 0.15;
-    }
-    for (let word of INTENSITY_WORDS.low) {
-        if (lowerText.includes(word)) intensityScore += 0.05;
-    }
-    intensityScore = Math.min(intensityScore, 1.0);
+    let intensityScore = Math.min(1, (Object.values(emotionCounts).reduce((a,b)=>a+b,0) / Math.max(1, wordCount)) * 2);
     
-    // Emoción dominante
-    let maxEmotion = 'neutro';
-    let maxCount = 0;
-    let totalMatches = 0;
+    let maxEmotion = 'neutro', maxCount = 0;
     for (let [emotion, count] of Object.entries(emotionCounts)) {
-        totalMatches += count;
-        if (count > maxCount) {
-            maxCount = count;
-            maxEmotion = emotion;
-        }
+        if (count > maxCount) { maxCount = count; maxEmotion = emotion; }
     }
     
-    // Score de pulso (0-100)
-    let pulseScore = 0;
-    if (totalMatches > 0) {
-        pulseScore = Math.min(100, Math.round((totalMatches / Math.max(1, wordCount)) * 300 + intensityScore * 40));
-    } else {
-        pulseScore = Math.max(5, Math.min(30, Math.floor(Math.random() * 25) + 5));
-    }
+    let pulseScore = maxCount > 0 ? Math.min(100, Math.round((maxCount / Math.max(1, wordCount)) * 300 + intensityScore * 40)) : Math.max(5, Math.min(30, Math.floor(Math.random() * 25) + 5));
     
-    // Riesgo de backlash (ira + desprecio + frustración)
-    const backlashEmotions = (emotionCounts.ira || 0) + (emotionCounts.desprecio || 0) + (emotionCounts.frustracion || 0);
-    const backlashScore = Math.min(100, Math.round((backlashEmotions / Math.max(1, wordCount)) * 500 + (maxEmotion === 'ira' ? 30 : 0)));
-    let backlashRisk = 'bajo';
-    if (backlashScore > 60) backlashRisk = 'alto';
-    else if (backlashScore > 30) backlashRisk = 'medio';
+    const backlashScore = Math.min(100, Math.round(((emotionCounts.ira || 0) + (emotionCounts.desprecio || 0) + (emotionCounts.frustracion || 0)) / Math.max(1, wordCount) * 500));
+    let backlashRisk = backlashScore > 60 ? 'alto' : (backlashScore > 30 ? 'medio' : 'bajo');
     
-    // Predicción viral (alegría + entusiasmo + sorpresa - tristeza * 0.5)
-    const viralScore = (emotionCounts.alegria || 0) * 2 + (emotionCounts.entusiasmo || 0) * 2 + (emotionCounts.sorpresa || 0) * 1.5 - (emotionCounts.tristeza || 0) * 0.8;
+    const viralScore = (emotionCounts.alegria || 0) * 2 + (emotionCounts.entusiasmo || 0) * 2 + (emotionCounts.sorpresa || 0) * 1.5 - (emotionCounts.tristeza || 0);
     let viralityPrediction = Math.min(95, Math.max(5, Math.round((viralScore / Math.max(1, wordCount)) * 200 + (pulseScore * 0.3))));
     
-    // Coherencia de tono (si hay emociones muy opuestas)
-    const hasOpposites = (emotionCounts.ira > 0 && emotionCounts.calma > 0) || (emotionCounts.alegria > 0 && emotionCounts.tristeza > 0);
-    const coherenceScore = hasOpposites ? 40 + Math.random() * 20 : 70 + Math.random() * 20;
+    const sarcasm = analyzeSarcasm(text);
+    const readability = calculateReadability(text);
+    const manipulation = detectManipulation(text);
+    const urgency = detectUrgency(text);
+    const phraseAnalysis = analyzeByPhrases(text);
     
-    // Ola emocional simulada (para gráfico)
+    let legibilidad = readability > 70 ? 'Muy fácil' : (readability > 50 ? 'Normal' : (readability > 30 ? 'Difícil' : 'Muy difícil'));
+    let tonoComercial = text.toLowerCase().includes('comprar') || text.toLowerCase().includes('oferta') || text.toLowerCase().includes('descuento');
+    
+    let recommendedAction = backlashRisk === 'alto' ? '⚠️ Precaución - Revisar tono' :
+                           (pulseScore > 70 && (maxEmotion === 'alegria' || maxEmotion === 'entusiasmo')) ? '🚀 Ideal para viralizar' :
+                           pulseScore < 20 ? '😴 Bajo impacto - Añadir emoción' :
+                           maxEmotion === 'ira' ? '⚔️ Contenido polarizante' :
+                           maxEmotion === 'amor' ? '💖 Contenido cálido - Buen engagement' :
+                           sarcasm.isSarcastic ? '🎭 Sarcasmo detectado - Puede malinterpretarse' :
+                           '📈 Estable - Puede mejorar con más intensidad';
+    
     let emotionalWave = [];
     for (let i = 0; i < 20; i++) {
-        let waveValue = Math.sin(i * 0.5) * pulseScore * 0.01 + Math.random() * 0.1;
-        emotionalWave.push(Math.min(1, Math.max(0, waveValue + (pulseScore / 100) * 0.5)));
+        emotionalWave.push(Math.sin(i * 0.5) * pulseScore * 0.01 + Math.random() * 0.1);
     }
     
-    // Acción recomendada
-    let recommendedAction = 'neutral';
-    if (backlashRisk === 'alto') recommendedAction = '⚠️ Precaución - Revisar tono';
-    else if (pulseScore > 70 && (maxEmotion === 'alegria' || maxEmotion === 'entusiasmo')) recommendedAction = '🚀 Ideal para viralizar';
-    else if (pulseScore < 20) recommendedAction = '😴 Bajo impacto - Añadir emoción';
-    else if (maxEmotion === 'ira') recommendedAction = '⚔️ Contenido polarizante';
-    else if (maxEmotion === 'amor') recommendedAction = '💖 Contenido cálido - Buen engagement';
-    else recommendedAction = '📈 Estable - Puede mejorar con más intensidad';
-    
     return {
-        pulseScore: pulseScore,
-        dominantEmotion: maxEmotion,
-        backlashRisk: backlashRisk,
-        viralityPrediction: viralityPrediction,
-        intensity: Math.round(intensityScore * 100),
-        emotionBreakdown: emotionCounts,
-        triggerWords: triggerWords.slice(0, 8),
-        coherenceScore: Math.round(coherenceScore),
-        emotionalWave: emotionalWave,
-        recommendedAction: recommendedAction,
-        wordCount: wordCount,
-        totalMatches: totalMatches
+        pulseScore, dominantEmotion: maxEmotion, backlashRisk, viralityPrediction,
+        intensity: Math.round(intensityScore * 100), emotionBreakdown: emotionCounts,
+        triggerWords: triggerWords.slice(0, 8), coherenceScore: 70 + Math.random() * 20,
+        emotionalWave, recommendedAction, sarcasm, readability, manipulation, urgency,
+        phraseAnalysis, legibilidad, tonoComercial, wordCount, totalMatches: maxCount
     };
 }
 
-// Exportar para uso global
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { analyzeVoidPulse, EMOTION_LEXICON };
-}
+if (typeof module !== 'undefined' && module.exports) module.exports = { analyzeVoidPulse };
