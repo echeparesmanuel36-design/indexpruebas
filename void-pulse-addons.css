@@ -1,57 +1,40 @@
-/* AXIOM VOID PULSE - ADDONS (no toca tu diseño base) */
+/* AXIOM VOID PULSE - ADDONS v3.0 */
+/* No toca tu diseño base, solo añade funcionalidades */
 
-#historySelect {
-    font-family: 'Inter', monospace;
-    cursor: pointer;
+#historySelect, #clearHistoryBtn, .loadHistoryBtn {
     transition: all 0.2s ease;
 }
 
-#historySelect:hover {
+#historySelect:hover, .loadHistoryBtn:hover {
     border-color: var(--accent-glow-1);
-}
-
-#clearHistoryBtn {
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-#clearHistoryBtn:hover {
-    border-color: var(--pulse-high);
-    color: var(--pulse-high);
+    transform: translateY(-1px);
 }
 
 .emotion-badge {
-    transition: all 0.2s ease;
-    cursor: default;
     backdrop-filter: blur(4px);
+    transition: all 0.2s ease;
 }
 
 .emotion-badge:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
     filter: brightness(1.1);
 }
 
-#pulseWaveCanvas {
-    transition: all 0.3s ease;
+.heartbeat {
+    animation: heartbeat 0.3s ease-in-out;
 }
 
-#pulseWaveCanvas:hover {
-    filter: drop-shadow(0 0 8px var(--accent-glow-1));
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
 }
 
-/* Modal responsivo */
-#comparatorModal textarea {
-    font-family: 'Inter', monospace;
-    font-size: 12px;
-    resize: vertical;
+.particle-effect {
+    pointer-events: none;
+    z-index: 9999;
 }
 
-#comparatorModal textarea:focus {
-    border-color: var(--accent-glow-1);
-    outline: none;
-}
-
-/* Scroll personalizado para modales */
 #comparatorModal > div::-webkit-scrollbar {
     width: 6px;
 }
@@ -66,11 +49,52 @@
     border-radius: 10px;
 }
 
-/* Efecto sutil en botones nuevos */
-button[onclick], #doCompareBtn, #closeModalBtn {
-    transition: transform 0.1s ease;
+button:active {
+    transform: scale(0.97);
 }
 
-button[onclick]:active, #doCompareBtn:active, #closeModalBtn:active {
-    transform: scale(0.97);
+#charCounter {
+    font-size: 10px;
+    font-weight: normal;
+}
+
+.skeleton {
+    background: linear-gradient(90deg, var(--code-bg) 25%, var(--border-color) 50%, var(--code-bg) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    border-radius: 8px;
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Tooltips */
+[data-tooltip] {
+    position: relative;
+    cursor: help;
+}
+
+[data-tooltip]:before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--code-bg);
+    color: var(--text-main);
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 10px;
+    white-space: nowrap;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    border: 1px solid var(--border-color);
+}
+
+[data-tooltip]:hover:before {
+    opacity: 1;
 }
