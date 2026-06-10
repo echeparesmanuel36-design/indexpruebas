@@ -1,0 +1,76 @@
+/* AXIOM VOID PULSE - ADDONS (no toca tu diseño base) */
+
+#historySelect {
+    font-family: 'Inter', monospace;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#historySelect:hover {
+    border-color: var(--accent-glow-1);
+}
+
+#clearHistoryBtn {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#clearHistoryBtn:hover {
+    border-color: var(--pulse-high);
+    color: var(--pulse-high);
+}
+
+.emotion-badge {
+    transition: all 0.2s ease;
+    cursor: default;
+    backdrop-filter: blur(4px);
+}
+
+.emotion-badge:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.1);
+}
+
+#pulseWaveCanvas {
+    transition: all 0.3s ease;
+}
+
+#pulseWaveCanvas:hover {
+    filter: drop-shadow(0 0 8px var(--accent-glow-1));
+}
+
+/* Modal responsivo */
+#comparatorModal textarea {
+    font-family: 'Inter', monospace;
+    font-size: 12px;
+    resize: vertical;
+}
+
+#comparatorModal textarea:focus {
+    border-color: var(--accent-glow-1);
+    outline: none;
+}
+
+/* Scroll personalizado para modales */
+#comparatorModal > div::-webkit-scrollbar {
+    width: 6px;
+}
+
+#comparatorModal > div::-webkit-scrollbar-track {
+    background: var(--code-bg);
+    border-radius: 10px;
+}
+
+#comparatorModal > div::-webkit-scrollbar-thumb {
+    background: var(--accent-glow-2);
+    border-radius: 10px;
+}
+
+/* Efecto sutil en botones nuevos */
+button[onclick], #doCompareBtn, #closeModalBtn {
+    transition: transform 0.1s ease;
+}
+
+button[onclick]:active, #doCompareBtn:active, #closeModalBtn:active {
+    transform: scale(0.97);
+}
