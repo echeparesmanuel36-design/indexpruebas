@@ -1,12 +1,12 @@
 {
-  "name": "Axiom Systems | Directorio Canino",
-  "short_name": "Axiom Canino",
-  "description": "Directorio de Especímenes Caninos - Axiom Systems",
+  "name": "AXIOM Void Pulse",
+  "short_name": "Void Pulse",
+  "description": "Detector de pulso emocional - Analiza el impacto de cualquier texto",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#050608",
-  "theme_color": "#050608",
-  "orientation": "portrait-primary",
+  "theme_color": "#03060a",
+  "background_color": "#03060a",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "assets/favicon.png",
