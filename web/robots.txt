@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://axiom-qr-factory.github.io/sitemap.xml
+Sitemap: https://axiom-systemstech.github.io/axiom-qr-factory/sitemap.xml
