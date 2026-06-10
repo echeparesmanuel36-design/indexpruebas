@@ -137,6 +137,10 @@
             padding: 30px;
             text-align: center;
             margin-bottom: 20px;
+            min-height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .flex-row {
             display: flex;
@@ -159,6 +163,7 @@
         .stat-number { font-size: 28px; font-weight: 700; color: var(--green); }
         .stat-label { font-size: 10px; color: var(--muted); }
         footer { text-align: center; padding: 40px; font-size: 11px; color: var(--muted); border-top: 1px solid var(--border); }
+        #qrcode img { margin: 0 auto; }
     </style>
 </head>
 <body>
@@ -197,52 +202,124 @@
 </main>
 <footer>© 2026 AXIOM SYSTEMS · 100% local · Tus datos no salen de tu navegador</footer>
 <script>
-    let count = 0, currentDataURL = null;
-    function gen() {
+    let count = 0;
+    let currentQRDataURL = null;
+
+    function generateQR() {
         const text = document.getElementById('qrText').value.trim();
-        const dark = document.getElementById('qrColor').value;
-        const light = document.getElementById('bgColor').value;
+        const darkColor = document.getElementById('qrColor').value;
+        const lightColor = document.getElementById('bgColor').value;
         const size = parseInt(document.getElementById('qrSize').value);
-        if (!text) return alert("Escribe algo");
-        const canvas = document.createElement('canvas');
-        new QRCode(canvas, { text, width: size, height: size, colorDark: dark, colorLight: light, correctLevel: QRCode.CorrectLevel.H });
-        setTimeout(() => {
-            currentDataURL = canvas.toDataURL('image/png');
-            const img = document.createElement('img');
-            img.src = currentDataURL;
-            img.style.width = size + 'px';
-            document.getElementById('qrcode').innerHTML = '';
-            document.getElementById('qrcode').appendChild(img);
-            count++;
-            document.getElementById('qrCount').innerText = count;
-        }, 50);
+
+        if (!text) {
+            alert("Introduce un enlace o texto");
+            return;
+        }
+
+        const container = document.getElementById('qrcode');
+        container.innerHTML = "";
+
+        try {
+            const qr = new QRCode(container, {
+                text: text,
+                width: size,
+                height: size,
+                colorDark: darkColor,
+                colorLight: lightColor,
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            
+            // Para capturar la imagen para descargar
+            setTimeout(() => {
+                const img = container.querySelector('img');
+                if (img && img.src) {
+                    currentQRDataURL = img.src;
+                }
+                count++;
+                document.getElementById('qrCount').innerText = count;
+            }, 100);
+            
+        } catch (error) {
+            console.error("Error generando QR:", error);
+            alert("Error al generar el QR. Revisa la consola.");
+        }
     }
-    document.getElementById('generateBtn').onclick = gen;
-    document.getElementById('downloadPngBtn').onclick = () => { if(currentDataURL) { let a = document.createElement('a'); a.href = currentDataURL; a.download = 'qrcode.png'; a.click(); } else alert("Genera un QR"); };
-    document.getElementById('downloadSvgBtn').onclick = () => {
+
+    function downloadPNG() {
+        if (!currentQRDataURL) {
+            alert("Genera un QR primero");
+            return;
+        }
+        const link = document.createElement('a');
+        link.download = `axiom-qr-${Date.now()}.png`;
+        link.href = currentQRDataURL;
+        link.click();
+    }
+
+    function downloadSVG() {
         const text = document.getElementById('qrText').value.trim();
-        const dark = document.getElementById('qrColor').value;
-        const light = document.getElementById('bgColor').value;
+        const darkColor = document.getElementById('qrColor').value;
+        const lightColor = document.getElementById('bgColor').value;
         const size = parseInt(document.getElementById('qrSize').value);
-        if (!text) return alert("Genera un QR");
+
+        if (!text) {
+            alert("Genera un QR primero");
+            return;
+        }
+
         const qr = new QRCode(-1, QRCode.CorrectLevel.H);
-        qr.addData(text); qr.make();
-        const m = qr.getModuleCount();
-        const cell = size / m;
-        let svg = `<svg width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg"><rect width="${size}" height="${size}" fill="${light}"/>`;
-        for(let r=0; r<m; r++) for(let c=0; c<m; c++) if(qr.isDark(r,c)) svg += `<rect x="${c*cell}" y="${r*cell}" width="${cell}" height="${cell}" fill="${dark}"/>`;
+        qr.addData(text);
+        qr.make();
+
+        const modules = qr.getModuleCount();
+        const cellSize = size / modules;
+        let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">`;
+        svg += `<rect width="${size}" height="${size}" fill="${lightColor}"/>`;
+
+        for (let row = 0; row < modules; row++) {
+            for (let col = 0; col < modules; col++) {
+                if (qr.isDark(row, col)) {
+                    svg += `<rect x="${col * cellSize}" y="${row * cellSize}" width="${cellSize}" height="${cellSize}" fill="${darkColor}"/>`;
+                }
+            }
+        }
         svg += `</svg>`;
-        const blob = new Blob([svg], {type:'image/svg+xml'});
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'qrcode.svg';
-        a.click();
-        URL.revokeObjectURL(a.href);
-    };
-    document.getElementById('copyLinkBtn').onclick = () => { const t = document.getElementById('qrText').value.trim(); if(t) { navigator.clipboard.writeText(t); alert("Copiado"); } else alert("Escribe algo"); };
-    const toggle = document.getElementById('themeToggle'), html = document.documentElement;
-    toggle.onclick = () => { const isDark = html.getAttribute('data-theme') === 'dark'; html.setAttribute('data-theme', isDark ? 'light' : 'dark'); toggle.innerText = isDark ? '☀️' : '🌙'; };
-    gen();
+
+        const blob = new Blob([svg], { type: 'image/svg+xml' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.download = `axiom-qr-${Date.now()}.svg`;
+        link.href = url;
+        link.click();
+        URL.revokeObjectURL(url);
+    }
+
+    function copyLink() {
+        const text = document.getElementById('qrText').value.trim();
+        if (!text) {
+            alert("Introduce un enlace o texto");
+            return;
+        }
+        navigator.clipboard.writeText(text);
+        alert("Enlace copiado al portapapeles");
+    }
+
+    document.getElementById('generateBtn').addEventListener('click', generateQR);
+    document.getElementById('downloadPngBtn').addEventListener('click', downloadPNG);
+    document.getElementById('downloadSvgBtn').addEventListener('click', downloadSVG);
+    document.getElementById('copyLinkBtn').addEventListener('click', copyLink);
+
+    // Tema oscuro/claro
+    const themeToggle = document.getElementById('themeToggle');
+    const htmlTag = document.documentElement;
+    themeToggle.addEventListener('click', () => {
+        const isDark = htmlTag.getAttribute('data-theme') === 'dark';
+        htmlTag.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        themeToggle.innerText = isDark ? '☀️' : '🌙';
+    });
+
+    // Generar QR inicial
+    generateQR();
 </script>
 </body>
 </html>
