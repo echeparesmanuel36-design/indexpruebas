@@ -1,3 +1,6 @@
-# Solo para desarrollo - no afecta a GitHub Pages
 .DS_Store
+Thumbs.db
 *.log
+node_modules/
+.vscode/
+.idea/
