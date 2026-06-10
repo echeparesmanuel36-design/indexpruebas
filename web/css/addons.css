@@ -1,0 +1,85 @@
+/* AXIOM QR FACTORY - ADDONS */
+/* Estilos adicionales que NO tocan el diseño base */
+
+/* Tooltips */
+[data-tooltip] {
+    position: relative;
+    cursor: help;
+}
+
+[data-tooltip]:before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--code-bg);
+    color: var(--text-main);
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 10px;
+    white-space: nowrap;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    border: 1px solid var(--border-color);
+}
+
+[data-tooltip]:hover:before {
+    opacity: 1;
+}
+
+/* Efecto de carga */
+.skeleton {
+    background: linear-gradient(90deg, var(--code-bg) 25%, var(--border-color) 50%, var(--code-bg) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    border-radius: 8px;
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Transiciones suaves */
+button, .btn-premium, .theme-toggle {
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+button:active, .btn-premium:active {
+    transform: scale(0.96);
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--code-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-glow-2);
+    border-radius: 10px;
+}
+
+/* Mejora de contraste en inputs */
+input, select, textarea {
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+    box-shadow: 0 0 0 2px var(--accent-glow-1);
+}
+
+/* QR container hover */
+.qr-container {
+    transition: transform 0.2s;
+}
+
+.qr-container:hover {
+    transform: scale(1.01);
+}
