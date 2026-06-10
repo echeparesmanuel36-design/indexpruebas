@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" data-theme="dark">
 <head>
-<link rel="stylesheet" href="void-pulse-addons.css">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="assets/favicon.png?v=2">
     <meta charset="UTF-8">
@@ -10,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="void-pulse-addons.css">
     <style>
         :root[data-theme="dark"] {
             --bg-color: #03060a;
@@ -71,7 +71,9 @@
         textarea:focus { border-color: var(--accent-glow-1); }
         .stats-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; }
         .stat-box { background: var(--code-bg); border-radius: 12px; padding: 12px 20px; flex: 1; text-align: center; border: 1px solid var(--border-color); }
-        .stat-number { font-size: 28px; font-weight: 700; color: var(--accent-success); }
+        .stat-number { font-size: 28px; font-weight: 700; color: var(--accent-success); transition: all 0.2s ease; }
+        .heartbeat { animation: heartbeat 0.3s ease-in-out; }
+        @keyframes heartbeat { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
         .stat-label { font-size: 10px; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
         button { background: var(--code-bg); border: 1px solid var(--border-color); padding: 12px 24px; border-radius: 40px; color: var(--text-main); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; transition: 0.2s; }
         button.primary { background: linear-gradient(135deg, var(--accent-glow-1), var(--accent-glow-2)); color: #000; border: none; }
@@ -82,9 +84,11 @@
         footer { text-align: center; padding: 40px 24px; font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--border-color); }
         .flex-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-end; margin-top: 16px; }
         .output-area { background: var(--code-bg); border-radius: 16px; padding: 20px; font-family: monospace; font-size: 13px; white-space: pre-wrap; margin-top: 16px; }
-        .pulse-bar { width: 100%; height: 12px; background: var(--code-bg); border-radius: 10px; overflow: hidden; margin-top: 8px; }
-        .pulse-fill { height: 100%; border-radius: 10px; transition: width 0.5s ease; }
         .emotion-badge { display: inline-block; padding: 6px 16px; border-radius: 40px; font-size: 12px; font-weight: 600; margin: 4px; }
+        .skeleton { background: linear-gradient(90deg, var(--code-bg) 25%, var(--border-color) 50%, var(--code-bg) 75%); background-size: 200% 100%; animation: skeleton-loading 1.5s infinite; border-radius: 8px; }
+        @keyframes skeleton-loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        .radar-chart { width: 100%; max-width: 200px; margin: 0 auto; }
+        .particle-effect { position: fixed; pointer-events: none; z-index: 1000; }
     </style>
 </head>
 <body>
@@ -95,27 +99,32 @@
     <div class="subtitle">Mide el pulso emocional y riesgo de cualquier texto en tiempo real. Tweets, prompts, emails, mensajes, contratos, hilos...</div>
 
     <div class="grid-2col">
-        <!-- Panel izquierdo: entrada -->
         <div class="glass-card">
-            <label>📝 TEXTO A ANALIZAR</label>
+            <label>📝 TEXTO A ANALIZAR <span id="charCounter" style="float:right; color:var(--text-muted);">0 caracteres</span></label>
             <textarea id="textInput" rows="10" placeholder="Pega aquí un tweet, prompt, email, mensaje de Discord, hilo, contrato..."></textarea>
             <div class="flex-row">
                 <button id="analyzeBtn" class="primary">💓 MEDIR PULSO</button>
+                <button id="randomTextBtn">🎲 Aleatorio</button>
+                <button id="fullscreenBtn">🖥️ Pantalla completa</button>
+            </div>
+            <div class="flex-row" style="justify-content: flex-start;">
+                <span style="font-size:10px; color:var(--text-muted);">⌨️ Ctrl+Enter para analizar</span>
             </div>
         </div>
 
-        <!-- Panel derecho: resultado -->
         <div class="glass-card">
             <label>📊 PULSO DEL TEXTO</label>
             <div class="output-area" id="analysisOutput">// El resultado del análisis aparecerá aquí...</div>
             <div class="flex-row">
-                <button id="copyResultBtn">📋 Copiar resultado</button>
+                <button id="copyResultBtn">📋 Copiar</button>
+                <button id="downloadPngBtn">🖼️ PNG 9:16</button>
+                <button id="downloadPdfBtn">📄 PDF</button>
+                <button id="shareTwitterBtn">🐦 Tweet</button>
                 <button id="enhanceBtn" class="primary">⚡ Versión potenciada</button>
             </div>
         </div>
     </div>
 
-    <!-- Estadísticas -->
     <div class="stats-row" id="statsPanel">
         <div class="stat-box"><div class="stat-number" id="pulseScore">0</div><div class="stat-label">Pulse Score</div></div>
         <div class="stat-box"><div class="stat-number" id="emotion">—</div><div class="stat-label">Emoción dominante</div></div>
@@ -123,7 +132,34 @@
         <div class="stat-box"><div class="stat-number" id="viralityPrediction">0%</div><div class="stat-label">Predicción viral</div></div>
     </div>
 
-    <!-- Sección premium bloqueada -->
+    <!-- Nuevas secciones añadidas sin romper diseño -->
+    <div class="glass-card" style="margin-top: 24px;">
+        <label>📈 ANÁLISIS AVANZADO</label>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+            <div><canvas id="radarCanvas" width="200" height="200" style="width:100%; max-width:200px; background:var(--code-bg); border-radius:16px;"></canvas></div>
+            <div><div id="wordCloud" style="min-height:150px; background:var(--code-bg); border-radius:16px; padding:12px;"></div></div>
+            <div><div id="sarcasmDetector" style="background:var(--code-bg); border-radius:16px; padding:12px;"><span style="color:var(--text-muted);">🔍 Análisis de sarcasmo...</span></div></div>
+        </div>
+        <div style="margin-top: 16px;" id="phraseBreakdown"></div>
+    </div>
+
+    <div class="glass-card">
+        <label>🎯 CONSEJOS Y SUGERENCIAS</label>
+        <div id="tipsContainer" style="background:var(--code-bg); border-radius:16px; padding:16px; color:var(--text-muted);">Analiza un texto para recibir consejos personalizados.</div>
+    </div>
+
+    <div class="glass-card">
+        <label>📜 HISTORIAL Y LOGROS</label>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px;">
+            <button id="showHistoryBtn">📋 Ver historial</button>
+            <button id="showAchievementsBtn">🏆 Ver logros</button>
+            <button id="resetAllDataBtn" style="border-color: var(--pulse-high); color: var(--pulse-high);">⚠️ Resetear todos los datos</button>
+        </div>
+        <div id="historyPanel" style="display:none; background:var(--code-bg); border-radius:16px; padding:16px; max-height:300px; overflow-y:auto;"></div>
+        <div id="achievementsPanel" style="display:none; background:var(--code-bg); border-radius:16px; padding:16px;"></div>
+        <div id="streakInfo" style="margin-top: 12px; font-size:12px; color:var(--accent-glow-1);"></div>
+    </div>
+
     <div class="premium-locked">
         <h3>🔒 AXIOM Void Pulse Enterprise</h3>
         <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">¿Necesitas analizar miles de textos automáticamente? El mismo motor en Rust para integrar en tu infraestructura. API en tiempo real.</p>
@@ -134,5 +170,41 @@
 
 <script src="void-pulse-core.js"></script>
 <script src="void-pulse-ui.js"></script>
+<script>
+    // Theme toggle FIXED
+    const themeToggle = document.getElementById('themeToggle');
+    const htmlElement = document.documentElement;
+    
+    function updateThemeButton() {
+        const currentTheme = htmlElement.getAttribute('data-theme');
+        themeToggle.innerHTML = currentTheme === 'dark' ? '☀️' : '🌙';
+    }
+    
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = htmlElement.getAttribute('data-theme');
+        if (currentTheme === 'dark') {
+            htmlElement.setAttribute('data-theme', 'light');
+        } else {
+            htmlElement.setAttribute('data-theme', 'dark');
+        }
+        updateThemeButton();
+        // Regenerar radar chart si existe
+        if (window.redrawRadar) window.redrawRadar();
+    });
+    
+    updateThemeButton();
+    
+    // Ctrl+Enter para analizar
+    document.getElementById('textInput').addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+            document.getElementById('analyzeBtn').click();
+        }
+    });
+    
+    // Contador de caracteres
+    document.getElementById('textInput').addEventListener('input', (e) => {
+        document.getElementById('charCounter').innerText = e.target.value.length + ' caracteres';
+    });
+</script>
 </body>
 </html>
