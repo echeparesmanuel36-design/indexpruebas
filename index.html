@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Generador de códigos QR profesional. Sin marca de agua, sin registro, 100% local. Personaliza colores, tamaños y descarga en PNG o SVG.">
+    <meta name="keywords" content="QR, generador QR, código QR, QR factory, AXIOM">
+    <meta name="author" content="AXIOM SYSTEMS">
+    <meta name="theme-color" content="#03060a">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <title>QR Factory | AXIOM SYSTEMS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/addons.css">
+</head>
+<body>
+<div class="blob1"></div>
+<div class="blob2"></div>
+
+<header>
+    <div class="logo">AXIOM SYSTEMS</div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">🌙</button>
+</header>
+
+<main>
+    <h1>📱 QR FACTORY</h1>
+    <div class="subtitle">Genera códigos QR profesionales. Sin marca de agua. Sin registro. 100% local.</div>
+
+    <div class="grid-2col">
+        <!-- Panel izquierdo: configuración -->
+        <div class="glass-card">
+            <label>🔗 ENLACE O TEXTO</label>
+            <input type="text" id="qrText" placeholder="https://tusitio.com o cualquier texto" value="https://axiom-systems.com">
+            
+            <label>🎨 COLOR DEL QR</label>
+            <div class="color-row">
+                <input type="color" id="qrColor" value="#000000">
+                <span style="color:var(--text-muted);">Color</span>
+            </div>
+            
+            <label>⬜ COLOR DE FONDO</label>
+            <div class="color-row">
+                <input type="color" id="bgColor" value="#ffffff">
+                <span style="color:var(--text-muted);">Fondo</span>
+            </div>
+            
+            <label>📐 TAMAÑO (px)</label>
+            <select id="qrSize">
+                <option value="200">Pequeño (200px)</option>
+                <option value="300" selected>Mediano (300px)</option>
+                <option value="500">Grande (500px)</option>
+                <option value="800">Extra grande (800px)</option>
+            </select>
+
+            <div class="flex-row">
+                <button id="generateBtn" class="primary">✨ GENERAR QR</button>
+            </div>
+        </div>
+
+        <!-- Panel derecho: resultado -->
+        <div class="glass-card">
+            <label>📷 CÓDIGO QR</label>
+            <div class="qr-container" id="qrContainer">
+                <canvas id="qrCanvas" width="300" height="300"></canvas>
+            </div>
+            <div class="flex-row">
+                <button id="downloadPngBtn">📥 PNG</button>
+                <button id="downloadSvgBtn">📥 SVG</button>
+                <button id="copyUrlBtn">📋 Copiar enlace</button>
+            </div>
+            <div class="preview-text" id="previewText">Contenido: https://axiom-systems.com</div>
+        </div>
+    </div>
+
+    <!-- Sección de estadísticas -->
+    <div class="stats-row" id="statsPanel">
+        <div class="stat-box">
+            <div class="stat-number" id="qrCount">0</div>
+            <div class="stat-label">QR generados</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number" id="lastSize">—</div>
+            <div class="stat-label">Último tamaño</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number" id="lastFormat">—</div>
+            <div class="stat-label">Último formato</div>
+        </div>
+    </div>
+
+    <!-- Sección premium (mockup) -->
+    <div class="premium-locked">
+        <h3>🔒 QR FACTORY PRO</h3>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">¿Necesitas logo en el centro? ¿Historial de QR? ¿API para integración? La versión PRO incluye motor en Rust y código fuente completo.</p>
+        <a href="#" class="btn-premium" id="proBtn">💼 Versión PRO →</a>
+    </div>
+</main>
+
+<footer>
+    © 2026 AXIOM SYSTEMS · Generación 100% local · Tus datos no salen de tu navegador
+</footer>
+
+<script src="wasm/motor.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/share.js"></script>
+<script src="js/shortcuts.js"></script>
+<script src="js/voice.js"></script>
+<script src="js/pwa.js"></script>
+</body>
+</html>
