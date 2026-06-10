@@ -1,83 +1,26 @@
 <!DOCTYPE html>
 <html lang="es" data-theme="dark">
 <head>
-    <link rel="icon" type="image/png" href="assets/favicon.png">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AXIOM QR FACTORY | Generador de QR soberano</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>AXIOM QR FACTORY | Generador profesional de QR</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/addons.css">
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs2@0.0.2/qrcode.min.js"></script>
-    <style>
-        :root[data-theme="dark"] {
-            --bg-color: #03060a;
-            --surface-color: rgba(9,13,20,0.97);
-            --text-main: #F5F6F8;
-            --text-muted: #8E92A2;
-            --accent-glow-1: #00e5ff;
-            --accent-glow-2: #9b51e0;
-            --accent-success: #00ff66;
-            --border-color: rgba(255,255,255,0.07);
-            --code-bg: #06090E;
-            --card-bg: rgba(9,13,20,0.6);
-        }
-        :root[data-theme="light"] {
-            --bg-color: #F2F4F8;
-            --surface-color: rgba(255,255,255,0.96);
-            --text-main: #101219;
-            --text-muted: #5F6473;
-            --accent-glow-1: #00b8cc;
-            --accent-glow-2: #823bc2;
-            --accent-success: #00aa44;
-            --border-color: rgba(0,0,0,0.09);
-            --code-bg: #EAEFF5;
-            --card-bg: rgba(255,255,255,0.8);
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            min-height: 100vh;
-            transition: background 0.3s ease;
-        }
-        .blob1, .blob2 { position: fixed; width: 500px; height: 500px; border-radius: 50%; pointer-events: none; z-index: 1; opacity: 0.15; }
-        .blob1 { top: 10%; right: 10%; background: radial-gradient(circle, var(--accent-glow-1) 0%, transparent 70%); }
-        .blob2 { bottom: 10%; left: 5%; background: radial-gradient(circle, var(--accent-glow-2) 0%, transparent 70%); }
-        header { max-width: 1200px; margin: 0 auto; padding: 30px 24px; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 10; }
-        .logo { font-weight: 600; font-size: 13px; letter-spacing: 0.25em; text-transform: uppercase; }
-        .theme-toggle { background: none; border: 1px solid var(--border-color); color: var(--text-main); padding: 8px 16px; font-size: 11px; text-transform: uppercase; cursor: pointer; border-radius: 20px; transition: 0.3s; }
-        .theme-toggle:hover { background: var(--text-main); color: var(--bg-color); }
-        main { max-width: 1200px; margin: 0 auto; padding: 20px 24px 60px; position: relative; z-index: 5; }
-        h1 { font-family: 'Playfair Display', serif; font-size: 52px; text-align: center; margin-bottom: 16px; }
-        .subtitle { text-align: center; font-size: 17px; color: var(--text-muted); margin-bottom: 48px; max-width: 700px; margin-left: auto; margin-right: auto; }
-        .glass-card { background: var(--card-bg); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 32px; padding: 28px; margin-bottom: 24px; }
-        .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-        @media (max-width: 800px) { .grid-2col { grid-template-columns: 1fr; } }
-        label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-muted); display: block; margin-bottom: 12px; font-weight: 600; }
-        input, select { width: 100%; background: var(--code-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 14px 16px; color: var(--text-main); font-family: 'Inter', monospace; font-size: 13px; outline: none; transition: 0.2s; }
-        input:focus, select:focus { border-color: var(--accent-glow-1); }
-        .color-row { display: flex; gap: 16px; }
-        .color-row div { flex: 1; }
-        .stats-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; }
-        .stat-box { background: var(--code-bg); border-radius: 12px; padding: 12px 20px; flex: 1; text-align: center; border: 1px solid var(--border-color); }
-        .stat-number { font-size: 28px; font-weight: 700; color: var(--accent-success); }
-        .stat-label { font-size: 10px; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
-        button { background: var(--code-bg); border: 1px solid var(--border-color); padding: 12px 24px; border-radius: 40px; color: var(--text-main); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; transition: 0.2s; }
-        button.primary { background: linear-gradient(135deg, var(--accent-glow-1), var(--accent-glow-2)); color: #000; border: none; }
-        button.primary:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(0,229,255,0.3); }
-        .qr-container { background: var(--code-bg); border-radius: 16px; padding: 30px; text-align: center; margin-bottom: 20px; }
-        .qr-container #qrcode { display: flex; justify-content: center; align-items: center; }
-        .qr-container #qrcode img { margin: 0 auto; }
-        .flex-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 16px; }
-        footer { text-align: center; padding: 40px 24px; font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--border-color); }
-    </style>
 </head>
 <body>
-<div class="blob1"></div><div class="blob2"></div>
-<header><div class="logo">AXIOM SYSTEMS</div><button class="theme-toggle" id="themeToggle">🌙</button></header>
+<div class="blob1"></div>
+<div class="blob2"></div>
+<header>
+    <div class="logo">AXIOM SYSTEMS</div>
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+</header>
 <main>
     <h1>📱 AXIOM QR FACTORY</h1>
     <div class="subtitle">Genera códigos QR profesionales. Sin marca de agua. Sin registro. 100% local.</div>
@@ -87,18 +30,18 @@
             <label>🔗 ENLACE O TEXTO</label>
             <input type="text" id="qrText" placeholder="https:// o texto libre..." value="https://axiom-systems.com">
             
-            <div class="color-row" style="margin-top: 16px;">
+            <div class="color-row">
                 <div>
-                    <label>🎨 COLOR DEL QR</label>
+                    <label>🎨 COLOR QR</label>
                     <input type="color" id="qrColor" value="#000000">
                 </div>
                 <div>
-                    <label>⬜ COLOR DE FONDO</label>
+                    <label>⬜ COLOR FONDO</label>
                     <input type="color" id="bgColor" value="#ffffff">
                 </div>
             </div>
             
-            <label style="margin-top: 16px;">📏 TAMAÑO</label>
+            <label>📏 TAMAÑO</label>
             <select id="qrSize">
                 <option value="150">Pequeño (150px)</option>
                 <option value="250" selected>Mediano (250px)</option>
@@ -113,7 +56,7 @@
 
         <div class="glass-card">
             <label>📷 CÓDIGO QR</label>
-            <div class="qr-container">
+            <div class="qr-container" id="qrContainer">
                 <div id="qrcode"></div>
             </div>
             <div class="flex-row">
@@ -128,143 +71,6 @@
     </div>
 </main>
 <footer>© 2026 AXIOM SYSTEMS · 100% local · Tus datos no salen de tu navegador</footer>
-
-<script>
-    // Variables
-    let qrGeneratedCount = 0;
-    let currentQRDataURL = null;
-    let currentText = "";
-
-    // Función para generar QR
-    function generateQR() {
-        const text = document.getElementById('qrText').value.trim();
-        const qrColor = document.getElementById('qrColor').value;
-        const bgColor = document.getElementById('bgColor').value;
-        const size = parseInt(document.getElementById('qrSize').value);
-        
-        if (!text) {
-            alert("Introduce un enlace o texto");
-            return;
-        }
-        
-        currentText = text;
-        
-        // Limpiar contenedor
-        const qrcodeContainer = document.getElementById('qrcode');
-        qrcodeContainer.innerHTML = "";
-        
-        // Crear canvas manualmente para controlar colores
-        const canvas = document.createElement('canvas');
-        const qr = new QRCode(canvas, {
-            text: text,
-            width: size,
-            height: size,
-            colorDark: qrColor,
-            colorLight: bgColor,
-            correctLevel: QRCode.CorrectLevel.H
-        });
-        
-        // Esperar a que se dibuje
-        setTimeout(() => {
-            // Obtener dataURL
-            currentQRDataURL = canvas.toDataURL('image/png');
-            
-            // Mostrar en el contenedor
-            const img = document.createElement('img');
-            img.src = currentQRDataURL;
-            img.style.width = `${size}px`;
-            img.style.height = `${size}px`;
-            qrcodeContainer.innerHTML = "";
-            qrcodeContainer.appendChild(img);
-            
-            // Incrementar contador
-            qrGeneratedCount++;
-            document.getElementById('qrCount').innerText = qrGeneratedCount;
-            
-        }, 50);
-    }
-    
-    // Descargar PNG
-    function downloadPNG() {
-        if (!currentQRDataURL) {
-            alert("Genera un QR primero");
-            return;
-        }
-        const link = document.createElement('a');
-        link.download = `axiom-qr-${Date.now()}.png`;
-        link.href = currentQRDataURL;
-        link.click();
-    }
-    
-    // Descargar SVG
-    function downloadSVG() {
-        const text = document.getElementById('qrText').value.trim();
-        const qrColor = document.getElementById('qrColor').value;
-        const bgColor = document.getElementById('bgColor').value;
-        const size = parseInt(document.getElementById('qrSize').value);
-        
-        if (!text) {
-            alert("Genera un QR primero");
-            return;
-        }
-        
-        // Generar SVG manualmente
-        const qr = new QRCode(-1, QRCode.CorrectLevel.H);
-        qr.addData(text);
-        qr.make();
-        
-        const modules = qr.getModuleCount();
-        const cellSize = size / modules;
-        
-        let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">`;
-        svg += `<rect width="${size}" height="${size}" fill="${bgColor}"/>`;
-        
-        for (let row = 0; row < modules; row++) {
-            for (let col = 0; col < modules; col++) {
-                if (qr.isDark(row, col)) {
-                    svg += `<rect x="${col * cellSize}" y="${row * cellSize}" width="${cellSize}" height="${cellSize}" fill="${qrColor}"/>`;
-                }
-            }
-        }
-        svg += `</svg>`;
-        
-        const blob = new Blob([svg], { type: 'image/svg+xml' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.download = `axiom-qr-${Date.now()}.svg`;
-        link.href = url;
-        link.click();
-        URL.revokeObjectURL(url);
-    }
-    
-    // Copiar enlace
-    function copyLink() {
-        const text = document.getElementById('qrText').value.trim();
-        if (!text) {
-            alert("Introduce un enlace o texto");
-            return;
-        }
-        navigator.clipboard.writeText(text);
-        alert("Enlace copiado al portapapeles");
-    }
-    
-    // Eventos
-    document.getElementById('generateBtn').addEventListener('click', generateQR);
-    document.getElementById('downloadPngBtn').addEventListener('click', downloadPNG);
-    document.getElementById('downloadSvgBtn').addEventListener('click', downloadSVG);
-    document.getElementById('copyLinkBtn').addEventListener('click', copyLink);
-    
-    // Generar QR inicial
-    generateQR();
-    
-    // Tema oscuro/claro
-    const themeToggle = document.getElementById('themeToggle');
-    const htmlTag = document.documentElement;
-    themeToggle.addEventListener('click', () => {
-        const isDark = htmlTag.getAttribute('data-theme') === 'dark';
-        htmlTag.setAttribute('data-theme', isDark ? 'light' : 'dark');
-        themeToggle.innerText = isDark ? '☀️' : '🌙';
-    });
-</script>
+<script src="js/ui.js"></script>
 </body>
 </html>
