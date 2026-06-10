@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://axiom-qr-factory.github.io/sitemap.xml
